@@ -10,21 +10,21 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* Fondos */
+    /* Fondos (se mantienen claros) */
     --bg-principal: #FBF7F0;
     --bg-claro: #FFFFFF;
     --bg-suave: #FDFBF7;
 
-    /* Color protagonista (energía/fiesta) */
+    /* Sistema de acentos festivos (NINGUNO domina — conviven) */
+    --turquesa: #0DA5A0;
+    --turquesa-oscuro: #0A8783;
+    --azul: #1565D0;
     --magenta: #E91E63;
-    --magenta-oscuro: #C2185B;
-
-    /* Acentos */
+    --coral: #FF6B4A;
     --dorado: #D4AF37;
-    --turquesa: #1DB5A6;
 
     /* Texto */
     --texto-principal: #2A2A2E;
@@ -35,7 +35,7 @@
     --border: rgba(42, 42, 46, 0.12);
     --shadow: rgba(0, 0, 0, 0.18);
 
-    --font-display: 'Playfair Display', serif;
+    --font-display: 'Fredoka', sans-serif;
     --font-body: 'Poppins', sans-serif;
     --container: 1200px;
   }
@@ -108,9 +108,15 @@
   .section-head h2 {
     font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 600; margin-bottom: 0.75rem; overflow-wrap: break-word;
-    color: var(--magenta);
   }
   .section-head p { color: var(--texto-suave); font-size: 1.05rem; }
+
+  /* Multicolor por sección: ningún color domina toda la página */
+  #sobre .section-head h2 { color: var(--azul); }
+  #catalogo .section-head h2 { color: var(--turquesa); }
+  #cobertura .section-head h2 { color: var(--magenta); }
+  #faq .section-head h2 { color: var(--coral); }
+  #contacto .section-head h2 { color: var(--azul); }
 
   .contact-card {
     background: var(--bg-claro);
@@ -138,7 +144,7 @@
     text-decoration: none;
     overflow-wrap: break-word;
   }
-  .contact-link:hover { color: var(--magenta); }
+  .contact-link:hover { color: var(--turquesa); }
 
   .placeholder-box {
     border: 1px dashed var(--border);
@@ -161,10 +167,10 @@
     font-family: var(--font-body); border: 1px solid transparent;
     transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   }
-  .btn-primary { background: var(--magenta); color: var(--texto-claro); }
-  .btn-primary:hover { background: var(--magenta-oscuro); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(233,30,99,0.35); }
+  .btn-primary { background: var(--turquesa); color: var(--texto-claro); }
+  .btn-primary:hover { background: var(--turquesa-oscuro); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(13,165,160,0.35); }
   .btn-secondary { background: transparent; color: var(--texto-claro); border-color: var(--texto-claro); }
-  .btn-secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); border-color: var(--dorado); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); border-color: var(--turquesa); }
 
   /* Nav */
   .nav {
@@ -180,17 +186,18 @@
   }
   .nav-logo {
     font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
-    color: var(--magenta); text-decoration: none; letter-spacing: 0.01em;
+    color: var(--azul); text-decoration: none; letter-spacing: 0.01em;
   }
   .nav-links { display: none; gap: 2rem; list-style: none; }
   .nav-links a {
     text-decoration: none; font-size: 0.95rem; font-weight: 500; color: var(--texto-principal);
     transition: color 0.2s ease;
   }
-  .nav-links a:hover { color: var(--magenta); }
+  .nav-links a:hover { color: var(--turquesa); }
   @media (min-width: 900px) {
     .nav-links { display: flex; align-items: center; }
   }
+  .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
   .nav-cta { display: none; }
   @media (min-width: 900px) {
     .nav-cta { display: inline-flex; }
@@ -325,8 +332,8 @@
     white-space: nowrap;
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
   }
-  .catalog-tab:hover { transform: translateY(-2px); border-color: var(--dorado); }
-  .catalog-tab.is-active { background: var(--magenta); color: var(--texto-claro); border-color: var(--magenta); }
+  .catalog-tab:hover { transform: translateY(-2px); border-color: var(--turquesa); }
+  .catalog-tab.is-active { background: var(--turquesa); color: var(--texto-claro); border-color: var(--turquesa); }
 
   /* Catálogo: subpestañas (subcategorías) */
   /* Móvil (por defecto): una sola línea con scroll horizontal + degradado que indica que hay más */
@@ -377,8 +384,8 @@
     white-space: nowrap;
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   }
-  .catalog-subtab:hover { border-color: var(--dorado); color: var(--texto-principal); }
-  .catalog-subtab.is-active { background: rgba(233,30,99,0.12); border-color: var(--magenta); color: var(--magenta-oscuro); }
+  .catalog-subtab:hover { border-color: var(--turquesa); color: var(--texto-principal); }
+  .catalog-subtab.is-active { background: rgba(13,165,160,0.12); border-color: var(--turquesa); color: var(--turquesa-oscuro); }
 
   /* Catálogo: grid y tarjetas de producto */
   .catalog-grid {
@@ -497,8 +504,8 @@
     cursor: pointer;
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
   }
-  .page-btn:hover:not(:disabled) { border-color: var(--dorado); transform: translateY(-2px); }
-  .page-btn.is-active { background: var(--magenta); color: var(--texto-claro); border-color: var(--magenta); }
+  .page-btn:hover:not(:disabled) { border-color: var(--turquesa); transform: translateY(-2px); }
+  .page-btn.is-active { background: var(--turquesa); color: var(--texto-claro); border-color: var(--turquesa); }
   .page-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
   .page-arrow { font-size: 1.1rem; }
 
@@ -516,7 +523,7 @@
     padding: 0.25rem 1.25rem;
     transition: border-color 0.25s ease;
   }
-  .faq-item[open] { border-color: var(--magenta); }
+  .faq-item[open] { border-color: var(--turquesa); }
   .faq-item summary {
     list-style: none;
     cursor: pointer;
@@ -569,7 +576,7 @@
     font-size: 0.9rem;
   }
   footer .footer-logo {
-    font-family: var(--font-display); color: var(--dorado); font-size: 1.2rem; margin-bottom: 0.75rem;
+    font-family: var(--font-display); font-weight: 600; color: var(--dorado); font-size: 1.2rem; margin-bottom: 0.75rem;
   }
 
   /* WhatsApp floating button */
@@ -597,6 +604,197 @@
     .whatsapp-float { width: 54px; height: 54px; bottom: 16px; right: 16px; }
     .whatsapp-float svg { width: 27px; height: 27px; }
   }
+
+  /* Botón outline (acciones secundarias, ej. "Agregar al pedido") */
+  .btn-outline {
+    background: transparent;
+    color: var(--turquesa);
+    border-color: var(--turquesa);
+  }
+  .btn-outline:hover { background: rgba(13,165,160,0.1); transform: translateY(-3px); }
+  .btn-outline.is-added { background: var(--turquesa); color: var(--texto-claro); border-color: var(--turquesa); }
+
+  /* Control de cantidad (en cada tarjeta de producto) */
+  .qty-control {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .qty-btn {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-suave);
+    color: var(--texto-principal);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .qty-btn:hover { background: rgba(13,165,160,0.12); border-color: var(--turquesa); }
+  .qty-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-claro);
+    color: var(--texto-principal);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0 0.25rem;
+  }
+  .qty-input:focus { outline: none; border-color: var(--turquesa); }
+  /* Quita las flechas nativas del input number para un look limpio */
+  .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .qty-input[type=number] { -moz-appearance: textfield; }
+  @media (min-width: 480px) {
+    .qty-btn, .qty-input { height: 40px; }
+    .qty-btn { width: 40px; }
+  }
+
+  /* Carrito de pedido, integrado en el header */
+  .nav-cart {
+    position: relative;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--texto-principal);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .nav-cart:hover { background: rgba(13,165,160,0.12); color: var(--turquesa); }
+  .nav-cart svg { width: 24px; height: 24px; }
+  .order-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--coral);
+    color: var(--texto-claro);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-principal);
+  }
+
+  /* Panel lateral de pedido */
+  .order-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2050;
+    background: rgba(20,20,25,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .order-backdrop.is-open { opacity: 1; pointer-events: auto; }
+  .order-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 420px;
+    max-width: 92vw;
+    background: var(--bg-claro);
+    z-index: 2100;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+  }
+  .order-panel.is-open { transform: translateX(0); }
+  .order-panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .order-panel-header h3 {
+    font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--turquesa);
+  }
+  .order-panel-close {
+    width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--bg-suave);
+    color: var(--texto-principal); font-size: 1.4rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .order-panel-close:hover { background: var(--border); }
+  .order-panel-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 1rem 1.5rem;
+  }
+  .order-empty {
+    color: var(--texto-suave);
+    text-align: center;
+    padding: 3rem 1rem;
+    font-size: 0.95rem;
+  }
+  .order-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .order-item:last-child { border-bottom: none; }
+  .order-item-name {
+    flex: 1 1 auto;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--texto-principal);
+    overflow-wrap: break-word;
+  }
+  .order-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex: 0 0 auto;
+  }
+  .order-item-controls .qty-btn { width: 30px; height: 30px; font-size: 1rem; }
+  .order-item-controls .qty-input { width: 50px; height: 30px; font-size: 0.9rem; }
+  .order-item-remove {
+    width: 30px; height: 30px; border-radius: 8px; border: none; background: transparent;
+    color: var(--coral); font-size: 1.2rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .order-item-remove:hover { background: rgba(255,107,74,0.12); }
+  .order-panel-footer {
+    padding: 1.25rem 1.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .order-clear {
+    background: none; border: none; color: var(--texto-suave);
+    font-family: var(--font-body); font-size: 0.85rem; text-decoration: underline;
+    cursor: pointer; padding: 0.25rem; align-self: center;
+  }
+  .order-clear:hover { color: var(--coral); }
+  .order-panel-footer .btn:disabled, .order-clear:disabled {
+    opacity: 0.4; cursor: not-allowed;
+  }
 </style>
 </head>
 <body class="no-js">
@@ -611,10 +809,21 @@
       <li><a href="#faq">Preguntas</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
-    <a href="#contacto" class="btn btn-primary nav-cta">Solicita tu cotización</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
+    <div class="nav-actions">
+      <a href="#contacto" class="btn btn-primary nav-cta">Solicita tu cotización</a>
+      <button class="nav-cart" id="navCart" type="button" aria-label="Ver mi pedido">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 6h15l-1.5 9h-12z"/>
+          <path d="M6 6 5 3H2"/>
+          <circle cx="9" cy="20" r="1.4" fill="currentColor" stroke="none"/>
+          <circle cx="18" cy="20" r="1.4" fill="currentColor" stroke="none"/>
+        </svg>
+        <span class="order-badge" id="orderBadge" hidden>0</span>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
   </div>
   <div class="nav-mobile" id="navMobile">
     <a href="#sobre">Sobre nosotros</a>
@@ -774,6 +983,21 @@
     <path d="M16.04 2.67C8.85 2.67 3 8.46 3 15.58c0 2.83.92 5.45 2.5 7.6L4 29.33l6.36-1.96a13.1 13.1 0 0 0 5.68 1.3c7.19 0 13.04-5.79 13.04-12.9 0-7.13-5.85-12.9-13.04-13.1Zm0 23.6c-1.93 0-3.78-.5-5.39-1.45l-.39-.22-3.78 1.16 1.18-3.66-.25-.4a10.55 10.55 0 0 1-1.66-5.7c0-5.87 4.84-10.64 10.79-10.64 2.88 0 5.59 1.11 7.63 3.13a10.43 10.43 0 0 1 3.16 7.45c0 5.87-4.85 10.64-10.79 10.64Zm5.92-7.95c-.32-.16-1.9-.93-2.2-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.18.21-.37.24-.68.08-.32-.16-1.33-.49-2.53-1.55-.93-.83-1.56-1.85-1.74-2.16-.18-.32-.02-.49.14-.66.16-.16.36-.41.54-.61.18-.21.24-.36.36-.6.12-.24.06-.45-.05-.61-.11-.16-.74-1.78-1.02-2.44-.26-.62-.53-.54-.73-.55-.18-.01-.4-.01-.61-.01-.21 0-.55.08-.84.4-.29.32-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.2 3.36 5.34 4.58 2.97 1.16 3.45.97 4.07.91.62-.06 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.13-.3-.21-.62-.37Z"/>
   </svg>
 </a>
+
+<!-- Panel de pedido -->
+<div class="order-backdrop" id="orderBackdrop"></div>
+<aside class="order-panel" id="orderPanel" aria-hidden="true">
+  <div class="order-panel-header">
+    <h3>Tu pedido</h3>
+    <button class="order-panel-close" id="orderPanelClose" type="button" aria-label="Cerrar pedido">&times;</button>
+  </div>
+  <div class="order-panel-body" id="orderList"></div>
+  <div class="order-panel-footer">
+    <button class="btn btn-primary btn-block" id="orderSendWhatsapp" type="button">Enviar pedido por WhatsApp</button>
+    <button class="btn btn-outline btn-block" id="orderSendEmail" type="button">Enviar pedido por correo</button>
+    <button class="order-clear" id="orderClear" type="button">Vaciar pedido</button>
+  </div>
+</aside>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -1265,11 +1489,16 @@
     const cards = [];
     items.forEach(item => {
       item.products.forEach(p => {
-        const src = 'assets/catalogo/' + item.slug + '/' + p.file + '.webp';
-        cards.push({ title: p.title, src });
+        const id = item.slug + '/' + p.file;
+        const src = 'assets/catalogo/' + id + '.webp';
+        cards.push({ id, title: p.title, src });
       });
     });
     return cards;
+  }
+
+  function escAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   }
 
   function renderPagination(totalPages) {
@@ -1292,14 +1521,18 @@
     currentPage = Math.min(Math.max(1, page), totalPages);
     const start = (currentPage - 1) * PAGE_SIZE;
     const cardsHtml = currentCards.slice(start, start + PAGE_SIZE).map(c => {
-      const waText = encodeURIComponent('Hola, me interesa el producto: ' + c.title);
       return '<div class="product-card reveal">' +
         '<div class="product-img-wrap">' +
           '<img src="' + c.src + '" alt="' + c.title + '" loading="lazy" width="400" height="400">' +
         '</div>' +
         '<div class="product-info">' +
           '<h3>' + c.title + '</h3>' +
-          '<a class="btn btn-primary btn-block" href="https://wa.me/' + WHATSAPP_NUMBER + '?text=' + waText + '" target="_blank" rel="noopener">Pedir por WhatsApp</a>' +
+          '<div class="qty-control">' +
+            '<button class="qty-btn" type="button" data-action="minus" aria-label="Menos">&minus;</button>' +
+            '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
+            '<button class="qty-btn" type="button" data-action="plus" aria-label="Más">+</button>' +
+          '</div>' +
+          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '">Agregar al pedido</button>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -1385,6 +1618,183 @@
       if (e.key === 'Escape') closeLightbox();
     });
   }
+
+  // ---- Sistema de pedido (sin pagos en línea: solo junta el pedido y lo envía como mensaje) ----
+  const ORDER_STORAGE_KEY = 'crf_pedido';
+  const ORDER_EMAIL = 'CORREO-PENDIENTE';
+  let orderState = {}; // { id: { title, qty } }
+
+  function loadOrder() {
+    try {
+      const raw = localStorage.getItem(ORDER_STORAGE_KEY);
+      if (raw) orderState = JSON.parse(raw);
+    } catch (e) { orderState = {}; }
+  }
+  function saveOrder() {
+    try { localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orderState)); } catch (e) {}
+  }
+  function orderCount() { return Object.keys(orderState).length; }
+
+  function addToOrder(id, title, qty) {
+    const n = Math.max(1, parseInt(qty, 10) || 1);
+    if (orderState[id]) {
+      orderState[id].qty += n;
+    } else {
+      orderState[id] = { title, qty: n };
+    }
+    saveOrder();
+    renderOrderPanel();
+  }
+  function removeFromOrder(id) {
+    delete orderState[id];
+    saveOrder();
+    renderOrderPanel();
+  }
+  function setOrderQty(id, qty) {
+    if (!orderState[id]) return;
+    orderState[id].qty = Math.max(1, parseInt(qty, 10) || 1);
+    saveOrder();
+    renderOrderPanel();
+  }
+  function clearOrder() {
+    orderState = {};
+    saveOrder();
+    renderOrderPanel();
+  }
+
+  const orderFloat = document.getElementById('navCart');
+  const orderBadge = document.getElementById('orderBadge');
+  const orderBackdrop = document.getElementById('orderBackdrop');
+  const orderPanel = document.getElementById('orderPanel');
+  const orderPanelClose = document.getElementById('orderPanelClose');
+  const orderListEl = document.getElementById('orderList');
+  const orderSendWhatsapp = document.getElementById('orderSendWhatsapp');
+  const orderSendEmail = document.getElementById('orderSendEmail');
+  const orderClearBtn = document.getElementById('orderClear');
+
+  function renderOrderPanel() {
+    const ids = Object.keys(orderState);
+    if (orderBadge) {
+      orderBadge.hidden = ids.length === 0;
+      orderBadge.textContent = String(ids.length);
+    }
+    if (orderListEl) {
+      orderListEl.innerHTML = ids.length === 0
+        ? '<p class="order-empty">Tu pedido está vacío.<br>Agrega productos desde el catálogo.</p>'
+        : ids.map(id => {
+            const item = orderState[id];
+            return '<div class="order-item" data-id="' + escAttr(id) + '">' +
+              '<span class="order-item-name">' + item.title + '</span>' +
+              '<div class="order-item-controls">' +
+                '<button class="qty-btn" type="button" data-order-action="minus" aria-label="Menos">&minus;</button>' +
+                '<input class="qty-input" type="number" min="1" step="1" value="' + item.qty + '" inputmode="numeric" aria-label="Cantidad">' +
+                '<button class="qty-btn" type="button" data-order-action="plus" aria-label="Más">+</button>' +
+                '<button class="order-item-remove" type="button" data-order-action="remove" aria-label="Quitar producto">&times;</button>' +
+              '</div>' +
+            '</div>';
+          }).join('');
+    }
+    const hasItems = ids.length > 0;
+    if (orderSendWhatsapp) orderSendWhatsapp.disabled = !hasItems;
+    if (orderSendEmail) orderSendEmail.disabled = !hasItems;
+    if (orderClearBtn) orderClearBtn.disabled = !hasItems;
+  }
+
+  function openOrderPanel() {
+    orderPanel.classList.add('is-open');
+    orderBackdrop.classList.add('is-open');
+    orderPanel.setAttribute('aria-hidden', 'false');
+  }
+  function closeOrderPanel() {
+    orderPanel.classList.remove('is-open');
+    orderBackdrop.classList.remove('is-open');
+    orderPanel.setAttribute('aria-hidden', 'true');
+  }
+
+  function buildOrderMessage() {
+    let msg = 'Hola, quiero hacer el siguiente pedido de mayoreo:\n\n';
+    Object.keys(orderState).forEach(id => {
+      const item = orderState[id];
+      msg += '- ' + item.title + ' x ' + item.qty + '\n';
+    });
+    msg += '\n¡Gracias!';
+    return msg;
+  }
+
+  if (orderFloat) orderFloat.addEventListener('click', openOrderPanel);
+  if (orderPanelClose) orderPanelClose.addEventListener('click', closeOrderPanel);
+  if (orderBackdrop) orderBackdrop.addEventListener('click', closeOrderPanel);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeOrderPanel();
+  });
+
+  if (orderListEl) {
+    orderListEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-order-action]');
+      if (!btn) return;
+      const itemEl = btn.closest('.order-item');
+      const id = itemEl.dataset.id;
+      if (btn.dataset.orderAction === 'remove') { removeFromOrder(id); return; }
+      const input = itemEl.querySelector('.qty-input');
+      let qty = parseInt(input.value, 10) || 1;
+      if (btn.dataset.orderAction === 'plus') qty += 1;
+      if (btn.dataset.orderAction === 'minus') qty = Math.max(1, qty - 1);
+      setOrderQty(id, qty);
+    });
+    orderListEl.addEventListener('change', (e) => {
+      const input = e.target.closest('.qty-input');
+      if (!input) return;
+      setOrderQty(input.closest('.order-item').dataset.id, input.value);
+    });
+  }
+
+  if (orderClearBtn) orderClearBtn.addEventListener('click', () => { if (orderCount() > 0) clearOrder(); });
+
+  if (orderSendWhatsapp) {
+    orderSendWhatsapp.addEventListener('click', () => {
+      if (orderCount() === 0) return;
+      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildOrderMessage()), '_blank');
+    });
+  }
+
+  if (orderSendEmail) {
+    orderSendEmail.addEventListener('click', () => {
+      if (orderCount() === 0) return;
+      const subject = encodeURIComponent('Pedido de mayoreo - Carlos Rocha Todo para Fiesta');
+      const body = encodeURIComponent(buildOrderMessage());
+      window.location.href = 'mailto:' + ORDER_EMAIL + '?subject=' + subject + '&body=' + body;
+    });
+  }
+
+  // Cantidad y "Agregar al pedido" en cada tarjeta del catálogo (delegación, las tarjetas se regeneran)
+  if (catalogGrid) {
+    catalogGrid.addEventListener('click', (e) => {
+      const qtyBtn = e.target.closest('.qty-btn');
+      if (qtyBtn) {
+        const input = qtyBtn.closest('.qty-control').querySelector('.qty-input');
+        let qty = parseInt(input.value, 10) || 1;
+        if (qtyBtn.dataset.action === 'plus') qty += 1;
+        if (qtyBtn.dataset.action === 'minus') qty = Math.max(1, qty - 1);
+        input.value = qty;
+        return;
+      }
+      const addBtn = e.target.closest('.btn-add-order');
+      if (addBtn) {
+        const input = addBtn.closest('.product-card').querySelector('.qty-input');
+        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1);
+        const original = addBtn.textContent;
+        addBtn.classList.add('is-added');
+        addBtn.textContent = 'Agregado ✓';
+        setTimeout(() => {
+          addBtn.classList.remove('is-added');
+          addBtn.textContent = original;
+        }, 1200);
+      }
+    });
+  }
+
+  loadOrder();
+  renderOrderPanel();
 
   // Red de seguridad global: revela todo a los 3s pase lo que pase (incluye lo ya presente al cargar)
   setTimeout(() => {
