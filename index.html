@@ -98,7 +98,10 @@
   .no-js .reveal, .no-js .reveal-scale { opacity: 1 !important; transform: none !important; }
 
   /* Section layout */
-  .section { padding: clamp(60px, 10vw, 120px) 0; }
+  .section { padding: 3rem 0; }
+  @media (min-width: 768px) {
+    .section { padding: 5rem 0; }
+  }
   .bg-soft { background: var(--bg-suave); }
   .section-eyebrow {
     display: inline-block; font-size: 0.85rem; letter-spacing: 0.12em;
@@ -697,6 +700,7 @@
     justify-content: center;
     border: 2px solid var(--bg-principal);
   }
+  .order-badge[hidden] { display: none; }
 
   /* Panel lateral de pedido */
   .order-backdrop {
@@ -758,6 +762,18 @@
     border-bottom: 1px solid var(--border);
   }
   .order-item:last-child { border-bottom: none; }
+  .order-item-thumb {
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--bg-suave);
+  }
+  .order-item-thumb-empty { border: 1px solid var(--border); }
+  @media (max-width: 380px) {
+    .order-item-thumb { width: 44px; height: 44px; }
+  }
   .order-item-name {
     flex: 1 1 auto;
     font-size: 0.9rem;
@@ -1532,7 +1548,7 @@
             '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
             '<button class="qty-btn" type="button" data-action="plus" aria-label="Más">+</button>' +
           '</div>' +
-          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '">Agregar al pedido</button>' +
+          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '" data-src="' + escAttr(c.src) + '">Agregar al pedido</button>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -1635,12 +1651,12 @@
   }
   function orderCount() { return Object.keys(orderState).length; }
 
-  function addToOrder(id, title, qty) {
+  function addToOrder(id, title, qty, src) {
     const n = Math.max(1, parseInt(qty, 10) || 1);
     if (orderState[id]) {
       orderState[id].qty += n;
     } else {
-      orderState[id] = { title, qty: n };
+      orderState[id] = { title, qty: n, src: src || '' };
     }
     saveOrder();
     renderOrderPanel();
@@ -1683,7 +1699,11 @@
         ? '<p class="order-empty">Tu pedido está vacío.<br>Agrega productos desde el catálogo.</p>'
         : ids.map(id => {
             const item = orderState[id];
+            const thumb = item.src
+              ? '<img class="order-item-thumb" src="' + escAttr(item.src) + '" alt="" loading="lazy">'
+              : '<div class="order-item-thumb order-item-thumb-empty"></div>';
             return '<div class="order-item" data-id="' + escAttr(id) + '">' +
+              thumb +
               '<span class="order-item-name">' + item.title + '</span>' +
               '<div class="order-item-controls">' +
                 '<button class="qty-btn" type="button" data-order-action="minus" aria-label="Menos">&minus;</button>' +
@@ -1781,7 +1801,7 @@
       const addBtn = e.target.closest('.btn-add-order');
       if (addBtn) {
         const input = addBtn.closest('.product-card').querySelector('.qty-input');
-        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1);
+        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1, addBtn.dataset.src);
         const original = addBtn.textContent;
         addBtn.classList.add('is-added');
         addBtn.textContent = 'Agregado ✓';
@@ -1801,6 +1821,5 @@
     document.querySelectorAll('.reveal, .reveal-scale').forEach(el => el.classList.add('is-visible'));
   }, 3000);
 </script>
-
 </body>
 </html>
