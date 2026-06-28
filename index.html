@@ -403,24 +403,6 @@
     width: 100%; height: 100%; object-fit: cover; display: block;
   }
 
-  /* TEMPORAL: etiqueta con el nombre de archivo, solo para organización interna del catálogo. Quitar cuando ya no se necesite. */
-  .product-filename-tag {
-    position: absolute;
-    bottom: 6px;
-    left: 6px;
-    right: 6px;
-    background: rgba(8, 14, 24, 0.85);
-    color: #ffd966;
-    font-family: 'Courier New', monospace;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 3px 6px;
-    border-radius: 6px;
-    text-align: center;
-    overflow-wrap: break-word;
-    pointer-events: none;
-  }
-
   /* Lightbox de producto */
   .lightbox {
     position: fixed;
@@ -825,49 +807,421 @@
 
   // ---- Catálogo: datos reales de assets/catalogo (32 subcarpetas agrupadas en 5 categorías) ----
   const WHATSAPP_NUMBER = '523317974096';
+
+  // Catálogo: datos reales (assets/catalogo), nombre de archivo y producto importados de productos.csv
   const CATALOG_DATA = [
-    // Velas
-    { slug: 'vela-de-cera', count: 8, group: 'velas', name: 'Vela de Cera', subcat: 'vela-de-cera', subcatLabel: 'Vela de Cera' },
-    { slug: 'velas-de-cera-numero', count: 4, group: 'velas', name: 'Velas de Cera con Número', subcat: 'velas-de-cera-numero', subcatLabel: 'Velas con Número' },
-    { slug: 'vela-pirotecnia', count: 4, group: 'velas', name: 'Vela Pirotecnia', subcat: 'vela-pirotecnia', subcatLabel: 'Vela Pirotecnia' },
-    { slug: 'velas-de-cera-aspiral', count: 8, group: 'velas', name: 'Velas de Cera Espiral', subcat: 'velas-de-cera-aspiral', subcatLabel: 'Velas Espiral' },
-    { slug: 'vela-de-cera-creativa', count: 2, group: 'velas', name: 'Vela de Cera Creativa', subcat: 'vela-de-cera-creativa', subcatLabel: 'Vela Creativa' },
-    { slug: 'velas-cera-feliz-cumpleanos', count: 6, group: 'velas', name: 'Velas de Cera Feliz Cumpleaños', subcat: 'velas-cera-feliz-cumpleanos', subcatLabel: 'Vela Feliz Cumpleaños' },
-    { slug: 'madera-feliz-cumpleanos', count: 1, group: 'velas', name: 'Madera Feliz Cumpleaños', subcat: 'madera-feliz-cumpleanos', subcatLabel: 'Madera Cumpleaños' },
-    // Globos y kits
-    { slug: 'kit-globos-feliz-cumpleanos', count: 39, group: 'globos', name: 'Kit Globos Feliz Cumpleaños', subcat: 'kit-globos-feliz-cumpleanos', subcatLabel: 'Kit Feliz Cumpleaños' },
-    { slug: 'kit-de-globo-revelacion', count: 5, group: 'globos', name: 'Kit de Globo Revelación', subcat: 'kit-de-globo-revelacion', subcatLabel: 'Revelación' },
-    { slug: 'kit-de-personaje', count: 115, group: 'globos', name: 'Kit de Personaje', subcat: 'kit-de-personaje', subcatLabel: 'Personaje' },
-    { slug: 'kit-globlos-boda', count: 1, group: 'globos', name: 'Kit Globos Boda', subcat: 'kit-globlos-boda', subcatLabel: 'Boda' },
-    { slug: 'kit-globo-te-amo', count: 2, group: 'globos', name: 'Kit Globo Te Amo', subcat: 'kit-globo-te-amo', subcatLabel: 'Te Amo' },
-    { slug: 'kit-de-globos-graduacion', count: 1, group: 'globos', name: 'Kit de Globos Graduación', subcat: 'kit-de-globos-graduacion', subcatLabel: 'Graduación' },
-    { slug: 'globo-de-letras', count: 22, group: 'globos', name: 'Globo de Letras', subcat: 'globo-de-letras', subcatLabel: 'Letras' },
-    { slug: 'globos-comunes', count: 2, group: 'globos', name: 'Globos Comunes', subcat: 'globos-comunes', subcatLabel: 'Comunes' },
-    { slug: 'arreglo-para-globo', count: 1, group: 'globos', name: 'Arreglo para Globo', subcat: 'arreglo-para-globo', subcatLabel: 'Arreglos' },
-    { slug: 'feliz-aniversario', count: 2, group: 'globos', name: 'Feliz Aniversario', subcat: 'feliz-aniversario', subcatLabel: 'Feliz Aniversario' },
-    // Banderines (banderin-21 es la foto de conjunto, se excluye; no es producto individual)
-    { slug: 'banderin', startIndex: 1, count: 9, group: 'banderines', name: 'Banderín Feliz Cumpleaños Diamantina', subcat: 'banderin-diamantina', subcatLabel: 'Cumpleaños Adiamantado' },
-    { slug: 'banderin', startIndex: 10, count: 1, group: 'banderines', name: 'Banderín Feliz Cumpleaños Holográfico', subcat: 'banderin-holografico', subcatLabel: 'Cumpleaños Holográfico' },
-    { slug: 'banderin', startIndex: 11, count: 8, group: 'banderines', name: 'Banderín Feliz Cumpleaños Liso', subcat: 'banderin-liso', subcatLabel: 'Cumpleaños Liso' },
-    { slug: 'banderin', startIndex: 19, count: 2, group: 'banderines', name: 'Banderín Baby Shower', subcat: 'banderin-baby-shower', subcatLabel: 'Baby Shower' },
-    // Manteles y cortinas
-    { slug: 'mantel-metalico-para-mesa', count: 5, group: 'manteles', name: 'Mantel Metálico para Mesa', subcat: 'manteles-metalicos', subcatLabel: 'Manteles Metálicos' },
-    // mantel-para-mesa-01 queda excluida del catálogo
-    { slug: 'mantel-para-mesa', indices: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], group: 'manteles', name: 'Mantel para Mesa', subcat: 'manteles', subcatLabel: 'Manteles' },
-    // cortina-cuadrado-06, -09, -15 y -16 quedan excluidas del catálogo (no aplican como producto)
-    { slug: 'cortina-cuadrado', indices: [1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14], group: 'manteles', name: 'Cortina Cuadrada', subcat: 'cortina-cuadrada', subcatLabel: 'Cortina Cuadrada' },
-    { slug: 'cortina-cuadrado-chico', count: 8, group: 'manteles', name: 'Cortina Cuadrada Chica', subcat: 'cortina-cuadrada-chica', subcatLabel: 'Cortina Cuadrada Chica' },
-    // Accesorios
-    { slug: 'espuma', count: 3, group: 'accesorios', name: 'Espuma', subcat: 'espuma', subcatLabel: 'Espuma' },
-    { slug: 'mariposas', count: 1, group: 'accesorios', name: 'Mariposas', subcat: 'mariposas', subcatLabel: 'Mariposas' },
-    { slug: 'espantasuegras', count: 1, group: 'accesorios', name: 'Espantasuegras', subcat: 'espantasuegras', subcatLabel: 'Espantasuegras' },
-    { slug: 'bomba-electrica-para-inflar-globos', count: 1, group: 'accesorios', name: 'Bomba Eléctrica para Inflar Globos', subcat: 'bombas', subcatLabel: 'Bombas para Inflar' },
-    { slug: 'bomba-manual-para-inflar-globos', count: 1, group: 'accesorios', name: 'Bomba Manual para Inflar Globos', subcat: 'bombas', subcatLabel: 'Bombas para Inflar' },
-    { slug: 'invitaciones', count: 1, group: 'accesorios', name: 'Invitaciones', subcat: 'invitaciones', subcatLabel: 'Invitaciones' },
-    { slug: 'palo-para-pinata', count: 1, group: 'accesorios', name: 'Palo para Piñata', subcat: 'palo-pinata', subcatLabel: 'Palo para Piñata' },
-    { slug: 'bolsas-para-bolo', count: 37, group: 'accesorios', name: 'Bolsas para Bolo', subcat: 'bolsas-bolo', subcatLabel: 'Bolsas para Bolo' },
-    { slug: 'bolera-de-carton-pequena', count: 1, group: 'accesorios', name: 'Bolera de Cartón Pequeña', subcat: 'bolera-carton', subcatLabel: 'Bolera de Cartón' },
-    { slug: 'bolos-carton', count: 13, group: 'accesorios', name: 'Bolos de Cartón', subcat: 'bolos-carton', subcatLabel: 'Bolos de Cartón' }
+    { slug: 'vela-de-cera', group: 'velas', subcat: 'vela-de-cera', subcatLabel: 'Vela de Cera', products: [
+      { file: 'vela-de-cera-rosa-gold', title: 'Vela de Cera Rosa Gold' },
+      { file: 'vela-de-crea-oro-champagne', title: 'Vela de Crea Oro Champagne' },
+      { file: 'vela-de-cera-tinto', title: 'Vela de Cera Tinto' },
+      { file: 'vela-de-cera-colores', title: 'Vela de Cera Colores' },
+      { file: 'vela-de-cera-azul', title: 'Vela de Cera Azul' },
+      { file: 'vela-de-cera-plateada', title: 'Vela de Cera Plateada' },
+      { file: 'vela-de-cera-colores-plus', title: 'Vela de Cera Colores Plus' },
+      { file: 'vela-de-cera-colores-2', title: 'Vela de Cera Colores 2' },
+    ] },
+    { slug: 'velas-de-cera-numero', group: 'velas', subcat: 'velas-de-cera-numero', subcatLabel: 'Velas con Número', products: [
+      { file: 'vela-de-cera-de-numero-plateada', title: 'Vela de Cera de Número Plateada' },
+      { file: 'vela-de-cera-de-numero-dorada-corona', title: 'Vela de Cera de Número Dorada Corona' },
+      { file: 'vela-de-cera-de-numero-plateada-corona', title: 'Vela de Cera de Número Plateada Corona' },
+      { file: 'vela-de-cera-de-numero-dorada', title: 'Vela de Cera de Número Dorada' },
+    ] },
+    { slug: 'vela-pirotecnia', group: 'velas', subcat: 'vela-pirotecnia', subcatLabel: 'Vela Pirotecnia', products: [
+      { file: 'vela-pirotecnia-rosa', title: 'Vela Pirotecnia Rosa' },
+      { file: 'velas-pirotecnia-colores', title: 'Velas Pirotecnia Colores' },
+      { file: 'velas-pirotecnia-paquete', title: 'Velas Pirotecnia Paquete' },
+      { file: 'velas-pirotecnia-mesa', title: 'Velas Pirotecnia Mesa' },
+    ] },
+    { slug: 'velas-de-cera-aspiral', group: 'velas', subcat: 'velas-de-cera-aspiral', subcatLabel: 'Velas Espiral', products: [
+      { file: 'velas-de-espiral-1', title: 'Velas de Espiral 1' },
+      { file: 'velas-de-espiral-2', title: 'Velas de Espiral 2' },
+      { file: 'velas-de-espiral-3', title: 'Velas de Espiral 3' },
+      { file: 'velas-de-espiral-4', title: 'Velas de Espiral 4' },
+      { file: 'velas-de-espiral-5', title: 'Velas de Espiral 5' },
+      { file: 'velas-de-espiral-6', title: 'Velas de Espiral 6' },
+      { file: 'velas-de-espiral-7', title: 'Velas de Espiral 7' },
+      { file: 'velas-de-espiral-8', title: 'Velas de Espiral 8' },
+    ] },
+    { slug: 'vela-de-cera-creativa', group: 'velas', subcat: 'vela-de-cera-creativa', subcatLabel: 'Vela Creativa', products: [
+      { file: 'vela-de-rosas', title: 'Vela de Rosas' },
+      { file: 'vela-de-rosa-azul', title: 'Vela de Rosa Azul' },
+    ] },
+    { slug: 'velas-cera-feliz-cumpleanos', group: 'velas', subcat: 'velas-cera-feliz-cumpleanos', subcatLabel: 'Vela Feliz Cumpleaños', products: [
+      { file: 'velas-de-cera-feliz-cumplanos-1', title: 'Velas de Cera Feliz Cumplaños 1' },
+      { file: 'velas-de-cera-feliz-cumplanos-2', title: 'Velas de Cera Feliz Cumplaños 2' },
+      { file: 'velas-de-cera-feliz-cumplanos-3', title: 'Velas de Cera Feliz Cumplaños 3' },
+      { file: 'velas-de-cera-feliz-cumplanos-4', title: 'Velas de Cera Feliz Cumplaños 4' },
+      { file: 'happy-birtday-1', title: 'Happy Birtday 1' },
+      { file: 'velas-de-cera-feliz-cumplanos-5', title: 'Velas de Cera Feliz Cumplaños 5' },
+    ] },
+    { slug: 'madera-feliz-cumpleanos', group: 'velas', subcat: 'madera-feliz-cumpleanos', subcatLabel: 'Madera Cumpleaños', products: [
+      { file: 'tematica-vaquera-cafe-y-rosa', title: 'Temática Vaquera Café y Rosa' },
+    ] },
+    { slug: 'kit-globos-feliz-cumpleanos', group: 'globos', subcat: 'kit-globos-feliz-cumpleanos', subcatLabel: 'Kit Feliz Cumpleaños', products: [
+      { file: 'kit-globos-futbol-verde-y-tarro-de-cerveza', title: 'Kit Globos Fútbol Verde y Tarro de Cerveza' },
+      { file: 'kit-globos-futbol-negro-y-plata-con-playera', title: 'Kit Globos Fútbol Negro y Plata con Playera' },
+      { file: 'kit-globos-futbol-rosa-con-letrero', title: 'Kit Globos Fútbol Rosa con Letrero' },
+      { file: 'kit-globos-futbol-verde-con-letrero', title: 'Kit Globos Fútbol Verde con Letrero' },
+      { file: 'kit-globos-futbol-verde-con-copa-dorada', title: 'Kit Globos Fútbol Verde con Copa Dorada' },
+      { file: 'kit-globos-futbol-verde-con-muneco', title: 'Kit Globos Fútbol Verde con Muñeco' },
+      { file: 'kit-globos-elegante-negro-y-dorado-con-mono', title: 'Kit Globos Elegante Negro y Dorado con Moño' },
+      { file: 'kit-globos-tematica-dulces-y-paletas', title: 'Kit Globos Temática Dulces y Paletas' },
+      { file: 'kit-globos-tematica-donas-y-helados', title: 'Kit Globos Temática Donas y Helados' },
+      { file: 'kit-globos-elegante-blanco-y-dorado', title: 'Kit Globos Elegante Blanco y Dorado' },
+      { file: 'kit-globos-tematica-safari-y-animal-print', title: 'Kit Globos Temática Safari y Animal Print' },
+      { file: 'kit-globos-elegante-plata-y-blanco-con-letrero-dorados', title: 'Kit Globos Elegante Plata y Blanco con Letrero Dorados' },
+      { file: 'kit-globos-verde-eucalipto-arena-y-cristal', title: 'Kit Globos Verde Eucalipto, Arena y Cristal' },
+      { file: 'kit-globos-tematica-mariposas-lavanda-y-oro', title: 'Kit Globos Temática Mariposas Lavanda y Oro' },
+      { file: 'kit-globos-tematica-monsters-inc', title: 'Kit Globos Temática Monsters Inc' },
+      { file: 'kit-globos-arcoiris-tonos-pastel', title: 'Kit Globos Arcoíris Tonos Pastel' },
+      { file: 'kit-globos-elegante-azul-marino-y-oro-cromado', title: 'Kit Globos Elegante Azul Marino y Oro Cromado' },
+      { file: 'kit-globos-tematica-espacio-y-astronauta', title: 'Kit Globos Temática Espacio y Astronauta' },
+      { file: 'kit-globos-tematica-minions-con-dorado', title: 'Kit Globos Temática Minions con Dorado' },
+      { file: 'kit-globos-tematica-buzz-lightyear', title: 'Kit Globos Temática Buzz Lightyear' },
+      { file: 'kit-globos-tematica-construccion-negro-amarillo-y-oro-cromado', title: 'Kit Globos Temática Construcción Negro, Amarillo y Oro Cromado' },
+      { file: 'kit-globos-corona-rey-azul-metalico-celeste-y-plata', title: 'Kit Globos Corona Rey Azul Metálico, Celeste y Plata' },
+      { file: 'corona-de-rey-azul', title: 'Corona de Rey Azul' },
+      { file: 'rosa-pastel-y-oro-rosa', title: 'Rosa Pastel y Oro Rosa' },
+      { file: 'sirena-y-conchas-marina', title: 'Sirena y Conchas Marina' },
+      { file: 'boho-eucalipto-y-arena', title: 'Boho Eucalipto y Arena' },
+      { file: 'rosa-metalico-y-corazones', title: 'Rosa Metálico y Corazones' },
+      { file: 'negro-y-rosa-fucsia', title: 'Negro y Rosa Fucsia' },
+      { file: 'margaritas-amarillo-y-celeste', title: 'Margaritas Amarillo y Celeste' },
+      { file: 'fiesta-selva-verde-y-dorado', title: 'Fiesta Selva Verde y Dorado' },
+      { file: 'elegante-azul-marino-y-celeste', title: 'Elegante Azul Marino y Celeste' },
+      { file: 'tonos-pastel-lila-y-coral', title: 'Tonos Pastel Lila y Coral' },
+      { file: 'elegante-arena-y-oro', title: 'Elegante Arena y Oro' },
+      { file: 'blanco-y-plata-cromado', title: 'Blanco y Plata Cromado' },
+      { file: 'safari-estampados-de-animales', title: 'Safari Estampados de Animales' },
+      { file: 'margaritas-tonos-pastel', title: 'Margaritas Tonos Pastel' },
+      { file: 'princesita-sofia-morado', title: 'Princesita Sofía Morado' },
+      { file: 'negro-y-plata-metalico', title: 'Negro y Plata Metálico' },
+      { file: 'safari-elegante-negro-y-verde', title: 'Safari Elegante Negro y Verde' },
+    ] },
+    { slug: 'kit-de-globo-revelacion', group: 'globos', subcat: 'kit-de-globo-revelacion', subcatLabel: 'Revelación', products: [
+      { file: 'baby-shower-nino-azul-y-blanco', title: 'Baby Shower Niño Azul y Blanco' },
+      { file: 'revelacion-de-genero-con-cortinas', title: 'Revelación de Género con Cortinas' },
+      { file: 'elegante-menta-y-dorado-cromado', title: 'Elegante Menta y Dorado Cromado' },
+      { file: 'revelacion-azul-y-rosa-pastel', title: 'Revelación Azul y Rosa Pastel' },
+      { file: 'baby-shower-nina-rosa-y-blanco', title: 'Baby Shower Niña Rosa y Blanco' },
+    ] },
+    { slug: 'kit-de-personaje', group: 'globos', subcat: 'kit-de-personaje', subcatLabel: 'Personaje', products: [
+      { file: 'kit-mario-bros', title: 'Kit Mario Bros' },
+      { file: 'kit-bowser', title: 'Kit Bowser' },
+      { file: 'kit-yoshi', title: 'Kit Yoshi' },
+      { file: 'kit-princesa-peach', title: 'Kit Princesa Peach' },
+      { file: 'kit-luigi', title: 'Kit Luigi' },
+      { file: 'kit-my-little-pony', title: 'Kit My Little Pony' },
+      { file: 'kit-bella-y-bestia', title: 'Kit Bella y Bestia' },
+      { file: 'kit-elsa-frozen', title: 'Kit Elsa Frozen' },
+      { file: 'kit-ana-frozen', title: 'Kit Ana Frozen' },
+      { file: 'kit-olaf-frozen', title: 'Kit Olaf Frozen' },
+      { file: 'kit-sirenita-ariel', title: 'Kit Sirenita Ariel' },
+      { file: 'kit-flounder', title: 'Kit Flounder' },
+      { file: 'kit-cenicienta', title: 'Kit Cenicienta' },
+      { file: 'kit-blancanieves', title: 'Kit Blancanieves' },
+      { file: 'kit-moana', title: 'Kit Moana' },
+      { file: 'kit-bella', title: 'Kit Bella' },
+      { file: 'kit-aurora', title: 'Kit Aurora' },
+      { file: 'kit-rapunzel', title: 'Kit Rapunzel' },
+      { file: 'kit-jasmine', title: 'Kit Jasmine' },
+      { file: 'kit-tiana', title: 'Kit Tiana' },
+      { file: 'kit-kuromi', title: 'Kit Kuromi' },
+      { file: 'kit-hello-kitty', title: 'Kit Hello Kitty' },
+      { file: 'kit-my-melody', title: 'Kit My Melody' },
+      { file: 'kit-cinnamoroll', title: 'Kit Cinnamoroll' },
+      { file: 'kit-badtz-maru', title: 'Kit Badtz-Maru' },
+      { file: 'kit-keroppi', title: 'Kit Keroppi' },
+      { file: 'kit-pompompurin', title: 'Kit Pompompurin' },
+      { file: 'kit-pochacco', title: 'Kit Pochacco' },
+      { file: 'kit-chococat', title: 'Kit Chococat' },
+      { file: 'kit-little-twin-stars', title: 'Kit Little Twin Stars' },
+      { file: 'kit-spiderman', title: 'Kit Spiderman' },
+      { file: 'kit-batman', title: 'Kit Batman' },
+      { file: 'kit-superman', title: 'Kit Superman' },
+      { file: 'kit-iron-man', title: 'Kit Iron Man' },
+      { file: 'kit-capitan-america', title: 'Kit Capitán América' },
+      { file: 'kit-hulk', title: 'Kit Hulk' },
+      { file: 'kit-thor', title: 'Kit Thor' },
+      { file: 'kit-chase-paw-patrol', title: 'Kit Chase Paw Patrol' },
+      { file: 'kit-marshall-paw-patrol', title: 'Kit Marshall Paw Patrol' },
+      { file: 'kit-skye-paw-patrol-01', title: 'Kit Skye Paw Patrol' },
+      { file: 'kit-rubble-paw-patrol', title: 'Kit Rubble Paw Patrol' },
+      { file: 'kit-futbol', title: 'Kit Fútbol' },
+      { file: 'kit-bob-esponja', title: 'Kit Bob Esponja' },
+      { file: 'kit-rapunzel-princesas', title: 'Kit Rapunzel Princesas' },
+      { file: 'kit-angel-y-stitch', title: 'Kit Ángel y Stitch' },
+      { file: 'kit-virgen-de-guadalupe', title: 'Kit Virgen de Guadalupe' },
+      { file: 'kit-minnie-mouse', title: 'Kit Minnie Mouse' },
+      { file: 'kit-tiburon-gym', title: 'Kit Tiburón Gym' },
+      { file: 'kit-sonic', title: 'Kit Sonic' },
+      { file: 'kit-vaca-animada', title: 'Kit Vaca Animada' },
+      { file: 'kit-cebra-animada', title: 'Kit Cebra Animada' },
+      { file: 'kit-mono-animado', title: 'Kit Mono Animado' },
+      { file: 'kit-skye-paw-patrol-02', title: 'Kit Skye Paw Patrol' },
+      { file: 'kit-dinosaurio-t-rex-naranja', title: 'Kit Dinosaurio T-Rex Naranja' },
+      { file: 'kit-dinosaurio-t-rex-rojo', title: 'Kit Dinosaurio T-Rex Rojo' },
+      { file: 'kit-dinosaurio-triceratops', title: 'Kit Dinosaurio Triceratops' },
+      { file: 'kit-winnie-pooh', title: 'Kit Winnie Pooh' },
+      { file: 'kit-rayo-mcqueen', title: 'Kit Rayo McQueen' },
+      { file: 'kit-futbol-americano', title: 'Kit Fútbol Americano' },
+      { file: 'kit-baloncesto', title: 'Kit Baloncesto' },
+      { file: 'plim-plim', title: 'Plim Plim' },
+      { file: 'malefica', title: 'Maléfica' },
+      { file: 'los-increibles', title: 'Los Increíbles' },
+      { file: 'cruella-de-vil', title: 'Cruella de Vil' },
+      { file: 'aladdin-jasmin', title: 'Aladdín / Jasmín' },
+      { file: 'pocahontas', title: 'Pocahontas' },
+      { file: 'mulan', title: 'Mulán' },
+      { file: 'tiana-la-princesa-y-el-sapo', title: 'Tiana (La Princesa y el Sapo)' },
+      { file: 'merida-valiente', title: 'Mérida (Valiente)' },
+      { file: 'moana', title: 'Moana' },
+      { file: 'raya-el-ultimo-dragon', title: 'Raya (El Último Dragón)' },
+      { file: 'mirabel-encanto', title: 'Mirabel (Encanto)' },
+      { file: 'asha-wish-el-poder-de-los-deseos', title: 'Asha (Wish: El Poder de los Deseos)' },
+      { file: 'intensamente-ansiedad', title: 'Intensamente (Ansiedad)' },
+      { file: 'naruto-diseno-clasico-shippuden', title: 'Naruto (Diseño Clásico / Shippuden)' },
+      { file: 'one-piece-luffy', title: 'One Piece (Luffy)' },
+      { file: 'dragon-ball-goku', title: 'Dragon Ball (Goku)' },
+      { file: 'demon-slayer-tanjiro', title: 'Demon Slayer (Tanjiro)' },
+      { file: 'my-hero-academia-deku', title: 'My Hero Academia (Deku)' },
+      { file: 'jujutsu-kaisen-gojo', title: 'Jujutsu Kaisen (Gojo)' },
+      { file: 'minecraft', title: 'Minecraft' },
+      { file: 'fortnite', title: 'Fortnite' },
+      { file: 'pokemon-pikachu', title: 'Pokémon (Pikachu)' },
+      { file: 'super-mario-bros-luigi', title: 'Super Mario Bros (Luigi)' },
+      { file: 'bowser-super-mario-bros', title: 'Bowser (Super Mario Bros)' },
+      { file: 'yoshi-super-mario-bros', title: 'Yoshi (Super Mario Bros)' },
+      { file: 'toad-honguito-super-mario-bros', title: 'Toad / Honguito (Super Mario Bros)' },
+      { file: 'princesa-peach-super-mario-bros', title: 'Princesa Peach (Super Mario Bros)' },
+      { file: 'rosita-fresita', title: 'Rosita Fresita' },
+      { file: 'monster-high', title: 'Monster High' },
+      { file: 'princesita-sofia', title: 'Princesita Sofía' },
+      { file: 'sonic', title: 'Sonic' },
+      { file: 'motociclista-de-carreras-moto-azul', title: 'Motociclista de Carreras / Moto Azul' },
+      { file: 'spider-man', title: 'Spider-Man' },
+      { file: 'granja-gallo', title: 'Granja / Gallo' },
+      { file: 'princesa-aurora-la-bella-durmiente', title: 'Princesa Aurora / La Bella Durmiente' },
+      { file: 'capibara', title: 'Capibara' },
+      { file: 'cenicienta', title: 'Cenicienta' },
+      { file: 'blancanieves', title: 'Blancanieves' },
+      { file: 'bandera-de-mexico', title: 'Bandera de México' },
+      { file: 'naruto-estilo-chibi', title: 'Naruto (Estilo Chibi)' },
+      { file: 'changuito-mono-de-cumpleanos', title: 'Changuito / Mono de Cumpleaños' },
+      { file: 'iron-man', title: 'Iron Man' },
+      { file: 'cono-de-helado-happy-birthday', title: 'Cono de Helado / Happy Birthday' },
+      { file: 'malteada-frappe', title: 'Malteada / Frappé' },
+      { file: 'mariposa', title: 'Mariposa' },
+      { file: 'barbie-letrero-logo', title: 'Barbie Letrero Logo' },
+      { file: 'barbie-en-carro-rosa', title: 'Barbie en Carro Rosa' },
+      { file: 'primera-comunion-azul-on-your-communion', title: 'Primera Comunión Azul / On Your Communion' },
+      { file: 'pato-donald', title: 'Pato Donald' },
+      { file: 'primera-comunion-rosa-on-your-communion', title: 'Primera Comunión Rosa / On Your Communion' },
+      { file: 'roblox', title: 'Roblox' },
+      { file: 'toy-story-woody', title: 'Toy Story / Woody' },
+      { file: 'caballos-rosa-y-negro', title: 'Caballos (Rosa y Negro)' },
+      { file: 'kuromi', title: 'Kuromi' },
+    ] },
+    { slug: 'kit-globlos-boda', group: 'globos', subcat: 'kit-globlos-boda', subcatLabel: 'Boda', products: [
+      { file: 'nuestra-boda-blanco-y-oro', title: 'Nuestra Boda Blanco y Oro' },
+    ] },
+    { slug: 'kit-globo-te-amo', group: 'globos', subcat: 'kit-globo-te-amo', subcatLabel: 'Te Amo', products: [
+      { file: 'te-amo-tono-rosa-y-cafe', title: 'Te Amo Tono Rosa y Café' },
+      { file: 'te-amo-fucsia-y-negro', title: 'Te Amo Fucsia y Negro' },
+    ] },
+    { slug: 'kit-de-globos-graduacion', group: 'globos', subcat: 'kit-de-globos-graduacion', subcatLabel: 'Graduación', products: [
+      { file: 'feliz-graduacion-azul-marino-y-oro', title: 'Feliz Graduación Azul Marino y Oro' },
+    ] },
+    { slug: 'globo-de-letras', group: 'globos', subcat: 'globo-de-letras', subcatLabel: 'Letras', products: [
+      { file: 'primera-comunion-plata', title: 'Primera Comunión Plata' },
+      { file: 'primera-comunion-oro', title: 'Primera Comunión Oro' },
+      { file: 'mi-bautizo-plata', title: 'Mi Bautizo Plata' },
+      { file: 'mi-bautizo-oro', title: 'Mi Bautizo Oro' },
+      { file: 'bienvenido-oro-01', title: 'Bienvenido Oro' },
+      { file: 'feliz-cumpleanos-tono-pastel', title: 'Feliz Cumpleaños Tono Pastel' },
+      { file: 'baby-shower-azul', title: 'Baby Shower Azul' },
+      { file: 'feliz-cumpleanos-plata-01', title: 'Feliz Cumpleaños Plata' },
+      { file: 'feliz-cumpleanos-multicolor', title: 'Feliz Cumpleaños Multicolor' },
+      { file: 'bienvenido-plata', title: 'Bienvenido Plata' },
+      { file: 'bienvenido-oro-02', title: 'Bienvenido Oro' },
+      { file: 'feliz-cumpleanos-plata-02', title: 'Feliz Cumpleaños Plata' },
+      { file: 'feliz-cumpleanos-oro', title: 'Feliz Cumpleaños Oro' },
+      { file: 'feliz-cumpleanos-negro', title: 'Feliz Cumpleaños Negro' },
+      { file: 'feliz-cumpleanos-rosa', title: 'Feliz Cumpleaños Rosa' },
+      { file: 'feliz-cumpleanos-dorado-cursiva', title: 'Feliz Cumpleaños Dorado Cursiva' },
+      { file: 'feliz-cumpleanos-rojo', title: 'Feliz Cumpleaños Rojo' },
+      { file: 'feliz-cumpleanos-morado', title: 'Feliz Cumpleaños Morado' },
+      { file: 'feliz-cumpleanos-negro-cursiva', title: 'Feliz Cumpleaños Negro Cursiva' },
+      { file: 'mis-15-anos-oro', title: 'Mis 15 Años Oro' },
+      { file: 'happy-birthday-plata-cursiva', title: 'Happy Birthday Plata Cursiva' },
+      { file: 'feliz-cumpleanos-habile-oro', title: 'Feliz Cumpleaños Habile Oro' },
+    ] },
+    { slug: 'globos-comunes', group: 'globos', subcat: 'globos-comunes', subcatLabel: 'Comunes', products: [
+      { file: 'paquete-globos-de-latex-colores-surtidos-1', title: 'Paquete Globos de Látex Colores Surtidos 1' },
+      { file: 'paquete-globos-de-latex-colores-surtidos-2', title: 'Paquete Globos de Látex Colores Surtidos 2' },
+    ] },
+    { slug: 'arreglo-para-globo', group: 'globos', subcat: 'arreglo-para-globo', subcatLabel: 'Arreglos', products: [
+      { file: 'kit-arreglo-de-globo-luminoso-con-rosa', title: 'Kit Arreglo de Globo Luminoso con Rosa' },
+    ] },
+    { slug: 'feliz-aniversario', group: 'globos', subcat: 'feliz-aniversario', subcatLabel: 'Feliz Aniversario', products: [
+      { file: 'kit-de-arco-de-globos-happy-anniversary-negro-con-oro', title: 'Kit de Arco de Globos Happy Anniversary Negro con Oro' },
+      { file: 'kit-de-arco-de-globos-happy-anniversary-plata-con-blanco', title: 'Kit de Arco de Globos Happy Anniversary Plata con Blanco' },
+    ] },
+    { slug: 'banderin', group: 'banderines', subcat: 'banderin-diamantina', subcatLabel: 'Cumpleaños Adiamantado', products: [
+      { file: 'banderin-plateado-adiamantado-letras-oro', title: 'Banderín Plateado Adiamantado Letras Oro' },
+      { file: 'banderin-rosa-adiamantado-letras-oro', title: 'Banderín Rosa Adiamantado Letras Oro' },
+      { file: 'banderin-azul-adiamantado-letras-oro', title: 'Banderín Azul Adiamantado Letras Oro' },
+      { file: 'banderin-verde-adiamantado-letras-oro', title: 'Banderín Verde Adiamantado Letras Oro' },
+      { file: 'banderin-negro-adiamantado-letras-oro', title: 'Banderín Negro Adiamantado Letras Oro' },
+      { file: 'banderin-morado-adiamantado-letras-oro', title: 'Banderín Morado Adiamantado Letras Oro' },
+      { file: 'banderin-rojo-adiamantado-letras-oro', title: 'Banderín Rojo Adiamantado Letras Oro' },
+      { file: 'banderin-fucsia-adiamantado-letras-oro', title: 'Banderín Fucsia Adiamantado Letras Oro' },
+      { file: 'banderin-dorado-adiamantado-letras-plata', title: 'Banderín Dorado Adiamantado Letras Plata' },
+    ] },
+    { slug: 'banderin', group: 'banderines', subcat: 'banderin-holografico', subcatLabel: 'Cumpleaños Holográfico', products: [
+      { file: 'banderin-morado-holografico-letras-oro', title: 'Banderín Morado Holográfico Letras Oro' },
+    ] },
+    { slug: 'banderin', group: 'banderines', subcat: 'banderin-liso', subcatLabel: 'Cumpleaños Liso', products: [
+      { file: 'banderin-liso-negro', title: 'Banderín Liso Negro' },
+      { file: 'banderin-liso-blanco', title: 'Banderín Liso Blanco' },
+      { file: 'banderin-liso-rosa', title: 'Banderín Liso Rosa' },
+      { file: 'banderin-liso-durazno', title: 'Banderín Liso Durazno' },
+      { file: 'banderin-liso-magenta', title: 'Banderín Liso Magenta' },
+      { file: 'banderin-liso-azul', title: 'Banderín Liso Azul' },
+      { file: 'banderin-liso-lila', title: 'Banderín Liso Lila' },
+      { file: 'banderin-liso-celeste', title: 'Banderín Liso Celeste' },
+    ] },
+    { slug: 'banderin', group: 'banderines', subcat: 'banderin-baby-shower', subcatLabel: 'Baby Shower', products: [
+      { file: 'banderin-liso-baby-shower-corazon-rosa', title: 'Banderín Liso Baby Shower Corazón Rosa' },
+      { file: 'banderin-liso-baby-shower-corazon-azul', title: 'Banderín Liso Baby Shower Corazón Azul' },
+    ] },
+    { slug: 'mantel-metalico-para-mesa', group: 'manteles', subcat: 'manteles-metalicos', subcatLabel: 'Manteles Metálicos', products: [
+      { file: 'mantel-foil-desechable-verde-plata', title: 'Mantel Foil Desechable Verde/Plata' },
+      { file: 'mantel-foil-desechable-negro-oro-rosa', title: 'Mantel Foil Desechable Negro/Oro Rosa' },
+      { file: 'mantel-foil-desechable-rojo-rosa-pastel', title: 'Mantel Foil Desechable Rojo/Rosa Pastel' },
+      { file: 'mantel-foil-desechable-azul-cielo-fucsia', title: 'Mantel Foil Desechable Azul Cielo/Fucsia' },
+      { file: 'mantel-foil-desechable-azul-rey-dorado', title: 'Mantel Foil Desechable Azul Rey/Dorado' },
+    ] },
+    { slug: 'mantel-para-mesa', group: 'manteles', subcat: 'manteles', subcatLabel: 'Manteles', products: [
+      { file: 'mantel-plastico-reusable-morado', title: 'Mantel Plástico Reusable Morado' },
+      { file: 'mantel-plastico-reusable-rosa', title: 'Mantel Plástico Reusable Rosa' },
+      { file: 'mantel-plastico-reusable-cafe', title: 'Mantel Plástico Reusable Café' },
+      { file: 'mantel-plastico-reusable-verde', title: 'Mantel Plástico Reusable Verde' },
+      { file: 'mantel-plastico-reusable-blanco', title: 'Mantel Plástico Reusable Blanco' },
+      { file: 'mantel-plastico-reusable-negro', title: 'Mantel Plástico Reusable Negro' },
+      { file: 'mantel-plastico-reusable-lila', title: 'Mantel Plástico Reusable Lila' },
+      { file: 'mantel-plastico-reusable-amarillo', title: 'Mantel Plástico Reusable Amarillo' },
+      { file: 'mantel-plastico-reusable-naranja', title: 'Mantel Plástico Reusable Naranja' },
+      { file: 'mantel-plastico-reusable-verde-limon', title: 'Mantel Plástico Reusable Verde Limón' },
+      { file: 'mantel-plastico-reusable-oro', title: 'Mantel Plástico Reusable Oro' },
+      { file: 'mantel-plastico-reusable-salmon', title: 'Mantel Plástico Reusable Salmón' },
+      { file: 'mantel-plastico-reusable-rosa-pastel', title: 'Mantel Plástico Reusable Rosa Pastel' },
+      { file: 'mantel-plastico-reusable-plata', title: 'Mantel Plástico Reusable Plata' },
+    ] },
+    { slug: 'cortina-cuadrado', group: 'manteles', subcat: 'cortina-cuadrada', subcatLabel: 'Cortina Cuadrada', products: [
+      { file: 'cortina-metalica-cuadros-plata', title: 'Cortina Metálica Cuadros Plata' },
+      { file: 'cortina-metalica-cuadros-verde', title: 'Cortina Metálica Cuadros Verde' },
+      { file: 'cortina-metalica-cuadros-azul-cielo', title: 'Cortina Metálica Cuadros Azul Cielo' },
+      { file: 'cortina-metalica-cuadros-morado', title: 'Cortina Metálica Cuadros Morado' },
+      { file: 'cortina-metalica-cuadros-amarillo', title: 'Cortina Metálica Cuadros Amarillo' },
+      { file: 'cortina-metalica-cuadros-dorado', title: 'Cortina Metálica Cuadros Dorado' },
+      { file: 'cortina-metalica-cuadros-negro', title: 'Cortina Metálica Cuadros Negro' },
+      { file: 'cortina-metalica-cuadros-oro-rosa', title: 'Cortina Metálica Cuadros Oro Rosa' },
+      { file: 'cortina-metalica-cuadros-rosa-pastel', title: 'Cortina Metálica Cuadros Rosa Pastel' },
+      { file: 'cortina-metalica-cuadros-rojo', title: 'Cortina Metálica Cuadros Rojo' },
+      { file: 'cortina-metalica-cuadros-naranja', title: 'Cortina Metálica Cuadros Naranja' },
+      { file: 'cortina-metalica-cuadros-bronce', title: 'Cortina Metálica Cuadros Bronce' },
+    ] },
+    { slug: 'cortina-cuadrado-chico', group: 'manteles', subcat: 'cortina-cuadrada-chica', subcatLabel: 'Cortina Cuadrada Chica', products: [
+      { file: 'cortina-metalica-cuadros-chicos-azul-marino', title: 'Cortina Metálica Cuadros Chicos Azul Marino' },
+      { file: 'cortina-metalica-cuadros-chicos-dorado', title: 'Cortina Metálica Cuadros Chicos Dorado' },
+      { file: 'cortina-metalica-cuadros-chicos-guinda', title: 'Cortina Metálica Cuadros Chicos Guinda' },
+      { file: 'cortina-metalica-cuadros-chicos-negro-rojo', title: 'Cortina Metálica Cuadros Chicos Negro / Rojo' },
+      { file: 'cortina-metalica-cuadros-chicos-azul-rosa', title: 'Cortina Metálica Cuadros Chicos Azul / Rosa' },
+      { file: 'cortina-metalica-cuadros-chicos-plata-dorado', title: 'Cortina Metálica Cuadros Chicos Plata / Dorado' },
+      { file: 'cortina-metalica-cuadros-chicos-oro-rosa-morado', title: 'Cortina Metálica Cuadros Chicos Oro Rosa / Morado' },
+      { file: 'cortina-metalica-cuadros-chicos-colores-surtidos', title: 'Cortina Metálica Cuadros Chicos Colores Surtidos' },
+    ] },
+    { slug: 'espuma', group: 'accesorios', subcat: 'espuma', subcatLabel: 'Espuma', products: [
+      { file: 'espuma-para-fiesta-colores-surtidos-1', title: 'Espuma para Fiesta Colores Surtidos 1' },
+      { file: 'espuma-para-fiesta-colores-surtidos-2', title: 'Espuma para Fiesta Colores Surtidos 2' },
+      { file: 'espuma-para-fiesta-colores-surtidos-3', title: 'Espuma para Fiesta Colores Surtidos 3' },
+    ] },
+    { slug: 'mariposas', group: 'accesorios', subcat: 'mariposas', subcatLabel: 'Mariposas', products: [
+      { file: 'decoracion-mariposas-3d-colores-surtidos-1', title: 'Decoración Mariposas 3D Colores Surtidos 1' },
+    ] },
+    { slug: 'espantasuegras', group: 'accesorios', subcat: 'espantasuegras', subcatLabel: 'Espantasuegras', products: [
+      { file: 'espantasuegras-colores-surtidos-1', title: 'Espantasuegras Colores Surtidos 1' },
+    ] },
+    { slug: 'bomba-electrica-para-inflar-globos', group: 'accesorios', subcat: 'bombas', subcatLabel: 'Bombas para Inflar', products: [
+      { file: 'inflador-electrico-para-globos', title: 'Inflador Eléctrico para Globos' },
+    ] },
+    { slug: 'bomba-manual-para-inflar-globos', group: 'accesorios', subcat: 'bombas', subcatLabel: 'Bombas para Inflar', products: [
+      { file: 'inflador-manual-para-globos', title: 'Inflador Manual para Globos' },
+    ] },
+    { slug: 'invitaciones', group: 'accesorios', subcat: 'invitaciones', subcatLabel: 'Invitaciones', products: [
+      { file: 'invitaciones-infantiles-personajes-surtidos', title: 'Invitaciones Infantiles Personajes Surtidos' },
+    ] },
+    { slug: 'palo-para-pinata', group: 'accesorios', subcat: 'palo-pinata', subcatLabel: 'Palo para Piñata', products: [
+      { file: 'palo-para-pinata-decorado-colores-surtidos', title: 'Palo para Piñata Decorado Colores Surtidos' },
+    ] },
+    { slug: 'bolsas-para-bolo', group: 'accesorios', subcat: 'bolsas-bolo', subcatLabel: 'Bolsas para Bolo', products: [
+      { file: 'bolsa-de-bolo-feliz-cumpleanos', title: 'Bolsa de Bolo Feliz Cumpleaños' },
+      { file: 'bolsa-de-bolo-sonic', title: 'Bolsa de Bolo Sonic' },
+      { file: 'bolsa-de-bolo-dinosaurios', title: 'Bolsa de Bolo Dinosaurios' },
+      { file: 'bolsa-de-bolo-paw-patrol', title: 'Bolsa de Bolo Paw Patrol' },
+      { file: 'bolsa-de-bolo-toy-story', title: 'Bolsa de Bolo Toy Story' },
+      { file: 'bolsa-de-bolo-kuromi', title: 'Bolsa de Bolo Kuromi' },
+      { file: 'bolsa-de-bolo-moana', title: 'Bolsa de Bolo Moana' },
+      { file: 'bolsa-de-bolo-rapunzel', title: 'Bolsa de Bolo Rapunzel' },
+      { file: 'bolsa-de-bolo-roblox', title: 'Bolsa de Bolo Roblox' },
+      { file: 'bolsa-de-bolo-huntrx', title: 'Bolsa de Bolo Huntrx' },
+      { file: 'bolsa-de-bolo-spiderman', title: 'Bolsa de Bolo Spiderman' },
+      { file: 'bolsa-de-bolo-stitch', title: 'Bolsa de Bolo Stitch' },
+      { file: 'bolsa-de-bolo-sirenita', title: 'Bolsa de Bolo Sirenita' },
+      { file: 'bolsa-de-bolo-superman', title: 'Bolsa de Bolo Superman' },
+      { file: 'bolsa-de-bolo-mario-bros', title: 'Bolsa de Bolo Mario Bros' },
+      { file: 'bolsa-de-bolo-avengers', title: 'Bolsa de Bolo Avengers' },
+      { file: 'bolsa-de-bolo-avengers-age-of-ultron', title: 'Bolsa de Bolo Avengers Age of Ultron' },
+      { file: 'bolsa-de-bolo-vaca', title: 'Bolsa de Bolo Vaca' },
+      { file: 'bolsa-de-bolo-princesa-peach', title: 'Bolsa de Bolo Princesa Peach' },
+      { file: 'bolsa-de-bolo-cars', title: 'Bolsa de Bolo Cars' },
+      { file: 'bolsa-de-bolo-harry-potter', title: 'Bolsa de Bolo Harry Potter' },
+      { file: 'bolsa-de-bolo-masha-y-el-oso', title: 'Bolsa de Bolo Masha y el Oso' },
+      { file: 'bolsa-de-bolo-bella', title: 'Bolsa de Bolo Bella' },
+      { file: 'bolsa-de-bolo-princesas-disney', title: 'Bolsa de Bolo Princesas Disney' },
+      { file: 'bolsa-de-bolo-the-batman', title: 'Bolsa de Bolo The Batman' },
+      { file: 'bolsa-de-bolo-plim-plim-abeja', title: 'Bolsa de Bolo Plim Plim Abeja' },
+      { file: 'bolsa-de-bolo-el-chavo-animado', title: 'Bolsa de Bolo El Chavo Animado' },
+      { file: 'bolsa-de-bolo-la-granja-de-zenon', title: 'Bolsa de Bolo La Granja de Zenón' },
+      { file: 'bolsa-de-bolo-jessie-toy-story', title: 'Bolsa de Bolo Jessie Toy Story' },
+      { file: 'bolsa-de-bolo-plim-plim-circo', title: 'Bolsa de Bolo Plim Plim Circo' },
+      { file: 'bolsa-de-bolo-cenicienta', title: 'Bolsa de Bolo Cenicienta' },
+      { file: 'bolsa-de-bolo-plim-plim-abeja-azul', title: 'Bolsa de Bolo Plim Plim Abeja Azul' },
+      { file: 'bolsa-de-bolo-minecraft', title: 'Bolsa de Bolo Minecraft' },
+      { file: 'bolsa-de-bolo-minnie-mouse', title: 'Bolsa de Bolo Minnie Mouse' },
+      { file: 'bolsa-de-bolo-futbol', title: 'Bolsa de Bolo Fútbol' },
+      { file: 'bolsa-de-bolo-spiderman-felicidades', title: 'Bolsa de Bolo Spiderman Felicidades' },
+      { file: 'bolsa-de-bolo-hello-kitty', title: 'Bolsa de Bolo Hello Kitty' },
+    ] },
+    { slug: 'bolera-de-carton-pequena', group: 'accesorios', subcat: 'bolera-carton', subcatLabel: 'Bolera de Cartón', products: [
+      { file: 'bolera-de-carton-pequena', title: 'Bolera de Cartón Pequeña' },
+    ] },
+    { slug: 'bolos-carton', group: 'accesorios', subcat: 'bolos-carton', subcatLabel: 'Bolos de Cartón', products: [
+      { file: 'bolo-de-carton-bely-y-beto', title: 'Bolo de Cartón Bely y Beto' },
+      { file: 'bolo-de-carton-bella-y-bestia', title: 'Bolo de Cartón Bella y Bestia' },
+      { file: 'bolo-de-carton-spiderman', title: 'Bolo de Cartón Spiderman' },
+      { file: 'bolo-de-carton-lilo-y-stitch-hula', title: 'Bolo de Cartón Lilo y Stitch Hula' },
+      { file: 'bolo-de-carton-dragon-ball-goku', title: 'Bolo de Cartón Dragon Ball Goku' },
+      { file: 'bolo-de-carton-minecraft', title: 'Bolo de Cartón Minecraft' },
+      { file: 'bolo-de-carton-paw-patrol', title: 'Bolo de Cartón Paw Patrol' },
+      { file: 'bolo-de-carton-stitch-feliz-cumple', title: 'Bolo de Cartón Stitch Feliz Cumple' },
+      { file: 'bolo-de-carton-minnie-mouse-roja', title: 'Bolo de Cartón Minnie Mouse Roja' },
+      { file: 'bolo-de-carton-hello-kitty-feliz-cumple', title: 'Bolo de Cartón Hello Kitty Feliz Cumple' },
+      { file: 'bolo-de-carton-kuromi-feliz-cumple', title: 'Bolo de Cartón Kuromi Feliz Cumple' },
+      { file: 'bolo-de-carton-masha-y-el-oso', title: 'Bolo de Cartón Masha y el Oso' },
+      { file: 'bolo-de-carton-labubu', title: 'Bolo de Cartón Labubu' },
+    ] }
   ];
 
   const catalogGrid = document.getElementById('catalogGrid');
@@ -896,24 +1250,10 @@
     if (subcat) items = items.filter(p => p.subcat === subcat);
     const cards = [];
     items.forEach(item => {
-      if (item.indices) {
-        item.indices.forEach((fileIndex, idx) => {
-          const fileNum = String(fileIndex).padStart(2, '0');
-          const title = item.indices.length > 1 ? (item.name + ' #' + (idx + 1)) : item.name;
-          const fileName = item.slug + '-' + fileNum;
-          const src = 'assets/catalogo/' + item.slug + '/' + fileName + '.webp';
-          cards.push({ title, src, fileName });
-        });
-      } else {
-        const start = item.startIndex || 1;
-        for (let i = 1; i <= item.count; i++) {
-          const fileNum = String(start + i - 1).padStart(2, '0');
-          const title = item.count > 1 ? (item.name + ' #' + i) : item.name;
-          const fileName = item.slug + '-' + fileNum;
-          const src = 'assets/catalogo/' + item.slug + '/' + fileName + '.webp';
-          cards.push({ title, src, fileName });
-        }
-      }
+      item.products.forEach(p => {
+        const src = 'assets/catalogo/' + item.slug + '/' + p.file + '.webp';
+        cards.push({ title: p.title, src });
+      });
     });
     return cards;
   }
@@ -942,7 +1282,6 @@
       return '<div class="product-card reveal">' +
         '<div class="product-img-wrap">' +
           '<img src="' + c.src + '" alt="' + c.title + '" loading="lazy" width="400" height="400">' +
-          '<span class="product-filename-tag">' + c.fileName + '</span>' +
         '</div>' +
         '<div class="product-info">' +
           '<h3>' + c.title + '</h3>' +
