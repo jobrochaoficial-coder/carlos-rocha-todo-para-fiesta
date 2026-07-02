@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#FBF7F0">
+<meta name="color-scheme" content="light">
+<title>Términos y Condiciones | Carlos Rocha - Todo para Fiesta</title>
+<meta name="description" content="Términos y condiciones de compra al mayoreo en Carlos Rocha - Todo para Fiesta.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-principal: #FBF7F0;
+    --bg-claro: #FFFFFF;
+    --bg-suave: #FDFBF7;
+    --turquesa: #0DA5A0;
+    --turquesa-oscuro: #0A8783;
+    --azul: #1565D0;
+    --magenta: #E91E63;
+    --coral: #FF6B4A;
+    --dorado: #D4AF37;
+    --texto-principal: #2A2A2E;
+    --texto-suave: #5A5A60;
+    --texto-claro: #FFFFFF;
+    --border: rgba(42, 42, 46, 0.12);
+    --shadow: rgba(0, 0, 0, 0.18);
+    --font-display: 'Fredoka', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+    --container: 1200px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { overflow-x: hidden; max-width: 100%; }
+  body {
+    font-family: var(--font-body);
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+  @media (min-width: 768px) { .container { padding: 0 40px; } }
+
+  /* Nav simplificado */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(251,247,240,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .nav-logo {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+    color: var(--azul); text-decoration: none; letter-spacing: 0.01em;
+  }
+
+  /* Botones */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.8rem 1.6rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; min-height: 44px; cursor: pointer;
+    font-family: var(--font-body); border: 1px solid transparent;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .btn-outline { background: transparent; color: var(--texto-principal); border-color: var(--border); }
+  .btn-outline:hover { border-color: var(--turquesa); color: var(--turquesa-oscuro); }
+  .btn-primary { background: var(--turquesa); color: var(--texto-claro); }
+  .btn-primary:hover { background: var(--turquesa-oscuro); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(13,165,160,0.35); }
+
+  /* Encabezado de página */
+  .legal-hero { padding: 7.5rem 0 2rem; }
+  .section-eyebrow {
+    display: inline-block; font-size: 0.85rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dorado); margin-bottom: 0.75rem; font-weight: 600;
+  }
+  .legal-hero h1 {
+    font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600; margin-bottom: 0.75rem; color: var(--azul); overflow-wrap: break-word;
+  }
+  .legal-hero p { color: var(--texto-suave); font-size: 1.05rem; max-width: 640px; }
+
+  /* Contenido legal */
+  .legal-content { padding: 1rem 0 4rem; }
+  .legal-content .card {
+    background: var(--bg-claro); border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem;
+  }
+  @media (min-width: 768px) { .legal-content .card { padding: 3rem; } }
+  .legal-content h2 {
+    font-family: var(--font-display); font-size: 1.35rem; font-weight: 600;
+    color: var(--turquesa-oscuro); margin: 2rem 0 0.75rem;
+  }
+  .legal-content h2:first-of-type { margin-top: 0; }
+  .legal-content p { margin-bottom: 1rem; }
+  .legal-content ul { margin: 0 0 1rem 1.25rem; }
+  .legal-content li { margin-bottom: 0.5rem; }
+  .legal-content a { color: var(--turquesa-oscuro); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  .legal-content a:hover { color: var(--turquesa); }
+  .legal-content .updated { margin-top: 2rem; font-size: 0.85rem; color: var(--texto-suave); font-style: italic; }
+
+  /* Footer */
+  footer {
+    background: var(--texto-principal); border-top: 1px solid rgba(255,255,255,0.12);
+    padding: 3rem 0 2rem; text-align: center; color: rgba(255,255,255,0.75); font-size: 0.9rem;
+  }
+  footer .footer-logo { font-family: var(--font-display); font-weight: 600; color: var(--dorado); font-size: 1.2rem; margin-bottom: 0.75rem; }
+  footer p { margin-bottom: 0.4rem; }
+  footer a:hover { color: var(--dorado); }
+  .footer-legal { font-size: 0.85rem; }
+  .footer-legal a { text-decoration: none; }
+  .footer-legal a:hover { text-decoration: underline; }
+
+  /* Botón flotante de WhatsApp */
+  .whatsapp-float {
+    position: fixed; bottom: 20px; right: 20px; z-index: 1100;
+    width: 60px; height: 60px; border-radius: 50%; background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .whatsapp-float:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 26px rgba(0,0,0,0.45); }
+  .whatsapp-float svg { width: 30px; height: 30px; }
+  @media (max-width: 480px) {
+    .whatsapp-float { width: 54px; height: 54px; bottom: 16px; right: 16px; }
+    .whatsapp-float svg { width: 27px; height: 27px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">Carlos Rocha<br><span style="font-size:0.6em; letter-spacing:0.15em; text-transform:uppercase; color:var(--texto-suave);">Todo para Fiesta</span></a>
+    <a href="index.html" class="btn btn-outline">← Volver al inicio</a>
+  </div>
+</nav>
+
+<section class="legal-hero">
+  <div class="container">
+    <span class="section-eyebrow">Legal</span>
+    <h1>Términos y Condiciones</h1>
+    <p>Estos términos aplican a la compra de artículos para fiesta al mayoreo a través de Carlos Rocha - Todo para Fiesta.</p>
+  </div>
+</section>
+
+<section class="legal-content">
+  <div class="container">
+    <div class="card">
+
+      <h2>1. Aceptación de los términos</h2>
+      <p>Al visitar este sitio, consultar nuestro catálogo o realizar un pedido con Carlos Rocha - Todo para Fiesta, aceptas los presentes Términos y Condiciones. Si no estás de acuerdo con alguno de estos puntos, te pedimos no utilizar el sitio ni realizar pedidos.</p>
+
+      <h2>2. Naturaleza del negocio</h2>
+      <p>Carlos Rocha - Todo para Fiesta es un proveedor mayorista de artículos para fiesta (velas, globos, banderines, manteles, cortinas y accesorios, entre otros). Nuestras ventas están orientadas a tiendas, dulcerías, organizadores de eventos y negocios que compran por volumen, no al menudeo individual salvo que se indique lo contrario.</p>
+
+      <h2>3. Proceso de pedido</h2>
+      <p>Los pedidos se realizan y confirman directamente por WhatsApp o correo electrónico. Un pedido se considera confirmado únicamente cuando ha sido validado por nuestro equipo, indicando productos, cantidades, precio y forma de entrega. Los precios y la disponibilidad de los productos pueden cambiar sin previo aviso, por lo que el precio final será siempre el confirmado al momento de cerrar el pedido.</p>
+
+      <h2>4. Pedido mínimo y precios por volumen</h2>
+      <p>Trabajamos con pedido mínimo y precios escalonados según la cantidad comprada; estas condiciones varían de un producto a otro. El mínimo de compra y el precio por volumen aplicable a tu pedido se confirman directamente por WhatsApp antes de cerrar la compra.</p>
+
+      <h2>5. Formas de pago</h2>
+      <p>Aceptamos pago en efectivo, transferencia bancaria y depósito. Los datos para transferencia o depósito se proporcionan al momento de confirmar el pedido.</p>
+
+      <h2>6. Entregas y envíos</h2>
+      <p>Realizamos entregas directas en ciertas zonas de Jalisco y estados cercanos, y enviamos por paquetería al resto del país. El costo de entrega o envío varía según la zona y el tamaño del pedido, y se informa al confirmar tu compra.</p>
+
+      <h2>7. Imágenes de los productos</h2>
+      <p>Las fotografías e imágenes del catálogo son ilustrativas. El color, acabado o presentación del producto físico puede variar ligeramente respecto a lo mostrado en el sitio.</p>
+
+      <h2>8. Propiedad del contenido</h2>
+      <p>Los textos, imágenes, catálogo y demás contenido de este sitio son propiedad de Carlos Rocha - Todo para Fiesta y no pueden reproducirse ni utilizarse con fines comerciales sin autorización previa.</p>
+
+      <h2>9. Contacto y ubicación</h2>
+      <p>Operamos desde Jalisco, México. Para dudas, cotizaciones o aclaraciones sobre estos Términos y Condiciones, puedes escribirnos por WhatsApp o al correo <a href="mailto:carlosrocha.mayoreo@gmail.com">carlosrocha.mayoreo@gmail.com</a>.</p>
+
+      <p class="updated">Última actualización: julio de 2026.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-logo">Carlos Rocha — Todo para Fiesta</div>
+    <p><a href="mailto:carlosrocha.mayoreo@gmail.com">carlosrocha.mayoreo@gmail.com</a></p>
+    <p class="footer-legal"><a href="terminos.html">Términos y Condiciones</a> · <a href="privacidad.html">Aviso de Privacidad</a></p>
+    <p>&copy; 2026 Carlos Rocha - Todo para Fiesta · Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/523317974096" target="_blank" rel="noopener" aria-label="Chatea por WhatsApp">
+  <svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.04 2.67C8.85 2.67 3 8.46 3 15.58c0 2.83.92 5.45 2.5 7.6L4 29.33l6.36-1.96a13.1 13.1 0 0 0 5.68 1.3c7.19 0 13.04-5.79 13.04-12.9 0-7.13-5.85-12.9-13.04-13.1Zm0 23.6c-1.93 0-3.78-.5-5.39-1.45l-.39-.22-3.78 1.16 1.18-3.66-.25-.4a10.55 10.55 0 0 1-1.66-5.7c0-5.87 4.84-10.64 10.79-10.64 2.88 0 5.59 1.11 7.63 3.13a10.43 10.43 0 0 1 3.16 7.45c0 5.87-4.85 10.64-10.79 10.64Zm5.92-7.95c-.32-.16-1.9-.93-2.2-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.18.21-.37.24-.68.08-.32-.16-1.33-.49-2.53-1.55-.93-.83-1.56-1.85-1.74-2.16-.18-.32-.02-.49.14-.66.16-.16.36-.41.54-.61.18-.21.24-.36.36-.6.12-.24.06-.45-.05-.61-.11-.16-.74-1.78-1.02-2.44-.26-.62-.53-.54-.73-.55-.18-.01-.4-.01-.61-.01-.21 0-.55.08-.84.4-.29.32-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.2 3.36 5.34 4.58 2.97 1.16 3.45.97 4.07.91.62-.06 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.13-.3-.21-.62-.37Z"/>
+  </svg>
+</a>
+
+</body>
+</html>
