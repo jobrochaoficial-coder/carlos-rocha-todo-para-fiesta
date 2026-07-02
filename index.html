@@ -975,7 +975,11 @@
         <a class="contact-link" href="https://wa.me/523317974096" target="_blank" rel="noopener">33 1797 4096</a>
         <a class="btn btn-primary" href="https://wa.me/523317974096" target="_blank" rel="noopener">Pedir por WhatsApp</a>
       </div>
-      <div class="placeholder-box reveal">[Formulario de contacto o cotización — pendiente]</div>
+      <div class="contact-card reveal">
+        <span class="contact-label">Correo</span>
+        <a class="contact-link" href="mailto:carlosrocha.mayoreo@gmail.com">carlosrocha.mayoreo@gmail.com</a>
+        <a class="btn btn-primary" href="mailto:carlosrocha.mayoreo@gmail.com">Escribir por correo</a>
+      </div>
     </div>
   </div>
 </section>
@@ -983,7 +987,8 @@
 <footer>
   <div class="container">
     <div class="footer-logo">Carlos Rocha — Todo para Fiesta</div>
-    <p>&copy; <span id="year"></span> Carlos Rocha - Todo para Fiesta. Todos los derechos reservados.</p>
+    <p><a href="mailto:carlosrocha.mayoreo@gmail.com">carlosrocha.mayoreo@gmail.com</a></p>
+    <p>&copy; <span id="year"></span> Carlos Rocha - Todo para Fiesta · Todos los derechos reservados.</p>
   </div>
 </footer>
 
@@ -1637,7 +1642,7 @@
 
   // ---- Sistema de pedido (sin pagos en línea: solo junta el pedido y lo envía como mensaje) ----
   const ORDER_STORAGE_KEY = 'crf_pedido';
-  const ORDER_EMAIL = 'CORREO-PENDIENTE';
+  const ORDER_EMAIL = 'carlosrocha.mayoreo@gmail.com';
   let orderState = {}; // { id: { title, qty } }
 
   function loadOrder() {
