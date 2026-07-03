@@ -779,10 +779,15 @@
   }
   .order-item-name {
     flex: 1 1 auto;
+    min-width: 0;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--texto-principal);
     overflow-wrap: break-word;
+  }
+  .order-item-subcat {
+    color: var(--texto-suave);
+    font-weight: 400;
   }
   .order-item-controls {
     display: flex;
@@ -1074,13 +1079,13 @@
   // Catálogo: datos reales (assets/catalogo), nombre de archivo y producto importados de productos.csv
   const CATALOG_DATA = [
     { slug: 'vela-de-cera', group: 'velas', subcat: 'vela-de-cera', subcatLabel: 'Metalizadas', products: [
-      { file: 'vela-de-cera-rosa-gold', title: 'Vela de Cera Rosa Gold' },
-      { file: 'vela-de-crea-oro-champagne', title: 'Vela de Crea Oro Champagne' },
-      { file: 'vela-de-cera-tinto', title: 'Vela de Cera Tinto' },
-      { file: 'vela-de-cera-azul', title: 'Vela de Cera Azul' },
-      { file: 'vela-de-cera-plateada', title: 'Vela de Cera Plateada' },
-      { file: 'vela-de-cera-colores-plus', title: 'Vela de Cera Colores Plus' },
-      { file: 'vela-de-cera-colores', title: 'Vela de Cera Colores' },
+      { file: 'vela-de-cera-rosa-gold', title: 'Rosa Gold Metálico' },
+      { file: 'vela-de-crea-oro-champagne', title: 'Oro Champagne Metálico' },
+      { file: 'vela-de-cera-tinto', title: 'Tinto Metálico' },
+      { file: 'vela-de-cera-azul', title: 'Azul Metálico' },
+      { file: 'vela-de-cera-plateada', title: 'Plateado Metálico' },
+      { file: 'vela-de-cera-colores-plus', title: 'Colores Plus Metálico' },
+      { file: 'vela-de-cera-colores', title: 'Colores Metálico' },
     ] },
     { slug: 'velas-de-cera-numero', group: 'velas', subcat: 'velas-de-cera-numero', subcatLabel: 'Números', products: [
       { file: 'vela-de-cera-de-numero-plateada', title: 'Vela de Cera de Número Plateada' },
@@ -1092,7 +1097,6 @@
       { file: 'vela-pirotecnia-rosa', title: 'Vela Pirotecnia Rosa' },
       { file: 'velas-pirotecnia-colores', title: 'Velas Pirotecnia Colores' },
       { file: 'velas-pirotecnia-paquete', title: 'Velas Pirotecnia Paquete' },
-      { file: 'velas-pirotecnia-mesa', title: 'Velas Pirotecnia Mesa' },
     ] },
     { slug: 'velas-de-cera-aspiral', group: 'velas', subcat: 'velas-de-cera-aspiral', subcatLabel: 'Espiral', products: [
       { file: 'velas-de-espiral-1', title: 'Velas de Espiral 1' },
@@ -1109,20 +1113,20 @@
       { file: 'vela-de-rosa-azul', title: 'Vela de Rosa Azul' },
     ] },
     { slug: 'velas-cera-feliz-cumpleanos', group: 'velas', subcat: 'velas-cera-feliz-cumpleanos', subcatLabel: 'Feliz Cumpleaños', products: [
-      { file: 'velas-de-cera-feliz-cumplanos-1', title: 'Feliz Cumpleaños Rosa Metálico' },
-      { file: 'velas-de-cera-feliz-cumplanos-2', title: 'Feliz Cumpleaños Rosa Gold Metálico' },
-      { file: 'velas-de-cera-feliz-cumplanos-3', title: 'Feliz Cumpleaños Cobre Metálico' },
-      { file: 'velas-de-cera-feliz-cumplanos-4', title: 'Feliz Cumpleaños Plateado Metálico' },
-      { file: 'velas-de-cera-feliz-cumplanos-5', title: 'Feliz Cumpleaños Azul Metálico' },
+      { file: 'velas-de-cera-feliz-cumplanos-1', title: 'Rosa Metálico' },
+      { file: 'velas-de-cera-feliz-cumplanos-2', title: 'Rosa Gold Metálico' },
+      { file: 'velas-de-cera-feliz-cumplanos-3', title: 'Cobre Metálico' },
+      { file: 'velas-de-cera-feliz-cumplanos-4', title: 'Plateado Metálico' },
+      { file: 'velas-de-cera-feliz-cumplanos-5', title: 'Azul Metálico' },
     ] },
     { slug: 'velas-cera-feliz-cumpleanos', group: 'velas', subcat: 'velas-happy-birthday', subcatLabel: 'Happy Birthday', products: [
-      { file: 'vela-happy-birthday-dorado', title: 'Vela Happy Birthday Dorado' },
-      { file: 'vela-happy-birthday-plateado', title: 'Vela Happy Birthday Plateado' },
-      { file: 'vela-happy-birthday-cobre', title: 'Vela Happy Birthday Cobre' },
-      { file: 'vela-happy-birthday-rosa', title: 'Vela Happy Birthday Rosa' },
-      { file: 'vela-happy-birthday-rosa-gold', title: 'Vela Happy Birthday Rosa Gold' },
-      { file: 'vela-happy-birthday-azul', title: 'Vela Happy Birthday Azul' },
-      { file: 'vela-happy-birthday-rojo', title: 'Vela Happy Birthday Rojo' },
+      { file: 'vela-happy-birthday-dorado', title: 'Dorado Metálico' },
+      { file: 'vela-happy-birthday-plateado', title: 'Plateado Metálico' },
+      { file: 'vela-happy-birthday-cobre', title: 'Cobre Metálico' },
+      { file: 'vela-happy-birthday-rosa', title: 'Rosa Metálico' },
+      { file: 'vela-happy-birthday-rosa-gold', title: 'Rosa Gold Metálico' },
+      { file: 'vela-happy-birthday-azul', title: 'Azul Metálico' },
+      { file: 'vela-happy-birthday-rojo', title: 'Rojo Metálico' },
     ] },
     { slug: 'kit-globos-feliz-cumpleanos', group: 'globos', subcat: 'kit-globos-feliz-cumpleanos', subcatLabel: 'Kit Feliz Cumpleaños', products: [
       { file: 'kit-globos-futbol-verde-y-tarro-de-cerveza', title: 'Kit Globos Fútbol Verde y Tarro de Cerveza' },
@@ -1526,7 +1530,7 @@
       item.products.forEach(p => {
         const id = item.slug + '/' + p.file;
         const src = 'assets/catalogo/' + id + '.webp';
-        cards.push({ id, title: p.title, src });
+        cards.push({ id, title: p.title, src, subcat: item.subcatLabel });
       });
     });
     return cards;
@@ -1567,7 +1571,7 @@
             '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
             '<button class="qty-btn" type="button" data-action="plus" aria-label="Más">+</button>' +
           '</div>' +
-          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '" data-src="' + escAttr(c.src) + '">Agregar al pedido</button>' +
+          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '" data-src="' + escAttr(c.src) + '" data-subcat="' + escAttr(c.subcat || '') + '">Agregar al pedido</button>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -1670,12 +1674,12 @@
   }
   function orderCount() { return Object.keys(orderState).length; }
 
-  function addToOrder(id, title, qty, src) {
+  function addToOrder(id, title, qty, src, subcat) {
     const n = Math.max(1, parseInt(qty, 10) || 1);
     if (orderState[id]) {
       orderState[id].qty += n;
     } else {
-      orderState[id] = { title, qty: n, src: src || '' };
+      orderState[id] = { title, qty: n, src: src || '', subcat: subcat || '' };
     }
     saveOrder();
     renderOrderPanel();
@@ -1721,9 +1725,12 @@
             const thumb = item.src
               ? '<img class="order-item-thumb" src="' + escAttr(item.src) + '" alt="" loading="lazy">'
               : '<div class="order-item-thumb order-item-thumb-empty"></div>';
+            const name = item.subcat
+              ? '<span class="order-item-subcat">' + item.subcat + '</span> · ' + item.title
+              : item.title;
             return '<div class="order-item" data-id="' + escAttr(id) + '">' +
               thumb +
-              '<span class="order-item-name">' + item.title + '</span>' +
+              '<span class="order-item-name">' + name + '</span>' +
               '<div class="order-item-controls">' +
                 '<button class="qty-btn" type="button" data-order-action="minus" aria-label="Menos">&minus;</button>' +
                 '<input class="qty-input" type="number" min="1" step="1" value="' + item.qty + '" inputmode="numeric" aria-label="Cantidad">' +
@@ -1754,7 +1761,8 @@
     let msg = 'Hola, quiero hacer el siguiente pedido de mayoreo:\n\n';
     Object.keys(orderState).forEach(id => {
       const item = orderState[id];
-      msg += '- ' + item.title + ' x ' + item.qty + '\n';
+      const label = item.subcat ? item.subcat + ' · ' + item.title : item.title;
+      msg += '- ' + label + ' x ' + item.qty + '\n';
     });
     msg += '\n¡Gracias!';
     return msg;
@@ -1820,7 +1828,7 @@
       const addBtn = e.target.closest('.btn-add-order');
       if (addBtn) {
         const input = addBtn.closest('.product-card').querySelector('.qty-input');
-        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1, addBtn.dataset.src);
+        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1, addBtn.dataset.src, addBtn.dataset.subcat);
         const original = addBtn.textContent;
         addBtn.classList.add('is-added');
         addBtn.textContent = 'Agregado ✓';
