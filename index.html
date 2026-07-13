@@ -7,7 +7,10 @@
 <meta name="color-scheme" content="light">
 <title>Carlos Rocha - Todo para Fiesta | Mayorista de artículos para fiesta</title>
 <meta name="description" content="Carlos Rocha - Todo para Fiesta: proveedor mayorista de artículos para fiesta en Jalisco, Colima, Nayarit y Zacatecas. Velas, globos, banderines, manteles, cortinas y accesorios para tiendas, dulcerías y eventos.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+<link rel="icon" href="assets/favicon/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -705,82 +708,115 @@
   }
   .order-badge[hidden] { display: none; }
 
-  /* Panel lateral de pedido */
-  .order-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 2050;
-    background: rgba(20,20,25,0.5);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  .order-backdrop.is-open { opacity: 1; pointer-events: auto; }
+  /* Vista de pedido a pantalla completa (estilo checkout de e-commerce) */
   .order-panel {
     position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 420px;
-    max-width: 92vw;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
     background: var(--bg-claro);
     z-index: 2100;
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
     transition: transform 0.3s ease;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.15);
   }
   .order-panel.is-open { transform: translateX(0); }
   .order-panel-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1.5rem 1.5rem 1rem;
+    gap: 1rem;
+    flex: 0 0 auto;
+    padding: 1.25rem 1.25rem;
     border-bottom: 1px solid var(--border);
   }
+  @media (min-width: 768px) {
+    .order-panel-header { padding: 1.5rem 2.5rem; }
+  }
   .order-panel-header h3 {
-    font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--turquesa);
+    font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; color: var(--turquesa);
+  }
+  @media (min-width: 768px) {
+    .order-panel-header h3 { font-size: 1.7rem; }
   }
   .order-panel-close {
-    width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--bg-suave);
-    color: var(--texto-principal); font-size: 1.4rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    height: 44px; padding: 0 1.1rem; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--bg-suave);
+    color: var(--texto-principal); font-family: var(--font-body);
+    font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap;
   }
   .order-panel-close:hover { background: var(--border); }
+  .order-panel-close svg { width: 18px; height: 18px; flex: 0 0 auto; }
   .order-panel-body {
     flex: 1 1 auto;
     overflow-y: auto;
-    padding: 1rem 1.5rem;
+    padding: 1.5rem 1.25rem 2rem;
+  }
+  @media (min-width: 768px) {
+    .order-panel-body { padding: 2.5rem 2.5rem 3rem; }
+  }
+  .order-panel-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .order-customer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .order-customer-form .form-group input,
+  .order-customer-form .form-group textarea {
+    padding: 0.75rem 1rem;
+  }
+  .order-customer-form textarea { min-height: 64px; }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 480px) {
+    .form-row { grid-template-columns: 1fr 1fr; }
+  }
+  /* El atributo hidden debe ganarle siempre a display:flex/grid de estas clases */
+  .order-customer-form[hidden],
+  .order-panel-footer[hidden] {
+    display: none;
   }
   .order-empty {
     color: var(--texto-suave);
     text-align: center;
-    padding: 3rem 1rem;
-    font-size: 0.95rem;
+    padding: 4rem 1rem;
+    font-size: 1.05rem;
   }
   .order-item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.9rem 0;
+    gap: 1rem;
+    padding: 1.1rem 0;
     border-bottom: 1px solid var(--border);
   }
   .order-item:last-child { border-bottom: none; }
   .order-item-thumb {
     flex: 0 0 auto;
-    width: 56px;
-    height: 56px;
-    border-radius: 8px;
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
     object-fit: cover;
     background: var(--bg-suave);
   }
   .order-item-thumb-empty { border: 1px solid var(--border); }
   @media (max-width: 380px) {
-    .order-item-thumb { width: 44px; height: 44px; }
+    .order-item-thumb { width: 52px; height: 52px; }
   }
   .order-item-name {
     flex: 1 1 auto;
     min-width: 0;
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     font-weight: 500;
     color: var(--texto-principal);
     overflow-wrap: break-word;
@@ -792,20 +828,29 @@
   .order-item-controls {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
     flex: 0 0 auto;
   }
-  .order-item-controls .qty-btn { width: 30px; height: 30px; font-size: 1rem; }
-  .order-item-controls .qty-input { width: 50px; height: 30px; font-size: 0.9rem; }
+  .order-item-controls .qty-btn { width: 34px; height: 34px; font-size: 1.05rem; }
+  .order-item-controls .qty-input { width: 54px; height: 34px; font-size: 0.95rem; }
   .order-item-remove {
-    width: 30px; height: 30px; border-radius: 8px; border: none; background: transparent;
-    color: var(--coral); font-size: 1.2rem; cursor: pointer;
+    width: 34px; height: 34px; border-radius: 8px; border: none; background: transparent;
+    color: var(--coral); font-size: 1.3rem; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
   }
   .order-item-remove:hover { background: rgba(255,107,74,0.12); }
   .order-panel-footer {
-    padding: 1.25rem 1.5rem 1.5rem;
+    flex: 0 0 auto;
+    padding: 1.25rem 1.25rem 1.5rem;
     border-top: 1px solid var(--border);
+    background: var(--bg-claro);
+  }
+  @media (min-width: 768px) {
+    .order-panel-footer { padding: 1.5rem 2.5rem 2rem; }
+  }
+  .order-panel-footer-inner {
+    max-width: 720px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -819,6 +864,37 @@
   .order-panel-footer .btn:disabled, .order-clear:disabled {
     opacity: 0.4; cursor: not-allowed;
   }
+
+  /* Formulario de contacto */
+  .contact-form-card {
+    margin-top: 1.5rem;
+    align-items: stretch;
+    width: 100%;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label {
+    font-size: 0.85rem; font-weight: 600; color: var(--texto-suave);
+  }
+  .form-group input, .form-group textarea {
+    font-family: var(--font-body); font-size: 0.95rem; padding: 0.8rem 1rem;
+    border-radius: 10px; border: 1px solid var(--border); background: var(--bg-suave);
+    color: var(--texto-principal); resize: vertical; min-height: 44px;
+  }
+  .form-group textarea { min-height: 110px; }
+  .form-group input:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--turquesa);
+  }
+  .form-status {
+    font-size: 0.9rem; min-height: 1.2em; margin: 0;
+  }
+  .form-status.is-success { color: var(--turquesa-oscuro); font-weight: 600; }
+  .form-status.is-error { color: var(--coral); font-weight: 600; }
 </style>
 </head>
 <body class="no-js">
@@ -989,6 +1065,26 @@
         <a class="btn btn-primary" href="mailto:carlosrocha.mayoreo@gmail.com">Escribir por correo</a>
       </div>
     </div>
+    <div class="contact-card contact-form-card reveal">
+      <span class="contact-label">Escríbenos aquí</span>
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-group">
+          <label for="cfName">Nombre</label>
+          <input type="text" id="cfName" name="name" required minlength="2" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="cfPhone">Teléfono</label>
+          <input type="tel" id="cfPhone" name="phone" required minlength="7" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="cfMessage">Mensaje</label>
+          <textarea id="cfMessage" name="message" required minlength="5"></textarea>
+        </div>
+        <input type="text" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
+        <button type="submit" class="btn btn-primary btn-block" id="contactSubmit">Enviar mensaje</button>
+        <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -1014,22 +1110,95 @@
   </svg>
 </a>
 
-<!-- Panel de pedido -->
-<div class="order-backdrop" id="orderBackdrop"></div>
+<!-- Vista de pedido a pantalla completa -->
 <aside class="order-panel" id="orderPanel" aria-hidden="true">
   <div class="order-panel-header">
     <h3>Tu pedido</h3>
-    <button class="order-panel-close" id="orderPanelClose" type="button" aria-label="Cerrar pedido">&times;</button>
+    <button class="order-panel-close" id="orderPanelClose" type="button" aria-label="Cerrar pedido y volver al inicio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Inicio
+    </button>
   </div>
-  <div class="order-panel-body" id="orderList"></div>
-  <div class="order-panel-footer">
-    <button class="btn btn-primary btn-block" id="orderSendWhatsapp" type="button">Enviar pedido por WhatsApp</button>
-    <button class="btn btn-outline btn-block" id="orderSendEmail" type="button">Enviar pedido por correo</button>
-    <button class="order-clear" id="orderClear" type="button">Vaciar pedido</button>
+  <div class="order-panel-body">
+    <div class="order-panel-inner">
+      <div id="orderList"></div>
+      <div class="order-customer-form" id="orderCustomerForm" hidden>
+        <span class="contact-label">Tus datos para el pedido</span>
+        <div class="form-group">
+          <label for="ocName">Nombre completo</label>
+          <input type="text" id="ocName" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="ocPhone">Teléfono</label>
+          <input type="tel" id="ocPhone" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="ocStreet">Calle y número</label>
+          <input type="text" id="ocStreet" autocomplete="address-line1">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ocColonia">Colonia</label>
+            <input type="text" id="ocColonia" autocomplete="address-line2">
+          </div>
+          <div class="form-group">
+            <label for="ocZip">Código Postal</label>
+            <input type="text" id="ocZip" inputmode="numeric" autocomplete="postal-code">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ocCity">Ciudad</label>
+            <input type="text" id="ocCity" autocomplete="address-level2">
+          </div>
+          <div class="form-group">
+            <label for="ocState">Estado</label>
+            <input type="text" id="ocState" autocomplete="address-level1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ocNote">Nota o comentario (opcional)</label>
+          <textarea id="ocNote"></textarea>
+        </div>
+        <p class="form-status" id="orderCustomerStatus" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+  <div class="order-panel-footer" id="orderPanelFooter" hidden>
+    <div class="order-panel-footer-inner">
+      <button class="btn btn-primary btn-block" id="orderSendWhatsapp" type="button">Enviar pedido por WhatsApp</button>
+      <button class="btn btn-outline btn-block" id="orderSendEmail" type="button">Enviar pedido por correo</button>
+      <p class="form-status" id="orderEmailStatus" role="status" aria-live="polite"></p>
+      <button class="order-clear" id="orderClear" type="button">Vaciar pedido</button>
+    </div>
   </div>
 </aside>
 
 <script>
+  // ===== CONFIGURACIÓN — REEMPLAZAR SOLO ESTE VALOR =====
+  // Access Key de Web3Forms (llega al correo carlosrocha.mayoreo@gmail.com)
+  const WEB3FORMS_KEY = '86bc078d-6bfd-4a47-9da4-0ee0b770e876';
+  // Número de WhatsApp para pedidos y contacto (con código de país, sin +)
+  const WHATSAPP_NUMBER = '523317974096';
+  // Correo donde llegan los pedidos y mensajes de contacto
+  const ORDER_EMAIL = 'carlosrocha.mayoreo@gmail.com';
+  // ===== FIN DE CONFIGURACIÓN =====
+
+  // Envía datos a Web3Forms (correo de respaldo). Lanza error si falla; quien la llame decide qué hacer.
+  async function sendToWeb3Forms(payload) {
+    if (!WEB3FORMS_KEY || WEB3FORMS_KEY === 'PEGA_AQUI_LA_ACCESS_KEY') {
+      throw new Error('Web3Forms: falta configurar WEB3FORMS_KEY.');
+    }
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...payload })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message || 'Web3Forms: envío no exitoso.');
+    return data;
+  }
+
   document.getElementById('year').textContent = new Date().getFullYear();
   document.body.classList.remove('no-js');
 
@@ -1074,8 +1243,6 @@
   document.querySelectorAll('.reveal, .reveal-scale').forEach(observeReveal);
 
   // ---- Catálogo: datos reales de assets/catalogo (32 subcarpetas agrupadas en 5 categorías) ----
-  const WHATSAPP_NUMBER = '523317974096';
-
   // Catálogo: datos reales (assets/catalogo), nombre de archivo y producto importados de productos.csv
   const CATALOG_DATA = [
     { slug: 'vela-de-cera', group: 'velas', subcat: 'vela-de-cera', subcatLabel: 'Metalizadas', products: [
@@ -1660,7 +1827,6 @@
 
   // ---- Sistema de pedido (sin pagos en línea: solo junta el pedido y lo envía como mensaje) ----
   const ORDER_STORAGE_KEY = 'crf_pedido';
-  const ORDER_EMAIL = 'carlosrocha.mayoreo@gmail.com';
   let orderState = {}; // { id: { title, qty } }
 
   function loadOrder() {
@@ -1703,13 +1869,59 @@
 
   const orderFloat = document.getElementById('navCart');
   const orderBadge = document.getElementById('orderBadge');
-  const orderBackdrop = document.getElementById('orderBackdrop');
   const orderPanel = document.getElementById('orderPanel');
   const orderPanelClose = document.getElementById('orderPanelClose');
   const orderListEl = document.getElementById('orderList');
+  const orderCustomerForm = document.getElementById('orderCustomerForm');
+  const orderPanelFooter = document.getElementById('orderPanelFooter');
   const orderSendWhatsapp = document.getElementById('orderSendWhatsapp');
   const orderSendEmail = document.getElementById('orderSendEmail');
+  const orderEmailStatus = document.getElementById('orderEmailStatus');
   const orderClearBtn = document.getElementById('orderClear');
+  const ocName = document.getElementById('ocName');
+  const ocPhone = document.getElementById('ocPhone');
+  const ocStreet = document.getElementById('ocStreet');
+  const ocColonia = document.getElementById('ocColonia');
+  const ocZip = document.getElementById('ocZip');
+  const ocCity = document.getElementById('ocCity');
+  const ocState = document.getElementById('ocState');
+  const ocNote = document.getElementById('ocNote');
+  const orderCustomerStatus = document.getElementById('orderCustomerStatus');
+
+  function getCustomerFields() {
+    return {
+      name: ocName ? ocName.value.trim() : '',
+      phone: ocPhone ? ocPhone.value.trim() : '',
+      street: ocStreet ? ocStreet.value.trim() : '',
+      colonia: ocColonia ? ocColonia.value.trim() : '',
+      zip: ocZip ? ocZip.value.trim() : '',
+      city: ocCity ? ocCity.value.trim() : '',
+      state: ocState ? ocState.value.trim() : '',
+      note: ocNote ? ocNote.value.trim() : ''
+    };
+  }
+
+  // Valida los datos obligatorios del cliente antes de enviar el pedido; muestra el aviso si faltan.
+  function validateCustomerFields(customer) {
+    const missing = [];
+    if (!customer.name) missing.push('Nombre completo');
+    if (!customer.phone) missing.push('Teléfono');
+    if (!customer.street) missing.push('Calle y número');
+    if (!customer.colonia) missing.push('Colonia');
+    if (!customer.zip) missing.push('Código Postal');
+    if (!customer.city) missing.push('Ciudad');
+    if (!customer.state) missing.push('Estado');
+    if (orderCustomerStatus) {
+      if (missing.length) {
+        orderCustomerStatus.textContent = 'Completa estos datos antes de enviar: ' + missing.join(', ') + '.';
+        orderCustomerStatus.className = 'form-status is-error';
+      } else {
+        orderCustomerStatus.textContent = '';
+        orderCustomerStatus.className = 'form-status';
+      }
+    }
+    return missing.length === 0;
+  }
 
   function renderOrderPanel() {
     const ids = Object.keys(orderState);
@@ -1741,38 +1953,76 @@
           }).join('');
     }
     const hasItems = ids.length > 0;
+    // Los datos del cliente y los botones de envío solo aparecen si hay productos en el pedido.
+    if (orderCustomerForm) orderCustomerForm.hidden = !hasItems;
+    if (orderPanelFooter) orderPanelFooter.hidden = !hasItems;
     if (orderSendWhatsapp) orderSendWhatsapp.disabled = !hasItems;
     if (orderSendEmail) orderSendEmail.disabled = !hasItems;
     if (orderClearBtn) orderClearBtn.disabled = !hasItems;
+    if (orderEmailStatus) { orderEmailStatus.textContent = ''; orderEmailStatus.className = 'form-status'; }
   }
 
   function openOrderPanel() {
     orderPanel.classList.add('is-open');
-    orderBackdrop.classList.add('is-open');
     orderPanel.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
   }
   function closeOrderPanel() {
     orderPanel.classList.remove('is-open');
-    orderBackdrop.classList.remove('is-open');
     orderPanel.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
   }
 
-  function buildOrderMessage() {
-    let msg = 'Hola, quiero hacer el siguiente pedido de mayoreo:\n\n';
+  function buildOrderProductLines(separator) {
+    let lines = '';
     Object.keys(orderState).forEach(id => {
       const item = orderState[id];
-      const label = item.subcat ? item.subcat + ' · ' + item.title : item.title;
-      msg += '- ' + label + ' x ' + item.qty + '\n';
+      const label = item.subcat ? item.subcat + separator + item.title : item.title;
+      lines += '- ' + label + ' x ' + item.qty + '\n';
     });
+    return lines;
+  }
+
+  // Correo (Web3Forms): reporte para Carlos, en tercera persona/formato de reporte.
+  function buildOrderMessageEmail(customer) {
+    let msg = 'Hola, quiero hacer el siguiente pedido de mayoreo:\n\n';
+    msg += 'Datos del cliente:\n';
+    msg += '- Nombre: ' + customer.name + '\n';
+    msg += '- Teléfono: ' + customer.phone + '\n';
+    msg += '- Calle y número: ' + customer.street + '\n';
+    msg += '- Colonia: ' + customer.colonia + '\n';
+    msg += '- CP: ' + customer.zip + '\n';
+    msg += '- Ciudad: ' + customer.city + '\n';
+    msg += '- Estado: ' + customer.state + '\n';
+    if (customer.note) msg += '- Nota: ' + customer.note + '\n';
+    msg += '\nProductos:\n' + buildOrderProductLines(' · ');
     msg += '\n¡Gracias!';
+    return msg;
+  }
+
+  // WhatsApp: lo redacta el propio cliente desde su teléfono, en primera persona.
+  // Sin emoji ni caracteres especiales de separador (solo acentos/ñ normales) para evitar
+  // problemas de codificación en distintos navegadores/dispositivos al abrir el enlace wa.me.
+  function buildOrderMessageWhatsapp(customer) {
+    let msg = '¡Hola! Quiero hacer un pedido de mayoreo\n\n';
+    msg += 'Mis datos:\n';
+    msg += 'Nombre: ' + customer.name + '\n';
+    msg += 'Teléfono: ' + customer.phone + '\n';
+    msg += 'Calle y número: ' + customer.street + '\n';
+    msg += 'Colonia: ' + customer.colonia + '\n';
+    msg += 'CP: ' + customer.zip + '\n';
+    msg += 'Ciudad: ' + customer.city + '\n';
+    msg += 'Estado: ' + customer.state + '\n';
+    if (customer.note) msg += 'Nota: ' + customer.note + '\n';
+    msg += '\nMi pedido:\n' + buildOrderProductLines(' - ');
+    msg += '\n¡Quedo atento! Gracias.';
     return msg;
   }
 
   if (orderFloat) orderFloat.addEventListener('click', openOrderPanel);
   if (orderPanelClose) orderPanelClose.addEventListener('click', closeOrderPanel);
-  if (orderBackdrop) orderBackdrop.addEventListener('click', closeOrderPanel);
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeOrderPanel();
+    if (e.key === 'Escape' && orderPanel.classList.contains('is-open')) closeOrderPanel();
   });
 
   if (orderListEl) {
@@ -1798,18 +2048,56 @@
   if (orderClearBtn) orderClearBtn.addEventListener('click', () => { if (orderCount() > 0) clearOrder(); });
 
   if (orderSendWhatsapp) {
-    orderSendWhatsapp.addEventListener('click', () => {
+    orderSendWhatsapp.addEventListener('click', async () => {
       if (orderCount() === 0) return;
-      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildOrderMessage()), '_blank');
+      const customer = getCustomerFields();
+      if (!validateCustomerFields(customer)) return;
+      // WhatsApp es prioritario: se abre primero y siempre, sin esperar al correo.
+      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildOrderMessageWhatsapp(customer)), '_blank');
+      // Correo de respaldo vía Web3Forms: si falla, no debe afectar el envío por WhatsApp.
+      try {
+        await sendToWeb3Forms({
+          subject: 'Nuevo pedido de mayoreo - Carlos Rocha Todo para Fiesta',
+          from_name: customer.name,
+          phone: customer.phone,
+          message: buildOrderMessageEmail(customer)
+        });
+      } catch (err) {
+        console.error('No se pudo enviar el respaldo del pedido por correo (Web3Forms):', err);
+      }
     });
   }
 
   if (orderSendEmail) {
-    orderSendEmail.addEventListener('click', () => {
+    orderSendEmail.addEventListener('click', async () => {
       if (orderCount() === 0) return;
-      const subject = encodeURIComponent('Pedido de mayoreo - Carlos Rocha Todo para Fiesta');
-      const body = encodeURIComponent(buildOrderMessage());
-      window.location.href = 'mailto:' + ORDER_EMAIL + '?subject=' + subject + '&body=' + body;
+      const customer = getCustomerFields();
+      if (!validateCustomerFields(customer)) return;
+      orderSendEmail.disabled = true;
+      if (orderEmailStatus) {
+        orderEmailStatus.textContent = 'Enviando...';
+        orderEmailStatus.className = 'form-status';
+      }
+      try {
+        await sendToWeb3Forms({
+          subject: 'Pedido de mayoreo - Carlos Rocha Todo para Fiesta',
+          from_name: customer.name,
+          phone: customer.phone,
+          message: buildOrderMessageEmail(customer)
+        });
+        if (orderEmailStatus) {
+          orderEmailStatus.textContent = '¡Pedido enviado por correo!';
+          orderEmailStatus.classList.add('is-success');
+        }
+      } catch (err) {
+        console.error('No se pudo enviar el pedido por correo (Web3Forms):', err);
+        if (orderEmailStatus) {
+          orderEmailStatus.textContent = 'No se pudo enviar el correo. Usa el botón de WhatsApp para tu pedido.';
+          orderEmailStatus.classList.add('is-error');
+        }
+      } finally {
+        orderSendEmail.disabled = orderCount() === 0;
+      }
     });
   }
 
@@ -1836,6 +2124,46 @@
           addBtn.classList.remove('is-added');
           addBtn.textContent = original;
         }, 1200);
+      }
+    });
+  }
+
+  // ---- Formulario de contacto (envía por correo vía Web3Forms) ----
+  const contactForm = document.getElementById('contactForm');
+  const contactStatus = document.getElementById('contactStatus');
+  const contactSubmit = document.getElementById('contactSubmit');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!contactForm.reportValidity()) return;
+      if (contactForm.botcheck.value) return; // honeypot anti-spam
+
+      const name = contactForm.name.value.trim();
+      const phone = contactForm.phone.value.trim();
+      const message = contactForm.message.value.trim();
+
+      contactSubmit.disabled = true;
+      contactStatus.textContent = 'Enviando...';
+      contactStatus.className = 'form-status';
+
+      try {
+        await sendToWeb3Forms({
+          subject: 'Nuevo mensaje de contacto - Carlos Rocha Todo para Fiesta',
+          from_name: name,
+          name,
+          phone,
+          message
+        });
+        contactStatus.textContent = '¡Mensaje enviado! Te contactaremos pronto.';
+        contactStatus.classList.add('is-success');
+        contactForm.reset();
+      } catch (err) {
+        console.error('Error al enviar el formulario de contacto (Web3Forms):', err);
+        contactStatus.textContent = 'No se pudo enviar. Intenta de nuevo o escríbenos por WhatsApp.';
+        contactStatus.classList.add('is-error');
+      } finally {
+        contactSubmit.disabled = false;
       }
     });
   }
