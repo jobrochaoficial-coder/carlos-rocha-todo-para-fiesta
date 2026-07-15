@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jobrochaoficial-coder.github.io/carlos-rocha-todo-para-fiesta/sitemap.xml
+Sitemap: https://carlosrochafiesta.com/sitemap.xml
