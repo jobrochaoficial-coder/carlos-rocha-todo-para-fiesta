@@ -1190,15 +1190,37 @@
   </div>
 </aside>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ===== CONFIGURACIÓN — REEMPLAZAR SOLO ESTE VALOR =====
+  // ===== CONFIGURACIÓN — REEMPLAZAR SOLO ESTOS VALORES =====
   // Access Key de Web3Forms (llega al correo carlosrocha.mayoreo@gmail.com)
   const WEB3FORMS_KEY = '86bc078d-6bfd-4a47-9da4-0ee0b770e876';
   // Número de WhatsApp para pedidos y contacto (con código de país, sin +)
   const WHATSAPP_NUMBER = '523317974096';
   // Correo donde llegan los pedidos y mensajes de contacto
   const ORDER_EMAIL = 'carlosrocha.mayoreo@gmail.com';
+  // Proyecto de Supabase (guarda pedidos y contactos como respaldo en base de datos)
+  const SUPABASE_URL = 'https://wfmvyboqijhfgisxdynr.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_UMaMCJR5zSrtJDzyAtMEEQ_Zr_slXB5';
   // ===== FIN DE CONFIGURACIÓN =====
+
+  // Cliente de Supabase, usado como respaldo adicional (no reemplaza correo ni WhatsApp).
+  const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+  // Guarda un registro en Supabase. Nunca lanza error hacia afuera: solo lo registra en consola,
+  // porque el guardado en base de datos es respaldo, no debe bloquear correo ni WhatsApp.
+  async function saveToSupabase(table, row) {
+    if (!supabaseClient) {
+      console.error('Supabase: no se pudo cargar el cliente (revisa el <script> del CDN).');
+      return;
+    }
+    try {
+      const { error } = await supabaseClient.from(table).insert([row]);
+      if (error) throw error;
+    } catch (err) {
+      console.error('Supabase: no se pudo guardar en "' + table + '":', err);
+    }
+  }
 
   // Envía datos a Web3Forms (correo de respaldo). Lanza error si falla; quien la llame decide qué hacer.
   async function sendToWeb3Forms(payload) {
@@ -2014,6 +2036,17 @@
     return msg;
   }
 
+  // Lista de productos en una sola línea, separados por coma (para guardar en Supabase).
+  function buildOrderProductsCSV() {
+    const parts = [];
+    Object.keys(orderState).forEach(id => {
+      const item = orderState[id];
+      const label = item.subcat ? item.subcat + ' · ' + item.title : item.title;
+      parts.push(label + ' x ' + item.qty);
+    });
+    return parts.join(', ');
+  }
+
   // WhatsApp: lo redacta el propio cliente desde su teléfono, en primera persona.
   // Sin emoji ni caracteres especiales de separador (solo acentos/ñ normales) para evitar
   // problemas de codificación en distintos navegadores/dispositivos al abrir el enlace wa.me.
@@ -2061,14 +2094,30 @@
 
   if (orderClearBtn) orderClearBtn.addEventListener('click', () => { if (orderCount() > 0) clearOrder(); });
 
+  // Fila para la tabla "pedidos" de Supabase, a partir de los datos del cliente y el carrito.
+  function buildOrderSupabaseRow(customer) {
+    return {
+      nombre: customer.name,
+      telefono: customer.phone,
+      calle_numero: customer.street,
+      colonia: customer.colonia,
+      codigo_postal: customer.zip,
+      ciudad: customer.city,
+      estado: customer.state,
+      nota: customer.note,
+      productos: buildOrderProductsCSV()
+    };
+  }
+
   if (orderSendWhatsapp) {
     orderSendWhatsapp.addEventListener('click', async () => {
       if (orderCount() === 0) return;
       const customer = getCustomerFields();
       if (!validateCustomerFields(customer)) return;
-      // WhatsApp es prioritario: se abre primero y siempre, sin esperar al correo.
+      // WhatsApp es prioritario: se abre primero y siempre, sin esperar al correo ni a Supabase.
       window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildOrderMessageWhatsapp(customer)), '_blank');
-      // Correo de respaldo vía Web3Forms: si falla, no debe afectar el envío por WhatsApp.
+      // Respaldo: correo (Web3Forms) y base de datos (Supabase). Si fallan, no afectan el envío por WhatsApp.
+      saveToSupabase('pedidos', buildOrderSupabaseRow(customer));
       try {
         await sendToWeb3Forms({
           subject: 'Nuevo pedido de mayoreo - Carlos Rocha Todo para Fiesta',
@@ -2092,6 +2141,8 @@
         orderEmailStatus.textContent = 'Enviando...';
         orderEmailStatus.className = 'form-status';
       }
+      // Respaldo en base de datos, junto con el envío por correo. No debe bloquear el correo si falla.
+      saveToSupabase('pedidos', buildOrderSupabaseRow(customer));
       try {
         await sendToWeb3Forms({
           subject: 'Pedido de mayoreo - Carlos Rocha Todo para Fiesta',
@@ -2160,6 +2211,9 @@
       contactSubmit.disabled = true;
       contactStatus.textContent = 'Enviando...';
       contactStatus.className = 'form-status';
+
+      // Respaldo en base de datos, junto con el envío por correo. No debe bloquear el correo si falla.
+      saveToSupabase('contactos', { nombre: name, telefono: phone, mensaje: message });
 
       try {
         await sendToWeb3Forms({
