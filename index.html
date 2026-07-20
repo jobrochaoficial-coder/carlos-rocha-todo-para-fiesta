@@ -1736,7 +1736,7 @@
       item.products.forEach(p => {
         const id = item.slug + '/' + p.file;
         const src = 'assets/catalogo/' + id + '.webp';
-        cards.push({ id, title: p.title, src, subcat: item.subcatLabel });
+        cards.push({ id, title: p.title, src, subcat: item.subcatLabel, ref: p.ref || '' });
       });
     });
     return cards;
@@ -1777,7 +1777,7 @@
             '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
             '<button class="qty-btn" type="button" data-action="plus" aria-label="Más">+</button>' +
           '</div>' +
-          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '" data-src="' + escAttr(c.src) + '" data-subcat="' + escAttr(c.subcat || '') + '">Agregar al pedido</button>' +
+          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '" data-src="' + escAttr(c.src) + '" data-subcat="' + escAttr(c.subcat || '') + '" data-ref="' + escAttr(c.ref || '') + '">Agregar al pedido</button>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -1879,12 +1879,12 @@
   }
   function orderCount() { return Object.keys(orderState).length; }
 
-  function addToOrder(id, title, qty, src, subcat) {
+  function addToOrder(id, title, qty, src, subcat, ref) {
     const n = Math.max(1, parseInt(qty, 10) || 1);
     if (orderState[id]) {
       orderState[id].qty += n;
     } else {
-      orderState[id] = { title, qty: n, src: src || '', subcat: subcat || '' };
+      orderState[id] = { title, qty: n, src: src || '', subcat: subcat || '', ref: ref || '' };
     }
     saveOrder();
     renderOrderPanel();
@@ -2016,7 +2016,8 @@
     let lines = '';
     Object.keys(orderState).forEach(id => {
       const item = orderState[id];
-      const label = item.subcat ? item.subcat + separator + item.title : item.title;
+      let label = item.subcat ? item.subcat + separator + item.title : item.title;
+      if (item.ref) label += ' [' + item.ref + ']';
       lines += '- ' + label + ' x ' + item.qty + '\n';
     });
     return lines;
@@ -2044,7 +2045,7 @@
     const parts = [];
     Object.keys(orderState).forEach(id => {
       const item = orderState[id];
-      const label = item.subcat ? item.subcat + ' · ' + item.title : item.title;
+      const label = (item.subcat ? item.subcat + ' · ' + item.title : item.title) + (item.ref ? ' [' + item.ref + ']' : '');
       parts.push(label + ' x ' + item.qty);
     });
     return parts.join(', ');
@@ -2184,7 +2185,7 @@
       const addBtn = e.target.closest('.btn-add-order');
       if (addBtn) {
         const input = addBtn.closest('.product-card').querySelector('.qty-input');
-        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1, addBtn.dataset.src, addBtn.dataset.subcat);
+        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1, addBtn.dataset.src, addBtn.dataset.subcat, addBtn.dataset.ref);
         const original = addBtn.textContent;
         addBtn.classList.add('is-added');
         addBtn.textContent = 'Agregado ✓';
