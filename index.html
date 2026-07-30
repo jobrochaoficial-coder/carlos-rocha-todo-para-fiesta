@@ -1310,9 +1310,11 @@
       { file: 'vela-de-cera-de-numero-dorada', title: 'Vela Cúbica de Número Dorada', ref: '', precio: 12 },
     ] },
     { slug: 'vela-pirotecnia', group: 'velas', subcat: 'vela-pirotecnia', subcatLabel: 'Pirotécnica', products: [
-      { file: 'vela-pirotecnia-rosa', title: 'Vela Pirotecnia Rosa', ref: '' },
-      { file: 'velas-pirotecnia-colores', title: 'Velas Pirotecnia Colores', ref: '' },
-      { file: 'velas-pirotecnia-paquete', title: 'Velas Pirotecnia Paquete', ref: '' },
+      { file: 'vela-pirotecnia-rosa', title: 'Velas Pirotecnia Número 5 (Mini) Paquete', ref: '', precio: 5 },
+      { file: 'velas-pirotecnia-colores', title: 'Velas Pirotecnia Número 10 Paquete', ref: '', precio: 6 },
+      { file: 'velas-pirotecnia-paquete', title: 'Velas Pirotecnia Número 12 Paquete', ref: '', precio: 7 },
+      { file: 'proximamente', title: 'Velas Pirotecnia Número 14 Paquete', ref: '', precio: 8.5 },
+      { file: 'proximamente', title: 'Velas Pirotecnia Número 14 PLUS Paquete', ref: '', precio: 10 },
     ] },
     { slug: 'velas-de-cera-espiral', group: 'velas', subcat: 'velas-de-cera-espiral', subcatLabel: 'Torcida', products: [
       { file: 'vela-espiral-rosa-gold', title: 'Rosa Gold', ref: '', precio: 15 },
@@ -1749,6 +1751,11 @@
     return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   }
 
+  function formatPrecio(precio) {
+    const n = Number(precio);
+    return Number.isInteger(n) ? String(n) : n.toFixed(2);
+  }
+
   function renderPagination(totalPages) {
     if (totalPages <= 1) {
       catalogPagination.style.display = 'none';
@@ -1775,7 +1782,7 @@
         '</div>' +
         '<div class="product-info">' +
           '<h3>' + c.title + '</h3>' +
-          (c.precio !== undefined && c.precio !== null && c.precio !== '' ? '<p class="product-price">$' + c.precio + ' MXN</p>' : '') +
+          (c.precio !== undefined && c.precio !== null && c.precio !== '' ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN</p>' : '') +
           '<div class="qty-control">' +
             '<button class="qty-btn" type="button" data-action="minus" aria-label="Menos">&minus;</button>' +
             '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
