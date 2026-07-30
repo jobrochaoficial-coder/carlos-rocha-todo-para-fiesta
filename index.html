@@ -501,6 +501,14 @@
     color: var(--texto-principal);
     overflow-wrap: break-word;
   }
+  .product-price {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--dorado);
+    letter-spacing: 0.01em;
+    margin-top: -0.35rem;
+  }
   .btn-block { width: 100%; font-size: 0.95rem; padding: 0.7rem 1rem; }
 
   /* Catálogo: paginación */
@@ -1732,7 +1740,7 @@
       item.products.forEach(p => {
         const id = item.slug + '/' + p.file;
         const src = 'assets/catalogo/' + id + '.webp';
-        cards.push({ id, title: p.title, src, subcat: item.subcatLabel, ref: p.ref || '' });
+        cards.push({ id, title: p.title, src, subcat: item.subcatLabel, ref: p.ref || '', precio: p.precio });
       });
     });
     return cards;
@@ -1768,6 +1776,7 @@
         '</div>' +
         '<div class="product-info">' +
           '<h3>' + c.title + '</h3>' +
+          (c.precio !== undefined && c.precio !== null && c.precio !== '' ? '<p class="product-price">$' + c.precio + ' MXN</p>' : '') +
           '<div class="qty-control">' +
             '<button class="qty-btn" type="button" data-action="minus" aria-label="Menos">&minus;</button>' +
             '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
