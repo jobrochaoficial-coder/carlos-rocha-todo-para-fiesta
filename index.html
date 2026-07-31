@@ -1618,13 +1618,13 @@
       { file: 'cortina-metalica-cuadros-chicos-azul-marino', title: 'Azul Marino', ref: '', precio: 13 },
     ] },
     { slug: 'espuma', group: 'complementos', subcat: 'espuma', subcatLabel: 'Espuma', products: [
-      { file: 'espuma-para-fiesta-colores-surtidos-3', title: 'Espuma para Fiesta Colores Surtidos', ref: '', precio: 360 },
+      { file: 'espuma-para-fiesta-colores-surtidos-3', title: 'Espuma para Fiesta Spray', ref: '', precio: 360, unidad: 'paquete (24 pz)' },
     ] },
     { slug: 'mariposas', group: 'complementos', subcat: 'mariposas', subcatLabel: 'Mariposa', products: [
-      { file: 'decoracion-mariposas-3d-colores-surtidos-1', title: 'Decoración Mariposas 3D Colores Surtidos 1', ref: '', precio: 14 },
+      { file: 'decoracion-mariposas-3d-colores-surtidos-1', title: 'Decoración Mariposas 3D Colores Surtidos 1', ref: '', precio: 14, unidad: 'c/u' },
     ] },
     { slug: 'espantasuegras', group: 'complementos', subcat: 'espantasuegras', subcatLabel: 'Espantasuegras', products: [
-      { file: 'espantasuegras-colores-surtidos-1', title: 'Espantasuegras Colores Surtidos 1', ref: '', precio: 14 },
+      { file: 'espantasuegras-colores-surtidos-1', title: 'Espantasuegras Colores Surtidos 1', ref: '', precio: 14, unidad: 'paquete (20 pz)' },
     ] },
     { slug: 'bomba-electrica-para-inflar-globos', group: 'complementos', subcat: 'bombas', subcatLabel: 'Bomba para Inflar', products: [
       { file: 'inflador-electrico-para-globos', title: 'Inflador Eléctrico para Globos', ref: '', precio: 260 },
@@ -1633,7 +1633,7 @@
       { file: 'inflador-manual-para-globos', title: 'Inflador Manual para Globos', ref: '', precio: 25 },
     ] },
     { slug: 'palo-para-pinata', group: 'complementos', subcat: 'palo-pinata', subcatLabel: 'Palo para Piñata', products: [
-      { file: 'palo-para-pinata-decorado-colores-surtidos', title: 'Palo para Piñata Decorado Colores Surtidos', ref: '', precio: 18 },
+      { file: 'palo-para-pinata-decorado-colores-surtidos', title: 'Palo para Piñata Decorado Colores Surtidos', ref: '', precio: 18, unidad: 'c/u' },
     ] },
     { slug: 'bolsas-para-bolo', group: 'empaque', subcat: 'bolsas-bolo', subcatLabel: 'Bolsa para Bolo', products: [
       { file: 'bolsa-de-bolo-feliz-cumpleanos', title: 'Feliz Cumpleaños', ref: 'Feliz Cumpleaños', precio: 16 },
@@ -1726,7 +1726,7 @@
       item.products.forEach(p => {
         const id = item.slug + '/' + p.file;
         const src = 'assets/catalogo/' + id + '.webp';
-        cards.push({ id, title: p.title, src, subcat: item.subcatLabel, ref: p.ref || '', precio: p.precio });
+        cards.push({ id, title: p.title, src, subcat: item.subcatLabel, ref: p.ref || '', precio: p.precio, unidad: p.unidad || '' });
       });
     });
     return cards;
@@ -1767,7 +1767,7 @@
         '</div>' +
         '<div class="product-info">' +
           '<h3>' + c.title + '</h3>' +
-          (c.precio !== undefined && c.precio !== null && c.precio !== '' ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN</p>' : '') +
+          (c.precio !== undefined && c.precio !== null && c.precio !== '' ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN' + (c.unidad ? ' ' + c.unidad : '') + '</p>' : '') +
           '<div class="qty-control">' +
             '<button class="qty-btn" type="button" data-action="minus" aria-label="Menos">&minus;</button>' +
             '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
