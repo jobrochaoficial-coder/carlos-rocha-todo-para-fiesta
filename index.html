@@ -837,9 +837,14 @@
   @media (max-width: 380px) {
     .order-item-thumb { width: 52px; height: 52px; }
   }
-  .order-item-name {
+  .order-item-main {
     flex: 1 1 auto;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .order-item-name {
     font-size: 0.98rem;
     font-weight: 500;
     color: var(--texto-principal);
@@ -848,6 +853,24 @@
   .order-item-subcat {
     color: var(--texto-suave);
     font-weight: 400;
+  }
+  .order-item-subtotal {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dorado);
+  }
+  .order-total {
+    text-align: right;
+    padding: 1.1rem 0 0.25rem;
+    margin-top: 0.25rem;
+    border-top: 2px solid var(--border);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+  }
+  .order-total strong {
+    font-size: 1.2rem;
+    color: var(--dorado);
   }
   .order-item-controls {
     display: flex;
@@ -1770,7 +1793,7 @@
             '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
             '<button class="qty-btn" type="button" data-action="plus" aria-label="Más">+</button>' +
           '</div>' +
-          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '" data-src="' + escAttr(c.src) + '" data-subcat="' + escAttr(c.subcat || '') + '" data-ref="' + escAttr(c.ref || '') + '">Agregar al pedido</button>' +
+          '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '" data-src="' + escAttr(c.src) + '" data-subcat="' + escAttr(c.subcat || '') + '" data-ref="' + escAttr(c.ref || '') + '" data-precio="' + escAttr(String(c.precio)) + '" data-unidad="' + escAttr(c.unidad || '') + '">Agregar al pedido</button>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -1872,12 +1895,23 @@
   }
   function orderCount() { return Object.keys(orderState).length; }
 
-  function addToOrder(id, title, qty, src, subcat, ref) {
+  // Suma precio × cantidad de todo el pedido. Fuente única de verdad para el total,
+  // usada tanto en el panel visual como en los mensajes de WhatsApp/correo y Supabase.
+  function calcOrderTotal() {
+    let total = 0;
+    Object.keys(orderState).forEach(id => {
+      const item = orderState[id];
+      total += (Number(item.precio) || 0) * item.qty;
+    });
+    return total;
+  }
+
+  function addToOrder(id, title, qty, src, subcat, ref, precio, unidad) {
     const n = Math.max(1, parseInt(qty, 10) || 1);
     if (orderState[id]) {
       orderState[id].qty += n;
     } else {
-      orderState[id] = { title, qty: n, src: src || '', subcat: subcat || '', ref: ref || '' };
+      orderState[id] = { title, qty: n, src: src || '', subcat: subcat || '', ref: ref || '', precio: Number(precio) || 0, unidad: unidad || '' };
     }
     saveOrder();
     renderOrderPanel();
@@ -1966,6 +2000,7 @@
         ? '<p class="order-empty">Tu pedido está vacío.<br>Agrega productos desde el catálogo.</p>'
         : ids.map(id => {
             const item = orderState[id];
+            const subtotal = (Number(item.precio) || 0) * item.qty;
             const thumb = item.src
               ? '<img class="order-item-thumb" src="' + escAttr(item.src) + '" alt="" loading="lazy">'
               : '<div class="order-item-thumb order-item-thumb-empty"></div>';
@@ -1974,7 +2009,10 @@
               : item.title;
             return '<div class="order-item" data-id="' + escAttr(id) + '">' +
               thumb +
-              '<span class="order-item-name">' + name + '</span>' +
+              '<div class="order-item-main">' +
+                '<span class="order-item-name">' + name + '</span>' +
+                '<span class="order-item-subtotal">' + item.qty + ' × $' + formatPrecio(item.precio) + ' = $' + formatPrecio(subtotal) + ' MXN</span>' +
+              '</div>' +
               '<div class="order-item-controls">' +
                 '<button class="qty-btn" type="button" data-order-action="minus" aria-label="Menos">&minus;</button>' +
                 '<input class="qty-input" type="number" min="1" step="1" value="' + item.qty + '" inputmode="numeric" aria-label="Cantidad">' +
@@ -1982,7 +2020,7 @@
                 '<button class="order-item-remove" type="button" data-order-action="remove" aria-label="Quitar producto">&times;</button>' +
               '</div>' +
             '</div>';
-          }).join('');
+          }).join('') + '<div class="order-total">Total del pedido: <strong>$' + formatPrecio(calcOrderTotal()) + ' MXN</strong></div>';
     }
     const hasItems = ids.length > 0;
     // Los datos del cliente y los botones de envío solo aparecen si hay productos en el pedido.
@@ -2011,7 +2049,8 @@
       const item = orderState[id];
       let label = item.subcat ? item.subcat + separator + item.title : item.title;
       if (item.ref) label += ' [' + item.ref + ']';
-      lines += '- ' + label + ' x ' + item.qty + '\n';
+      const subtotal = (Number(item.precio) || 0) * item.qty;
+      lines += '- ' + label + ' x ' + item.qty + ' = $' + formatPrecio(subtotal) + '\n';
     });
     return lines;
   }
@@ -2029,6 +2068,7 @@
     msg += '- Estado: ' + customer.state + '\n';
     if (customer.note) msg += '- Nota: ' + customer.note + '\n';
     msg += '\nProductos:\n' + buildOrderProductLines(' · ');
+    msg += '\nTotal del pedido: $' + formatPrecio(calcOrderTotal()) + ' MXN';
     msg += '\n¡Gracias!';
     return msg;
   }
@@ -2039,7 +2079,8 @@
     Object.keys(orderState).forEach(id => {
       const item = orderState[id];
       const label = (item.subcat ? item.subcat + ' · ' + item.title : item.title) + (item.ref ? ' [' + item.ref + ']' : '');
-      parts.push(label + ' x ' + item.qty);
+      const subtotal = (Number(item.precio) || 0) * item.qty;
+      parts.push(label + ' x ' + item.qty + ' = $' + formatPrecio(subtotal));
     });
     return parts.join(', ');
   }
@@ -2059,6 +2100,7 @@
     msg += 'Estado: ' + customer.state + '\n';
     if (customer.note) msg += 'Nota: ' + customer.note + '\n';
     msg += '\nMi pedido:\n' + buildOrderProductLines(' - ');
+    msg += '\nTotal del pedido: $' + formatPrecio(calcOrderTotal()) + ' MXN';
     msg += '\n¡Quedo atento! Gracias.';
     return msg;
   }
@@ -2102,7 +2144,8 @@
       ciudad: customer.city,
       estado: customer.state,
       nota: customer.note,
-      productos: buildOrderProductsCSV()
+      productos: buildOrderProductsCSV(),
+      total: calcOrderTotal()
     };
   }
 
@@ -2178,7 +2221,7 @@
       const addBtn = e.target.closest('.btn-add-order');
       if (addBtn) {
         const input = addBtn.closest('.product-card').querySelector('.qty-input');
-        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1, addBtn.dataset.src, addBtn.dataset.subcat, addBtn.dataset.ref);
+        addToOrder(addBtn.dataset.id, addBtn.dataset.title, parseInt(input.value, 10) || 1, addBtn.dataset.src, addBtn.dataset.subcat, addBtn.dataset.ref, addBtn.dataset.precio, addBtn.dataset.unidad);
         const original = addBtn.textContent;
         addBtn.classList.add('is-added');
         addBtn.textContent = 'Agregado ✓';
