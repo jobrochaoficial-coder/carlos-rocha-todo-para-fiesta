@@ -134,6 +134,8 @@
   #cobertura .section-head h2 { color: var(--magenta); }
   #faq .section-head h2 { color: var(--coral); }
   #contacto .section-head h2 { color: var(--azul); }
+  /* Cada tarjeta toma su propia altura: evita que el acordeón de Correo estire la de WhatsApp */
+  #contacto .grid-placeholder { align-items: start; }
 
   .contact-card {
     background: var(--bg-claro);
@@ -912,12 +914,15 @@
     opacity: 0.4; cursor: not-allowed;
   }
 
-  /* Formulario de contacto */
-  .contact-form-card {
-    margin-top: 1.5rem;
-    align-items: stretch;
+  /* Formulario de contacto (dentro del acordeón de la tarjeta de correo) */
+  .accordion {
     width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
   }
+  .accordion.is-open { max-height: 800px; }
+  .accordion-inner { padding-top: 1.5rem; }
   .contact-form {
     display: flex;
     flex-direction: column;
@@ -1112,28 +1117,29 @@
       <div class="contact-card reveal">
         <span class="contact-label">Correo</span>
         <a class="contact-link" href="mailto:carlosrocha.mayoreo@gmail.com">carlosrocha.mayoreo@gmail.com</a>
-        <a class="btn btn-primary" href="mailto:carlosrocha.mayoreo@gmail.com">Escribir por correo</a>
+        <button type="button" class="btn btn-primary" id="emailToggle" aria-expanded="false" aria-controls="emailAccordion">Escribir por correo</button>
+        <div class="accordion" id="emailAccordion">
+          <div class="accordion-inner">
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="form-group">
+                <label for="cfName">Nombre</label>
+                <input type="text" id="cfName" name="name" required minlength="2" autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label for="cfPhone">Teléfono</label>
+                <input type="tel" id="cfPhone" name="phone" required minlength="7" autocomplete="tel">
+              </div>
+              <div class="form-group">
+                <label for="cfMessage">Mensaje</label>
+                <textarea id="cfMessage" name="message" required minlength="5"></textarea>
+              </div>
+              <input type="text" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
+              <button type="submit" class="btn btn-primary btn-block" id="contactSubmit">Enviar mensaje</button>
+              <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="contact-card contact-form-card reveal">
-      <span class="contact-label">Escríbenos aquí</span>
-      <form class="contact-form" id="contactForm" novalidate>
-        <div class="form-group">
-          <label for="cfName">Nombre</label>
-          <input type="text" id="cfName" name="name" required minlength="2" autocomplete="name">
-        </div>
-        <div class="form-group">
-          <label for="cfPhone">Teléfono</label>
-          <input type="tel" id="cfPhone" name="phone" required minlength="7" autocomplete="tel">
-        </div>
-        <div class="form-group">
-          <label for="cfMessage">Mensaje</label>
-          <textarea id="cfMessage" name="message" required minlength="5"></textarea>
-        </div>
-        <input type="text" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
-        <button type="submit" class="btn btn-primary btn-block" id="contactSubmit">Enviar mensaje</button>
-        <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
-      </form>
     </div>
   </div>
 </section>
@@ -2230,6 +2236,16 @@
           addBtn.textContent = original;
         }, 1200);
       }
+    });
+  }
+
+  // ---- Acordeón de la tarjeta de correo: muestra/oculta el formulario de contacto ----
+  const emailToggle = document.getElementById('emailToggle');
+  const emailAccordion = document.getElementById('emailAccordion');
+  if (emailToggle && emailAccordion) {
+    emailToggle.addEventListener('click', () => {
+      const isOpen = emailAccordion.classList.toggle('is-open');
+      emailToggle.setAttribute('aria-expanded', String(isOpen));
     });
   }
 
