@@ -589,13 +589,15 @@
     overflow-wrap: break-word;
   }
 
-  /* Cobertura map placeholder */
+  /* Cobertura: etiquetas de texto informativas (no botones, no interactivas) */
   .coverage-list {
-    display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem;
+    display: flex; flex-wrap: wrap; margin-top: 1.5rem;
   }
   .coverage-chip {
-    padding: 0.6rem 1.2rem; border-radius: 999px; background: var(--bg-claro);
-    border: 1px solid var(--border); font-size: 0.9rem; font-weight: 500; color: var(--texto-principal);
+    font-size: 1rem; font-weight: 600; color: var(--texto-principal);
+  }
+  .coverage-chip:not(:last-child)::after {
+    content: '\00a0\00b7\00a0'; color: var(--texto-suave); font-weight: 400;
   }
 
   /* Footer */
@@ -1037,7 +1039,7 @@
     <div class="section-head reveal">
       <span class="section-eyebrow">Sobre nosotros</span>
       <h2>Tu proveedor de productos para fiesta</h2>
-      <p>Con 7 años de experiencia, en Carlos Rocha somos tu proveedor de confianza de artículos para fiesta al mayoreo. Nos distingue el trato directo, la mejor calidad y precios, una amplia variedad y entregas rápidas. Surtimos a tiendas, dulcerías, organizadores de eventos y negocios que buscan calidad y buen precio por volumen.</p>
+      <p>Soy Carlos Rocha, tu proveedor de confianza de artículos para fiesta al mayoreo. Con 7 años de experiencia, me distingue el trato directo, la mejor calidad y precios, una amplia variedad y entregas rápidas. Surto a tiendas, dulcerías, organizadores de eventos y negocios que buscan calidad y buen precio por volumen.</p>
     </div>
   </div>
 </section>
