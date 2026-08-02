@@ -833,7 +833,7 @@
     <div class="section-head reveal">
       <span class="section-eyebrow">Catálogo</span>
       <h2>Nuestro Catálogo</h2>
-      <p>Explora por categoría. Si quieres más fotos de un producto o cotizar por volumen, pídelo directo por WhatsApp.</p>
+      <p>Explora por categoría. Precios por pieza, venta de mayoreo (pedido mínimo $2,500 MXN). Si quieres más fotos de un producto o cotizar por volumen, pídelo directo por WhatsApp.</p>
     </div>
     <div class="catalog-tabs" role="tablist">
       <button class="catalog-tab is-active" data-group="velas" type="button" role="tab">Velas</button>
@@ -892,7 +892,7 @@
     <div class="faq-list stagger">
       <details class="faq-item reveal">
         <summary>¿Cuál es el pedido mínimo?</summary>
-        <p>Vendemos desde 10 piezas en adelante.</p>
+        <p>El pedido mínimo es de $2,500 MXN para envíos por paquetería (el envío se cobra aparte según la zona). Si estás en Jalisco, Colima, Nayarit o Zacatecas y te queda cerca para entrega directa, el mínimo es de $5,000 MXN. La entrega directa depende de la localidad, así que confírmanos tu zona por WhatsApp y te decimos cómo te llega.</p>
       </details>
       <details class="faq-item reveal">
         <summary>¿El precio baja si compro más?</summary>
@@ -928,7 +928,7 @@
     <div class="section-head reveal">
       <span class="section-eyebrow">Contacto</span>
       <h2>Haz tu pedido</h2>
-      <p>Escríbenos y arma tu pedido de mayoreo. Vendemos desde 10 piezas en adelante, y entre más compres, mejor precio. Aceptamos efectivo, transferencia y depósito. Te atendemos directo por WhatsApp.</p>
+      <p>Escríbenos y arma tu pedido de mayoreo. Pedido mínimo $2,500 MXN, y entre más compres, mejor precio. Aceptamos efectivo, transferencia y depósito. Te atendemos directo por WhatsApp.</p>
     </div>
     <div class="grid-placeholder cols-2">
       <div class="contact-card reveal">
@@ -1551,7 +1551,7 @@
         '</div>' +
         '<div class="product-info">' +
           '<h3>' + c.title + '</h3>' +
-          (c.precio !== undefined && c.precio !== null && c.precio !== '' ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN' + (c.unidad ? ' ' + c.unidad : '') + '</p>' : '') +
+          (c.precio !== undefined && c.precio !== null && c.precio !== '' ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN' + (c.unidad ? ' ' + c.unidad : ' c/u') + '</p>' : '') +
           '<div class="qty-control">' +
             '<button class="qty-btn" type="button" data-action="minus" aria-label="Menos">&minus;</button>' +
             '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +

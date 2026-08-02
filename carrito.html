@@ -231,7 +231,7 @@
   <div class="container">
     <span class="section-eyebrow">Pedido</span>
     <h1>Tu Pedido</h1>
-    <p>Revisa los productos que agregaste, completa tus datos y envía tu pedido por WhatsApp o correo. Vendemos desde 10 piezas en adelante.</p>
+    <p>Revisa los productos que agregaste, completa tus datos y envía tu pedido por WhatsApp o correo. Pedido mínimo: $2,500 MXN. Para entrega directa en Jalisco, Colima, Nayarit y Zacatecas, el mínimo es $5,000 MXN según la localidad — confírmanos tu zona por WhatsApp.</p>
   </div>
 </section>
 
@@ -438,6 +438,20 @@
     };
   }
 
+  // Pedido mínimo en dinero (reemplaza el viejo mínimo de 10 piezas por producto).
+  const ORDER_MINIMUM = 2500;
+
+  // Valida que el total del pedido (calcOrderTotal, misma fuente que se muestra y se envía)
+  // alcance el mínimo antes de dejar enviar por WhatsApp o correo.
+  function validateOrderMinimum() {
+    const ok = calcOrderTotal() >= ORDER_MINIMUM;
+    if (!ok && orderCustomerStatus) {
+      orderCustomerStatus.textContent = 'El pedido mínimo es de $2,500 MXN. Para entrega directa en Jalisco, Colima, Nayarit y Zacatecas el mínimo es $5,000 MXN (según la localidad). Escríbenos por WhatsApp para confirmar tu zona.';
+      orderCustomerStatus.className = 'form-status is-error';
+    }
+    return ok;
+  }
+
   // Valida los datos obligatorios del cliente antes de enviar el pedido; muestra el aviso si faltan.
   function validateCustomerFields(customer) {
     const missing = [];
@@ -602,6 +616,7 @@
   if (orderSendWhatsapp) {
     orderSendWhatsapp.addEventListener('click', async () => {
       if (orderCount() === 0) return;
+      if (!validateOrderMinimum()) return;
       const customer = getCustomerFields();
       if (!validateCustomerFields(customer)) return;
       // WhatsApp es prioritario: se abre primero y siempre, sin esperar al correo ni a Supabase.
@@ -624,6 +639,7 @@
   if (orderSendEmail) {
     orderSendEmail.addEventListener('click', async () => {
       if (orderCount() === 0) return;
+      if (!validateOrderMinimum()) return;
       const customer = getCustomerFields();
       if (!validateCustomerFields(customer)) return;
       orderSendEmail.disabled = true;
