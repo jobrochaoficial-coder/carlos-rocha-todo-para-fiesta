@@ -736,186 +736,6 @@
   }
   .order-badge[hidden] { display: none; }
 
-  /* Vista de pedido a pantalla completa (estilo checkout de e-commerce) */
-  .order-panel {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    background: var(--bg-claro);
-    z-index: 2100;
-    display: flex;
-    flex-direction: column;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-  }
-  .order-panel.is-open { transform: translateX(0); }
-  .order-panel-header {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1rem;
-    flex: 0 0 auto;
-    padding: 1.25rem 1.25rem;
-    border-bottom: 1px solid var(--border);
-  }
-  @media (min-width: 768px) {
-    .order-panel-header { padding: 1.5rem 2.5rem; }
-  }
-  .order-panel-header h3 {
-    font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; color: var(--turquesa);
-  }
-  @media (min-width: 768px) {
-    .order-panel-header h3 { font-size: 1.7rem; }
-  }
-  .order-panel-close {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    height: 44px; padding: 0 1.1rem; border-radius: 999px;
-    border: 1px solid var(--border); background: var(--bg-suave);
-    color: var(--texto-principal); font-family: var(--font-body);
-    font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap;
-  }
-  .order-panel-close:hover { background: var(--border); }
-  .order-panel-close svg { width: 18px; height: 18px; flex: 0 0 auto; }
-  .order-panel-body {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    padding: 1.5rem 1.25rem 2rem;
-  }
-  @media (min-width: 768px) {
-    .order-panel-body { padding: 2.5rem 2.5rem 3rem; }
-  }
-  .order-panel-inner {
-    max-width: 720px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .order-customer-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-top: 1.5rem;
-    margin-top: 1rem;
-    border-top: 1px solid var(--border);
-  }
-  .order-customer-form .form-group input,
-  .order-customer-form .form-group textarea {
-    padding: 0.75rem 1rem;
-  }
-  .order-customer-form textarea { min-height: 64px; }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  @media (min-width: 480px) {
-    .form-row { grid-template-columns: 1fr 1fr; }
-  }
-  /* El atributo hidden debe ganarle siempre a display:flex/grid de estas clases */
-  .order-customer-form[hidden],
-  .order-panel-footer[hidden] {
-    display: none;
-  }
-  .order-empty {
-    color: var(--texto-suave);
-    text-align: center;
-    padding: 4rem 1rem;
-    font-size: 1.05rem;
-  }
-  .order-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.1rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .order-item:last-child { border-bottom: none; }
-  .order-item-thumb {
-    flex: 0 0 auto;
-    width: 64px;
-    height: 64px;
-    border-radius: 10px;
-    object-fit: cover;
-    background: var(--bg-suave);
-  }
-  .order-item-thumb-empty { border: 1px solid var(--border); }
-  @media (max-width: 380px) {
-    .order-item-thumb { width: 52px; height: 52px; }
-  }
-  .order-item-main {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-  .order-item-name {
-    font-size: 0.98rem;
-    font-weight: 500;
-    color: var(--texto-principal);
-    overflow-wrap: break-word;
-  }
-  .order-item-subcat {
-    color: var(--texto-suave);
-    font-weight: 400;
-  }
-  .order-item-subtotal {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--dorado);
-  }
-  .order-total {
-    text-align: right;
-    padding: 1.1rem 0 0.25rem;
-    margin-top: 0.25rem;
-    border-top: 2px solid var(--border);
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--texto-principal);
-  }
-  .order-total strong {
-    font-size: 1.2rem;
-    color: var(--dorado);
-  }
-  .order-item-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex: 0 0 auto;
-  }
-  .order-item-controls .qty-btn { width: 34px; height: 34px; font-size: 1.05rem; }
-  .order-item-controls .qty-input { width: 54px; height: 34px; font-size: 0.95rem; }
-  .order-item-remove {
-    width: 34px; height: 34px; border-radius: 8px; border: none; background: transparent;
-    color: var(--coral); font-size: 1.3rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .order-item-remove:hover { background: rgba(255,107,74,0.12); }
-  .order-panel-footer {
-    flex: 0 0 auto;
-    padding: 1.25rem 1.25rem 1.5rem;
-    border-top: 1px solid var(--border);
-    background: var(--bg-claro);
-  }
-  @media (min-width: 768px) {
-    .order-panel-footer { padding: 1.5rem 2.5rem 2rem; }
-  }
-  .order-panel-footer-inner {
-    max-width: 720px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .order-clear {
-    background: none; border: none; color: var(--texto-suave);
-    font-family: var(--font-body); font-size: 0.85rem; text-decoration: underline;
-    cursor: pointer; padding: 0.25rem; align-self: center;
-  }
-  .order-clear:hover { color: var(--coral); }
-  .order-panel-footer .btn:disabled, .order-clear:disabled {
-    opacity: 0.4; cursor: not-allowed;
-  }
-
   /* Formulario de contacto (dentro del acordeón de la tarjeta de correo) */
   .accordion {
     width: 100%;
@@ -965,7 +785,7 @@
     </ul>
     <div class="nav-actions">
       <a href="#contacto" class="btn btn-primary nav-cta">Solicita tu cotización</a>
-      <button class="nav-cart" id="navCart" type="button" aria-label="Ver mi pedido">
+      <a class="nav-cart" id="navCart" href="carrito.html" aria-label="Ver mi pedido">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 6h15l-1.5 9h-12z"/>
           <path d="M6 6 5 3H2"/>
@@ -973,7 +793,7 @@
           <circle cx="18" cy="20" r="1.4" fill="currentColor" stroke="none"/>
         </svg>
         <span class="order-badge" id="orderBadge" hidden>0</span>
-      </button>
+      </a>
       <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -1167,70 +987,6 @@
     <path d="M16.04 2.67C8.85 2.67 3 8.46 3 15.58c0 2.83.92 5.45 2.5 7.6L4 29.33l6.36-1.96a13.1 13.1 0 0 0 5.68 1.3c7.19 0 13.04-5.79 13.04-12.9 0-7.13-5.85-12.9-13.04-13.1Zm0 23.6c-1.93 0-3.78-.5-5.39-1.45l-.39-.22-3.78 1.16 1.18-3.66-.25-.4a10.55 10.55 0 0 1-1.66-5.7c0-5.87 4.84-10.64 10.79-10.64 2.88 0 5.59 1.11 7.63 3.13a10.43 10.43 0 0 1 3.16 7.45c0 5.87-4.85 10.64-10.79 10.64Zm5.92-7.95c-.32-.16-1.9-.93-2.2-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.18.21-.37.24-.68.08-.32-.16-1.33-.49-2.53-1.55-.93-.83-1.56-1.85-1.74-2.16-.18-.32-.02-.49.14-.66.16-.16.36-.41.54-.61.18-.21.24-.36.36-.6.12-.24.06-.45-.05-.61-.11-.16-.74-1.78-1.02-2.44-.26-.62-.53-.54-.73-.55-.18-.01-.4-.01-.61-.01-.21 0-.55.08-.84.4-.29.32-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.2 3.36 5.34 4.58 2.97 1.16 3.45.97 4.07.91.62-.06 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.13-.3-.21-.62-.37Z"/>
   </svg>
 </a>
-
-<!-- Vista de pedido a pantalla completa -->
-<aside class="order-panel" id="orderPanel" aria-hidden="true">
-  <div class="order-panel-header">
-    <h3>Tu pedido</h3>
-    <button class="order-panel-close" id="orderPanelClose" type="button" aria-label="Cerrar pedido y volver al inicio">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      Inicio
-    </button>
-  </div>
-  <div class="order-panel-body">
-    <div class="order-panel-inner">
-      <div id="orderList"></div>
-      <div class="order-customer-form" id="orderCustomerForm" hidden>
-        <span class="contact-label">Tus datos para el pedido</span>
-        <div class="form-group">
-          <label for="ocName">Nombre completo</label>
-          <input type="text" id="ocName" autocomplete="name">
-        </div>
-        <div class="form-group">
-          <label for="ocPhone">Teléfono</label>
-          <input type="tel" id="ocPhone" autocomplete="tel">
-        </div>
-        <div class="form-group">
-          <label for="ocStreet">Calle y número</label>
-          <input type="text" id="ocStreet" autocomplete="address-line1">
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="ocColonia">Colonia</label>
-            <input type="text" id="ocColonia" autocomplete="address-line2">
-          </div>
-          <div class="form-group">
-            <label for="ocZip">Código Postal</label>
-            <input type="text" id="ocZip" inputmode="numeric" autocomplete="postal-code">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="ocCity">Ciudad</label>
-            <input type="text" id="ocCity" autocomplete="address-level2">
-          </div>
-          <div class="form-group">
-            <label for="ocState">Estado</label>
-            <input type="text" id="ocState" autocomplete="address-level1">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="ocNote">Nota o comentario (opcional)</label>
-          <textarea id="ocNote"></textarea>
-        </div>
-        <p class="form-status" id="orderCustomerStatus" role="status" aria-live="polite"></p>
-      </div>
-    </div>
-  </div>
-  <div class="order-panel-footer" id="orderPanelFooter" hidden>
-    <div class="order-panel-footer-inner">
-      <button class="btn btn-primary btn-block" id="orderSendWhatsapp" type="button">Enviar pedido por WhatsApp</button>
-      <button class="btn btn-outline btn-block" id="orderSendEmail" type="button">Enviar pedido por correo</button>
-      <p class="form-status" id="orderEmailStatus" role="status" aria-live="polite"></p>
-      <button class="order-clear" id="orderClear" type="button">Vaciar pedido</button>
-    </div>
-  </div>
-</aside>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -1888,9 +1644,12 @@
     });
   }
 
-  // ---- Sistema de pedido (sin pagos en línea: solo junta el pedido y lo envía como mensaje) ----
+  // ---- Sistema de pedido: agrega productos desde el catálogo y guarda en localStorage.
+  // El detalle del pedido (lista, total, datos del cliente, envío por WhatsApp/correo y
+  // guardado en Supabase) vive en carrito.html — usa la misma llave 'crf_pedido', así que
+  // lo que se agregue aquí aparece intacto al abrir esa página.
   const ORDER_STORAGE_KEY = 'crf_pedido';
-  let orderState = {}; // { id: { title, qty } }
+  let orderState = {}; // { id: { title, qty, src, subcat, ref, precio, unidad } }
 
   function loadOrder() {
     try {
@@ -1901,17 +1660,14 @@
   function saveOrder() {
     try { localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orderState)); } catch (e) {}
   }
-  function orderCount() { return Object.keys(orderState).length; }
 
-  // Suma precio × cantidad de todo el pedido. Fuente única de verdad para el total,
-  // usada tanto en el panel visual como en los mensajes de WhatsApp/correo y Supabase.
-  function calcOrderTotal() {
-    let total = 0;
-    Object.keys(orderState).forEach(id => {
-      const item = orderState[id];
-      total += (Number(item.precio) || 0) * item.qty;
-    });
-    return total;
+  const orderBadge = document.getElementById('orderBadge');
+  function updateOrderBadge() {
+    const count = Object.keys(orderState).length;
+    if (orderBadge) {
+      orderBadge.hidden = count === 0;
+      orderBadge.textContent = String(count);
+    }
   }
 
   function addToOrder(id, title, qty, src, subcat, ref, precio, unidad) {
@@ -1922,296 +1678,7 @@
       orderState[id] = { title, qty: n, src: src || '', subcat: subcat || '', ref: ref || '', precio: Number(precio) || 0, unidad: unidad || '' };
     }
     saveOrder();
-    renderOrderPanel();
-  }
-  function removeFromOrder(id) {
-    delete orderState[id];
-    saveOrder();
-    renderOrderPanel();
-  }
-  function setOrderQty(id, qty) {
-    if (!orderState[id]) return;
-    orderState[id].qty = Math.max(1, parseInt(qty, 10) || 1);
-    saveOrder();
-    renderOrderPanel();
-  }
-  function clearOrder() {
-    orderState = {};
-    saveOrder();
-    renderOrderPanel();
-  }
-
-  const orderFloat = document.getElementById('navCart');
-  const orderBadge = document.getElementById('orderBadge');
-  const orderPanel = document.getElementById('orderPanel');
-  const orderPanelClose = document.getElementById('orderPanelClose');
-  const orderListEl = document.getElementById('orderList');
-  const orderCustomerForm = document.getElementById('orderCustomerForm');
-  const orderPanelFooter = document.getElementById('orderPanelFooter');
-  const orderSendWhatsapp = document.getElementById('orderSendWhatsapp');
-  const orderSendEmail = document.getElementById('orderSendEmail');
-  const orderEmailStatus = document.getElementById('orderEmailStatus');
-  const orderClearBtn = document.getElementById('orderClear');
-  const ocName = document.getElementById('ocName');
-  const ocPhone = document.getElementById('ocPhone');
-  const ocStreet = document.getElementById('ocStreet');
-  const ocColonia = document.getElementById('ocColonia');
-  const ocZip = document.getElementById('ocZip');
-  const ocCity = document.getElementById('ocCity');
-  const ocState = document.getElementById('ocState');
-  const ocNote = document.getElementById('ocNote');
-  const orderCustomerStatus = document.getElementById('orderCustomerStatus');
-
-  function getCustomerFields() {
-    return {
-      name: ocName ? ocName.value.trim() : '',
-      phone: ocPhone ? ocPhone.value.trim() : '',
-      street: ocStreet ? ocStreet.value.trim() : '',
-      colonia: ocColonia ? ocColonia.value.trim() : '',
-      zip: ocZip ? ocZip.value.trim() : '',
-      city: ocCity ? ocCity.value.trim() : '',
-      state: ocState ? ocState.value.trim() : '',
-      note: ocNote ? ocNote.value.trim() : ''
-    };
-  }
-
-  // Valida los datos obligatorios del cliente antes de enviar el pedido; muestra el aviso si faltan.
-  function validateCustomerFields(customer) {
-    const missing = [];
-    if (!customer.name) missing.push('Nombre completo');
-    if (!customer.phone) missing.push('Teléfono');
-    if (!customer.street) missing.push('Calle y número');
-    if (!customer.colonia) missing.push('Colonia');
-    if (!customer.zip) missing.push('Código Postal');
-    if (!customer.city) missing.push('Ciudad');
-    if (!customer.state) missing.push('Estado');
-    if (orderCustomerStatus) {
-      if (missing.length) {
-        orderCustomerStatus.textContent = 'Completa estos datos antes de enviar: ' + missing.join(', ') + '.';
-        orderCustomerStatus.className = 'form-status is-error';
-      } else {
-        orderCustomerStatus.textContent = '';
-        orderCustomerStatus.className = 'form-status';
-      }
-    }
-    return missing.length === 0;
-  }
-
-  function renderOrderPanel() {
-    const ids = Object.keys(orderState);
-    if (orderBadge) {
-      orderBadge.hidden = ids.length === 0;
-      orderBadge.textContent = String(ids.length);
-    }
-    if (orderListEl) {
-      orderListEl.innerHTML = ids.length === 0
-        ? '<p class="order-empty">Tu pedido está vacío.<br>Agrega productos desde el catálogo.</p>'
-        : ids.map(id => {
-            const item = orderState[id];
-            const subtotal = (Number(item.precio) || 0) * item.qty;
-            const thumb = item.src
-              ? '<img class="order-item-thumb" src="' + escAttr(item.src) + '" alt="" loading="lazy">'
-              : '<div class="order-item-thumb order-item-thumb-empty"></div>';
-            const name = item.subcat
-              ? '<span class="order-item-subcat">' + item.subcat + '</span> · ' + item.title
-              : item.title;
-            return '<div class="order-item" data-id="' + escAttr(id) + '">' +
-              thumb +
-              '<div class="order-item-main">' +
-                '<span class="order-item-name">' + name + '</span>' +
-                '<span class="order-item-subtotal">' + item.qty + ' × $' + formatPrecio(item.precio) + ' = $' + formatPrecio(subtotal) + ' MXN</span>' +
-              '</div>' +
-              '<div class="order-item-controls">' +
-                '<button class="qty-btn" type="button" data-order-action="minus" aria-label="Menos">&minus;</button>' +
-                '<input class="qty-input" type="number" min="1" step="1" value="' + item.qty + '" inputmode="numeric" aria-label="Cantidad">' +
-                '<button class="qty-btn" type="button" data-order-action="plus" aria-label="Más">+</button>' +
-                '<button class="order-item-remove" type="button" data-order-action="remove" aria-label="Quitar producto">&times;</button>' +
-              '</div>' +
-            '</div>';
-          }).join('') + '<div class="order-total">Total del pedido: <strong>$' + formatPrecio(calcOrderTotal()) + ' MXN</strong></div>';
-    }
-    const hasItems = ids.length > 0;
-    // Los datos del cliente y los botones de envío solo aparecen si hay productos en el pedido.
-    if (orderCustomerForm) orderCustomerForm.hidden = !hasItems;
-    if (orderPanelFooter) orderPanelFooter.hidden = !hasItems;
-    if (orderSendWhatsapp) orderSendWhatsapp.disabled = !hasItems;
-    if (orderSendEmail) orderSendEmail.disabled = !hasItems;
-    if (orderClearBtn) orderClearBtn.disabled = !hasItems;
-    if (orderEmailStatus) { orderEmailStatus.textContent = ''; orderEmailStatus.className = 'form-status'; }
-  }
-
-  function openOrderPanel() {
-    orderPanel.classList.add('is-open');
-    orderPanel.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeOrderPanel() {
-    orderPanel.classList.remove('is-open');
-    orderPanel.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  function buildOrderProductLines(separator) {
-    let lines = '';
-    Object.keys(orderState).forEach(id => {
-      const item = orderState[id];
-      let label = item.subcat ? item.subcat + separator + item.title : item.title;
-      if (item.ref) label += ' [' + item.ref + ']';
-      const subtotal = (Number(item.precio) || 0) * item.qty;
-      lines += '- ' + label + ' x ' + item.qty + ' = $' + formatPrecio(subtotal) + '\n';
-    });
-    return lines;
-  }
-
-  // Correo (Web3Forms): reporte para Carlos, en tercera persona/formato de reporte.
-  function buildOrderMessageEmail(customer) {
-    let msg = 'Hola, quiero hacer el siguiente pedido de mayoreo:\n\n';
-    msg += 'Datos del cliente:\n';
-    msg += '- Nombre: ' + customer.name + '\n';
-    msg += '- Teléfono: ' + customer.phone + '\n';
-    msg += '- Calle y número: ' + customer.street + '\n';
-    msg += '- Colonia: ' + customer.colonia + '\n';
-    msg += '- CP: ' + customer.zip + '\n';
-    msg += '- Ciudad: ' + customer.city + '\n';
-    msg += '- Estado: ' + customer.state + '\n';
-    if (customer.note) msg += '- Nota: ' + customer.note + '\n';
-    msg += '\nProductos:\n' + buildOrderProductLines(' · ');
-    msg += '\nTotal del pedido: $' + formatPrecio(calcOrderTotal()) + ' MXN';
-    msg += '\n¡Gracias!';
-    return msg;
-  }
-
-  // Lista de productos en una sola línea, separados por coma (para guardar en Supabase).
-  function buildOrderProductsCSV() {
-    const parts = [];
-    Object.keys(orderState).forEach(id => {
-      const item = orderState[id];
-      const label = (item.subcat ? item.subcat + ' · ' + item.title : item.title) + (item.ref ? ' [' + item.ref + ']' : '');
-      const subtotal = (Number(item.precio) || 0) * item.qty;
-      parts.push(label + ' x ' + item.qty + ' = $' + formatPrecio(subtotal));
-    });
-    return parts.join(', ');
-  }
-
-  // WhatsApp: lo redacta el propio cliente desde su teléfono, en primera persona.
-  // Sin emoji ni caracteres especiales de separador (solo acentos/ñ normales) para evitar
-  // problemas de codificación en distintos navegadores/dispositivos al abrir el enlace wa.me.
-  function buildOrderMessageWhatsapp(customer) {
-    let msg = '¡Hola! Quiero hacer un pedido de mayoreo\n\n';
-    msg += 'Mis datos:\n';
-    msg += 'Nombre: ' + customer.name + '\n';
-    msg += 'Teléfono: ' + customer.phone + '\n';
-    msg += 'Calle y número: ' + customer.street + '\n';
-    msg += 'Colonia: ' + customer.colonia + '\n';
-    msg += 'CP: ' + customer.zip + '\n';
-    msg += 'Ciudad: ' + customer.city + '\n';
-    msg += 'Estado: ' + customer.state + '\n';
-    if (customer.note) msg += 'Nota: ' + customer.note + '\n';
-    msg += '\nMi pedido:\n' + buildOrderProductLines(' - ');
-    msg += '\nTotal del pedido: $' + formatPrecio(calcOrderTotal()) + ' MXN';
-    msg += '\n¡Quedo atento! Gracias.';
-    return msg;
-  }
-
-  if (orderFloat) orderFloat.addEventListener('click', openOrderPanel);
-  if (orderPanelClose) orderPanelClose.addEventListener('click', closeOrderPanel);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && orderPanel.classList.contains('is-open')) closeOrderPanel();
-  });
-
-  if (orderListEl) {
-    orderListEl.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-order-action]');
-      if (!btn) return;
-      const itemEl = btn.closest('.order-item');
-      const id = itemEl.dataset.id;
-      if (btn.dataset.orderAction === 'remove') { removeFromOrder(id); return; }
-      const input = itemEl.querySelector('.qty-input');
-      let qty = parseInt(input.value, 10) || 1;
-      if (btn.dataset.orderAction === 'plus') qty += 1;
-      if (btn.dataset.orderAction === 'minus') qty = Math.max(1, qty - 1);
-      setOrderQty(id, qty);
-    });
-    orderListEl.addEventListener('change', (e) => {
-      const input = e.target.closest('.qty-input');
-      if (!input) return;
-      setOrderQty(input.closest('.order-item').dataset.id, input.value);
-    });
-  }
-
-  if (orderClearBtn) orderClearBtn.addEventListener('click', () => { if (orderCount() > 0) clearOrder(); });
-
-  // Fila para la tabla "pedidos" de Supabase, a partir de los datos del cliente y el carrito.
-  function buildOrderSupabaseRow(customer) {
-    return {
-      nombre: customer.name,
-      telefono: customer.phone,
-      calle_numero: customer.street,
-      colonia: customer.colonia,
-      codigo_postal: customer.zip,
-      ciudad: customer.city,
-      estado: customer.state,
-      nota: customer.note,
-      productos: buildOrderProductsCSV(),
-      total: calcOrderTotal()
-    };
-  }
-
-  if (orderSendWhatsapp) {
-    orderSendWhatsapp.addEventListener('click', async () => {
-      if (orderCount() === 0) return;
-      const customer = getCustomerFields();
-      if (!validateCustomerFields(customer)) return;
-      // WhatsApp es prioritario: se abre primero y siempre, sin esperar al correo ni a Supabase.
-      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildOrderMessageWhatsapp(customer)), '_blank');
-      // Respaldo: correo (Web3Forms) y base de datos (Supabase). Si fallan, no afectan el envío por WhatsApp.
-      saveToSupabase('pedidos', buildOrderSupabaseRow(customer));
-      try {
-        await sendToWeb3Forms({
-          subject: 'Nuevo pedido de mayoreo - Carlos Rocha Todo para Fiesta',
-          from_name: customer.name,
-          phone: customer.phone,
-          message: buildOrderMessageEmail(customer)
-        });
-      } catch (err) {
-        console.error('No se pudo enviar el respaldo del pedido por correo (Web3Forms):', err);
-      }
-    });
-  }
-
-  if (orderSendEmail) {
-    orderSendEmail.addEventListener('click', async () => {
-      if (orderCount() === 0) return;
-      const customer = getCustomerFields();
-      if (!validateCustomerFields(customer)) return;
-      orderSendEmail.disabled = true;
-      if (orderEmailStatus) {
-        orderEmailStatus.textContent = 'Enviando...';
-        orderEmailStatus.className = 'form-status';
-      }
-      // Respaldo en base de datos, junto con el envío por correo. No debe bloquear el correo si falla.
-      saveToSupabase('pedidos', buildOrderSupabaseRow(customer));
-      try {
-        await sendToWeb3Forms({
-          subject: 'Pedido de mayoreo - Carlos Rocha Todo para Fiesta',
-          from_name: customer.name,
-          phone: customer.phone,
-          message: buildOrderMessageEmail(customer)
-        });
-        if (orderEmailStatus) {
-          orderEmailStatus.textContent = '¡Pedido enviado por correo!';
-          orderEmailStatus.classList.add('is-success');
-        }
-      } catch (err) {
-        console.error('No se pudo enviar el pedido por correo (Web3Forms):', err);
-        if (orderEmailStatus) {
-          orderEmailStatus.textContent = 'No se pudo enviar el correo. Usa el botón de WhatsApp para tu pedido.';
-          orderEmailStatus.classList.add('is-error');
-        }
-      } finally {
-        orderSendEmail.disabled = orderCount() === 0;
-      }
-    });
+    updateOrderBadge();
   }
 
   // Cantidad y "Agregar al pedido" en cada tarjeta del catálogo (delegación, las tarjetas se regeneran)
@@ -2295,7 +1762,7 @@
   }
 
   loadOrder();
-  renderOrderPanel();
+  updateOrderBadge();
 
   // Red de seguridad global: revela todo a los 3s pase lo que pase (incluye lo ya presente al cargar)
   setTimeout(() => {
