@@ -373,7 +373,8 @@
 
   function formatPrecio(precio) {
     const n = Number(precio);
-    return Number.isInteger(n) ? String(n) : n.toFixed(2);
+    const decimals = Number.isInteger(n) ? 0 : 2;
+    return n.toLocaleString('es-MX', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
   }
 
   // ---- Sistema de pedido: misma llave e idéntica lógica que index.html, para que el
