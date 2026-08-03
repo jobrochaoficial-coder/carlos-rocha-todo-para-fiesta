@@ -476,11 +476,15 @@
     border-radius: 12px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
     background: #1A1A1F;
+    touch-action: none;
+    cursor: grab;
   }
+  .lightbox img:active { cursor: grabbing; }
   .lightbox-close {
     position: absolute;
     top: 16px;
     right: 16px;
+    z-index: 1;
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -995,6 +999,9 @@
 </a>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Panzoom: zoom y arrastre para la foto ampliada del catálogo (lightbox). Si el CDN falla,
+     window.Panzoom queda undefined y el lightbox sigue abriendo la imagen normal, sin zoom. -->
+<script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4/dist/panzoom.min.js"></script>
 <script>
   // ===== CONFIGURACIÓN — REEMPLAZAR SOLO ESTOS VALORES =====
   // Access Key de Web3Forms (llega al correo carlosrocha.mayoreo@gmail.com)
@@ -1625,13 +1632,53 @@
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
 
+  // Zoom del lightbox (Panzoom por CDN). Si el CDN no cargó, "Panzoom" queda undefined
+  // y el lightbox sigue abriendo la imagen normal, sin zoom, sin romperse.
+  let lightboxPanzoom = null;
+
+  function teardownLightboxZoom() {
+    if (lightboxPanzoom) {
+      lightboxPanzoom.destroy();
+      lightboxPanzoom = null;
+    }
+  }
+  function setupLightboxZoom() {
+    teardownLightboxZoom();
+    if (typeof Panzoom === 'undefined') return;
+    lightboxPanzoom = Panzoom(lightboxImg, {
+      minScale: 1,
+      maxScale: 4,
+      panOnlyWhenZoomed: true,
+    });
+  }
+  // Rueda del mouse para zoom (solo hace algo si Panzoom sí cargó).
+  lightboxImg.addEventListener('wheel', (e) => {
+    if (lightboxPanzoom) lightboxPanzoom.zoomWithWheel(e);
+  });
+  // Doble clic / doble toque: acerca si está normal, regresa a tamaño normal si ya está zoom.
+  lightboxImg.addEventListener('dblclick', (e) => {
+    if (!lightboxPanzoom) return;
+    if (lightboxPanzoom.getScale() > 1.01) {
+      lightboxPanzoom.zoom(1, { animate: true });
+    } else {
+      lightboxPanzoom.zoom(2.5, { animate: true, focal: { x: e.clientX, y: e.clientY } });
+    }
+  });
+  // Cada vez que termina de cargar una imagen nueva (o la misma, reabierta), arranca el
+  // zoom limpio con las dimensiones correctas de esa foto.
+  lightboxImg.addEventListener('load', setupLightboxZoom);
+
   function openLightbox(src, alt) {
+    teardownLightboxZoom();
     lightboxImg.src = src;
     lightboxImg.alt = alt || '';
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
+    // Si la imagen ya estaba en caché, "load" puede no disparar de nuevo: arranca aquí también.
+    if (lightboxImg.complete) setupLightboxZoom();
   }
   function closeLightbox() {
+    teardownLightboxZoom();
     lightbox.classList.remove('is-open');
     lightbox.setAttribute('aria-hidden', 'true');
     lightboxImg.src = '';
