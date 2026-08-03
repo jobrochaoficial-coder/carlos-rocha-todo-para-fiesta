@@ -128,6 +128,10 @@
     border-top: 2px solid var(--border); font-size: 1.05rem; font-weight: 600; color: var(--texto-principal);
   }
   .order-total strong { font-size: 1.2rem; color: var(--dorado); }
+  .order-minimum-warning {
+    text-align: left; font-size: 0.85rem; font-weight: 600; color: var(--coral);
+    margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border);
+  }
   .order-item-controls { display: flex; align-items: center; gap: 0.4rem; flex: 0 0 auto; }
   .order-item-controls .qty-btn { width: 34px; height: 34px; font-size: 1.05rem; }
   .order-item-controls .qty-input { width: 54px; height: 34px; font-size: 0.95rem; }
@@ -178,6 +182,8 @@
   .form-status { font-size: 0.9rem; min-height: 1.2em; margin: 0; }
   .form-status.is-success { color: var(--turquesa-oscuro); font-weight: 600; }
   .form-status.is-error { color: var(--coral); font-weight: 600; }
+  .field-error { font-size: 0.8rem; font-weight: 600; color: var(--coral); margin: 0; }
+  .field-error:empty { display: none; }
 
   /* Botones de envío del pedido: mismo bloque que antes vivía en el panel, ahora en flujo normal */
   .order-actions { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
@@ -245,40 +251,46 @@
         <div class="form-group">
           <label for="ocName">Nombre completo</label>
           <input type="text" id="ocName" autocomplete="name">
+          <p class="field-error" id="ocName-error" role="alert"></p>
         </div>
         <div class="form-group">
           <label for="ocPhone">Teléfono</label>
           <input type="tel" id="ocPhone" autocomplete="tel">
+          <p class="field-error" id="ocPhone-error" role="alert"></p>
         </div>
         <div class="form-group">
           <label for="ocStreet">Calle y número</label>
           <input type="text" id="ocStreet" autocomplete="address-line1">
+          <p class="field-error" id="ocStreet-error" role="alert"></p>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="ocColonia">Colonia</label>
             <input type="text" id="ocColonia" autocomplete="address-line2">
+            <p class="field-error" id="ocColonia-error" role="alert"></p>
           </div>
           <div class="form-group">
             <label for="ocZip">Código Postal</label>
             <input type="text" id="ocZip" inputmode="numeric" autocomplete="postal-code">
+            <p class="field-error" id="ocZip-error" role="alert"></p>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="ocCity">Ciudad</label>
             <input type="text" id="ocCity" autocomplete="address-level2">
+            <p class="field-error" id="ocCity-error" role="alert"></p>
           </div>
           <div class="form-group">
             <label for="ocState">Estado</label>
             <input type="text" id="ocState" autocomplete="address-level1">
+            <p class="field-error" id="ocState-error" role="alert"></p>
           </div>
         </div>
         <div class="form-group">
           <label for="ocNote">Nota o comentario (opcional)</label>
           <textarea id="ocNote"></textarea>
         </div>
-        <p class="form-status" id="orderCustomerStatus" role="status" aria-live="polite"></p>
       </div>
 
       <div class="order-actions" id="orderPanelFooter" hidden>
@@ -423,7 +435,6 @@
   const ocCity = document.getElementById('ocCity');
   const ocState = document.getElementById('ocState');
   const ocNote = document.getElementById('ocNote');
-  const orderCustomerStatus = document.getElementById('orderCustomerStatus');
 
   function getCustomerFields() {
     return {
@@ -442,36 +453,57 @@
   const ORDER_MINIMUM = 2500;
 
   // Valida que el total del pedido (calcOrderTotal, misma fuente que se muestra y se envía)
-  // alcance el mínimo antes de dejar enviar por WhatsApp o correo.
+  // alcance el mínimo antes de dejar enviar por WhatsApp o correo. El aviso al cliente ya se
+  // muestra en vivo junto al total (ver renderOrderPanel); aquí solo se aplica el bloqueo.
   function validateOrderMinimum() {
-    const ok = calcOrderTotal() >= ORDER_MINIMUM;
-    if (!ok && orderCustomerStatus) {
-      orderCustomerStatus.textContent = 'El pedido mínimo es de $2,500 MXN. Para entrega directa en Jalisco, Colima, Nayarit y Zacatecas el mínimo es $5,000 MXN (según la localidad). Escríbenos por WhatsApp para confirmar tu zona.';
-      orderCustomerStatus.className = 'form-status is-error';
-    }
-    return ok;
+    return calcOrderTotal() >= ORDER_MINIMUM;
   }
 
-  // Valida los datos obligatorios del cliente antes de enviar el pedido; muestra el aviso si faltan.
+  // Campos obligatorios del pedido: [propiedad en customer, id del input, mensaje si falta].
+  const REQUIRED_FIELDS = [
+    ['name', 'ocName', 'Falta tu nombre completo'],
+    ['phone', 'ocPhone', 'Falta tu teléfono'],
+    ['street', 'ocStreet', 'Falta la calle y número'],
+    ['colonia', 'ocColonia', 'Falta la colonia'],
+    ['zip', 'ocZip', 'Falta el código postal'],
+    ['city', 'ocCity', 'Falta la ciudad'],
+    ['state', 'ocState', 'Falta el estado'],
+  ];
+
+  function setFieldError(inputId, message) {
+    const errorEl = document.getElementById(inputId + '-error');
+    if (errorEl) errorEl.textContent = message || '';
+  }
+
+  // Quita el aviso de un campo en cuanto el cliente empieza a llenarlo.
+  REQUIRED_FIELDS.forEach(([, inputId]) => {
+    const input = document.getElementById(inputId);
+    if (input) input.addEventListener('input', () => { if (input.value.trim()) setFieldError(inputId, ''); });
+  });
+
+  // Valida los datos obligatorios del cliente antes de enviar el pedido; muestra el aviso
+  // debajo de cada campo vacío (no un mensaje único listando todo).
   function validateCustomerFields(customer) {
-    const missing = [];
-    if (!customer.name) missing.push('Nombre completo');
-    if (!customer.phone) missing.push('Teléfono');
-    if (!customer.street) missing.push('Calle y número');
-    if (!customer.colonia) missing.push('Colonia');
-    if (!customer.zip) missing.push('Código Postal');
-    if (!customer.city) missing.push('Ciudad');
-    if (!customer.state) missing.push('Estado');
-    if (orderCustomerStatus) {
-      if (missing.length) {
-        orderCustomerStatus.textContent = 'Completa estos datos antes de enviar: ' + missing.join(', ') + '.';
-        orderCustomerStatus.className = 'form-status is-error';
+    let allOk = true;
+    REQUIRED_FIELDS.forEach(([key, inputId, message]) => {
+      if (!customer[key]) {
+        setFieldError(inputId, message);
+        allOk = false;
       } else {
-        orderCustomerStatus.textContent = '';
-        orderCustomerStatus.className = 'form-status';
+        setFieldError(inputId, '');
       }
-    }
-    return missing.length === 0;
+    });
+    return allOk;
+  }
+
+  // Aviso en vivo de cuánto falta para el mínimo, mostrado justo debajo del total.
+  // Vacío (sin aviso) en cuanto el pedido alcanza $2,500 MXN.
+  function buildOrderMinimumWarning() {
+    const faltante = ORDER_MINIMUM - calcOrderTotal();
+    if (faltante <= 0) return '';
+    return '<p class="order-minimum-warning">Te faltan $' + formatPrecio(faltante) + ' para alcanzar el pedido mínimo de $2,500 MXN. ' +
+      'Para entrega directa en Jalisco, Colima, Nayarit y Zacatecas el mínimo es $5,000 MXN (según la localidad). ' +
+      'Confírmanos tu zona por WhatsApp.</p>';
   }
 
   function renderOrderPanel() {
@@ -501,7 +533,7 @@
                 '<button class="order-item-remove" type="button" data-order-action="remove" aria-label="Quitar producto">&times;</button>' +
               '</div>' +
             '</div>';
-          }).join('') + '<div class="order-total">Total del pedido: <strong>$' + formatPrecio(calcOrderTotal()) + ' MXN</strong></div>';
+          }).join('') + '<div class="order-total">Total del pedido: <strong>$' + formatPrecio(calcOrderTotal()) + ' MXN</strong></div>' + buildOrderMinimumWarning();
     }
     const hasItems = ids.length > 0;
     // Los datos del cliente y los botones de envío solo aparecen si hay productos en el pedido.
