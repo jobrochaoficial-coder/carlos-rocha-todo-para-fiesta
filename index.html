@@ -536,9 +536,18 @@
     font-family: var(--font-display);
     font-size: 0.95rem;
     font-weight: 700;
-    color: var(--dorado);
+    color: var(--turquesa);
     letter-spacing: 0.01em;
     margin-top: -0.35rem;
+  }
+  .product-subtotal {
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+    margin-top: -0.4rem;
+  }
+  .product-subtotal strong {
+    color: var(--turquesa-oscuro);
+    font-weight: 700;
   }
   .btn-block { width: 100%; font-size: 0.95rem; padding: 0.7rem 1rem; }
 
@@ -1591,10 +1600,13 @@
         '</div>' +
         '<div class="product-info">' +
           '<h3>' + c.title + '</h3>' +
-          (c.precio !== undefined && c.precio !== null && c.precio !== '' ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN' + (c.unidad ? ' ' + c.unidad : ' c/u') + '</p>' : '') +
+          (c.precio !== undefined && c.precio !== null && c.precio !== ''
+            ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN' + (c.unidad ? ' ' + c.unidad : ' c/u') + '</p>' +
+              '<p class="product-subtotal" data-precio="' + escAttr(String(c.precio)) + '">Subtotal: <strong>$' + formatPrecio(c.precio) + ' MXN</strong></p>'
+            : '') +
           '<div class="qty-control">' +
             '<button class="qty-btn" type="button" data-action="minus" aria-label="Menos">&minus;</button>' +
-            '<input class="qty-input" type="number" min="1" step="1" value="10" inputmode="numeric" aria-label="Cantidad">' +
+            '<input class="qty-input" type="number" min="1" step="1" value="1" inputmode="numeric" aria-label="Cantidad">' +
             '<button class="qty-btn" type="button" data-action="plus" aria-label="Más">+</button>' +
           '</div>' +
           '<button class="btn btn-outline btn-block btn-add-order" type="button" data-id="' + escAttr(c.id) + '" data-title="' + escAttr(c.title) + '" data-src="' + escAttr(c.src) + '" data-subcat="' + escAttr(c.subcat || '') + '" data-ref="' + escAttr(c.ref || '') + '" data-precio="' + escAttr(String(c.precio)) + '" data-unidad="' + escAttr(c.unidad || '') + '">Agregar al pedido</button>' +
@@ -1834,6 +1846,20 @@
     updateOrderBadge();
   }
 
+  // Subtotal de la tarjeta (cantidad × precio unitario, misma cuenta que usa el carrito):
+  // se recalcula en vivo con cada cambio de cantidad, sin tocar el precio unitario ("c/u").
+  function updateCardSubtotal(card) {
+    if (!card) return;
+    const subtotalEl = card.querySelector('.product-subtotal');
+    if (!subtotalEl) return;
+    const strongEl = subtotalEl.querySelector('strong');
+    if (!strongEl) return;
+    const precio = Number(subtotalEl.dataset.precio) || 0;
+    const qtyInput = card.querySelector('.qty-input');
+    const qty = Math.max(1, parseInt(qtyInput && qtyInput.value, 10) || 1);
+    strongEl.textContent = '$' + formatPrecio(precio * qty) + ' MXN';
+  }
+
   // Cantidad y "Agregar al pedido" en cada tarjeta del catálogo (delegación, las tarjetas se regeneran)
   if (catalogGrid) {
     catalogGrid.addEventListener('click', (e) => {
@@ -1844,6 +1870,7 @@
         if (qtyBtn.dataset.action === 'plus') qty += 1;
         if (qtyBtn.dataset.action === 'minus') qty = Math.max(1, qty - 1);
         input.value = qty;
+        updateCardSubtotal(qtyBtn.closest('.product-card'));
         return;
       }
       const addBtn = e.target.closest('.btn-add-order');
@@ -1858,6 +1885,11 @@
           addBtn.textContent = original;
         }, 1200);
       }
+    });
+    // Escribir la cantidad a mano (sin usar +/-) también actualiza el subtotal al instante.
+    catalogGrid.addEventListener('input', (e) => {
+      const input = e.target.closest('.qty-input');
+      if (input) updateCardSubtotal(input.closest('.product-card'));
     });
   }
 
