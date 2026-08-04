@@ -1726,6 +1726,14 @@
     const scale = (e.detail && typeof e.detail.scale === 'number') ? e.detail.scale : (lightboxPanzoom ? lightboxPanzoom.getScale() : 1);
     updateLightboxResetVisibility(scale);
   });
+  // Panzoom deja puesta la transición CSS de una animación (doble clic, reset) y no la
+  // limpia sola; si el usuario arrastra justo después de zoomear, ese remanente frena el
+  // arrastre y se siente "con retraso". "panzoomstart" solo se dispara con gestos reales
+  // de dedo/mouse (no con nuestras llamadas de reset), así que forzar aquí que no haya
+  // transición deja el arrastre pegado al dedo sin afectar el suavizado del reset.
+  lightboxImg.addEventListener('panzoomstart', () => {
+    lightboxImg.style.transition = 'none';
+  });
   // Cada vez que termina de cargar una imagen nueva (o la misma, reabierta), arranca el
   // zoom limpio con las dimensiones correctas de esa foto.
   lightboxImg.addEventListener('load', setupLightboxZoom);
