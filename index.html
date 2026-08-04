@@ -321,6 +321,20 @@
     font-weight: 600;
     text-shadow: 0 1px 8px rgba(0,0,0,0.45);
   }
+  /* Móvil: más aire entre título/subtítulo y la franja de datos en 3 columnas
+     iguales (antes envolvía en 2+1, quedando desalineada). Fondo y overlay del
+     hero se conservan intactos, solo cambia la distribución del texto. */
+  @media (max-width: 639px) {
+    #hero .container { padding-left: 28px; padding-right: 28px; }
+    #hero h1 .hero-h1-sub { margin-top: 0.6rem; }
+    #hero .hero-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+    #hero .hero-bar-item { text-align: left; }
+  }
 
   /* Generic section placeholders reused across sections */
   .grid-placeholder {
@@ -553,6 +567,24 @@
     font-weight: 700;
   }
   .btn-block { width: 100%; font-size: 0.95rem; padding: 0.7rem 1rem; }
+  /* Móvil: nombre a 2 líneas fijas (todas las tarjetas parejas en altura),
+     "c/u" en gris junto al precio, subtotal en azul para distinguirlo del
+     precio unitario en teal, y controles/botón más compactos. */
+  @media (max-width: 639px) {
+    .product-info h3 {
+      line-height: 1.25;
+      min-height: 2.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .product-price-unit { color: var(--texto-suave); font-weight: 500; font-size: 0.78rem; }
+    .product-subtotal strong { color: var(--azul); }
+    .qty-btn { width: 30px; height: 30px; font-size: 1rem; }
+    .qty-input { height: 30px; font-size: 0.9rem; }
+    .btn-add-order { min-height: 34px; padding: 0.5rem 0.7rem; font-size: 0.8rem; line-height: 1.15; }
+  }
 
   /* Catálogo: paginación */
   .catalog-pagination {
@@ -1605,7 +1637,7 @@
         '<div class="product-info">' +
           '<h3>' + c.title + '</h3>' +
           (c.precio !== undefined && c.precio !== null && c.precio !== ''
-            ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN' + (c.unidad ? ' ' + c.unidad : ' c/u') + '</p>' +
+            ? '<p class="product-price">$' + formatPrecio(c.precio) + ' MXN <span class="product-price-unit">' + (c.unidad || 'c/u') + '</span></p>' +
               '<p class="product-subtotal" data-precio="' + escAttr(String(c.precio)) + '">Subtotal: <strong>$' + formatPrecio(c.precio) + ' MXN</strong></p>'
             : '') +
           '<div class="qty-control">' +
