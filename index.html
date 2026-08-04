@@ -170,6 +170,16 @@
     min-width: 0;
   }
   .contact-link:hover { color: var(--turquesa); }
+  /* Móvil: las tarjetas de WhatsApp/Correo tenían mucho padding y alto mínimo
+     de sobra; se compactan sin perder nada del contenido. */
+  @media (max-width: 639px) {
+    .contact-card {
+      padding: 1.25rem;
+      gap: 0.5rem;
+      min-height: 0;
+    }
+    .contact-link { font-size: 1.15rem; }
+  }
 
   .placeholder-box {
     border: 1px dashed var(--border);
@@ -244,18 +254,47 @@
   @media (min-width: 900px) {
     .nav-toggle { display: none; }
   }
+  /* Móvil: menú como cajón lateral que entra desde la derecha, con overlay oscuro
+     detrás. En escritorio (900px+) no se usa: ahí los enlaces van en la barra. */
+  .nav-overlay {
+    position: fixed; inset: 0; z-index: 1150;
+    background: rgba(20,20,25,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .nav-overlay.is-open { opacity: 1; pointer-events: auto; }
   .nav-mobile {
-    display: none;
+    position: fixed;
+    top: 0; right: 0;
+    width: min(75vw, 320px);
+    height: 100vh;
+    height: 100dvh;
+    z-index: 1200;
+    display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    padding: 1.5rem 24px 2rem;
+    padding: 5.5rem 1.5rem 2rem;
     background: var(--bg-claro);
-    border-bottom: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    box-shadow: -12px 0 30px rgba(0,0,0,0.2);
+    transform: translateX(100%);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
   }
-  .nav-mobile.is-open { display: flex; }
+  .nav-mobile.is-open { transform: translateX(0); pointer-events: auto; }
   .nav-mobile a { text-decoration: none; color: var(--texto-principal); font-weight: 500; font-size: 1.05rem; }
+  .nav-mobile-close {
+    position: absolute; top: 1.1rem; right: 1.1rem;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--bg-suave);
+    color: var(--texto-principal); font-size: 1.5rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .nav-mobile-close:hover { background: rgba(13,165,160,0.12); border-color: var(--turquesa); }
   @media (min-width: 900px) {
-    .nav-mobile { display: none !important; }
+    .nav-overlay, .nav-mobile { display: none !important; }
   }
 
   /* Hero */
@@ -702,16 +741,18 @@
   footer {
     background: var(--texto-principal);
     border-top: 1px solid rgba(255,255,255,0.12);
-    padding: 3rem 0 2rem;
+    padding: 1.75rem 0 1.5rem;
     text-align: center;
     color: rgba(255,255,255,0.75);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
   }
-  footer p { overflow-wrap: break-word; }
+  footer p { overflow-wrap: break-word; margin-bottom: 0.35rem; }
+  footer p:last-child { margin-bottom: 0; }
   footer .footer-logo {
-    font-family: var(--font-display); font-weight: 600; color: var(--dorado); font-size: 1.2rem; margin-bottom: 0.75rem;
+    font-family: var(--font-display); font-weight: 600; color: var(--dorado); font-size: 1.1rem; margin-bottom: 0.5rem;
   }
-  .footer-legal { font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .footer-legal { font-size: 0.8rem; margin-bottom: 0.35rem; }
   .footer-legal a { text-decoration: none; }
   .footer-legal a:hover { text-decoration: underline; }
 
@@ -898,7 +939,9 @@
       </button>
     </div>
   </div>
+  <div class="nav-overlay" id="navOverlay"></div>
   <div class="nav-mobile" id="navMobile">
+    <button class="nav-mobile-close" id="navMobileClose" type="button" aria-label="Cerrar menú">&times;</button>
     <a href="#catalogo">Catálogo</a>
     <a href="#sobre">Sobre nosotros</a>
     <a href="#cobertura">Cobertura</a>
@@ -1155,17 +1198,31 @@
   updateNavScrolled();
   window.addEventListener('scroll', updateNavScrolled, { passive: true });
 
-  // Nav móvil
+  // Nav móvil: cajón lateral desde la derecha, con overlay
   const navToggle = document.getElementById('navToggle');
   const navMobile = document.getElementById('navMobile');
-  navToggle.addEventListener('click', () => {
-    const isOpen = navMobile.classList.toggle('is-open');
-    navToggle.setAttribute('aria-expanded', String(isOpen));
-  });
-  navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  const navOverlay = document.getElementById('navOverlay');
+  const navMobileClose = document.getElementById('navMobileClose');
+  function openNavMobile() {
+    navMobile.classList.add('is-open');
+    navOverlay.classList.add('is-open');
+    navToggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeNavMobile() {
     navMobile.classList.remove('is-open');
+    navOverlay.classList.remove('is-open');
     navToggle.setAttribute('aria-expanded', 'false');
-  }));
+  }
+  navToggle.addEventListener('click', () => {
+    if (navMobile.classList.contains('is-open')) closeNavMobile();
+    else openNavMobile();
+  });
+  navMobileClose.addEventListener('click', closeNavMobile);
+  navOverlay.addEventListener('click', closeNavMobile);
+  navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNavMobile));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNavMobile();
+  });
 
   // Reveal animations con Intersection Observer + fallback anti-pantalla-negra
   // observeReveal es reutilizable: también la usa el catálogo para tarjetas creadas dinámicamente
