@@ -197,14 +197,19 @@
   .btn-secondary { background: transparent; color: var(--texto-claro); border-color: var(--texto-claro); }
   .btn-secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); border-color: var(--turquesa); }
 
-  /* Nav */
+  /* Nav: transparente flotando sobre el hero; toma su fondo crema sólido al bajar el scroll */
   .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: rgba(251,247,240,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
   }
-  .nav.is-scrolled { box-shadow: 0 4px 20px var(--shadow); }
+  .nav.is-scrolled {
+    background: rgba(251,247,240,0.85);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom-color: var(--border);
+    box-shadow: 0 4px 20px var(--shadow);
+  }
   .nav-inner {
     display: flex; align-items: center; justify-content: space-between;
     height: 76px;
@@ -212,6 +217,12 @@
   .nav-logo {
     font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
     color: var(--azul); text-decoration: none; letter-spacing: 0.01em;
+    transition: color 0.35s ease, text-shadow 0.35s ease;
+  }
+  .nav-logo-sub {
+    font-size: 0.6em; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--texto-suave);
+    transition: color 0.35s ease, text-shadow 0.35s ease;
   }
   .nav-links { display: none; gap: 2rem; list-style: none; }
   .nav-links a {
@@ -219,6 +230,21 @@
     transition: color 0.2s ease;
   }
   .nav-links a:hover { color: var(--turquesa); }
+  /* Header flotando sobre el hero (aún sin scroll): texto/íconos en blanco con una
+     sombra sutil para que se lean bien sobre cualquier zona de la foto de fondo. */
+  .nav:not(.is-scrolled) .nav-logo,
+  .nav:not(.is-scrolled) .nav-logo-sub,
+  .nav:not(.is-scrolled) .nav-links a,
+  .nav:not(.is-scrolled) .nav-cart,
+  .nav:not(.is-scrolled) .nav-toggle {
+    color: var(--texto-claro);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  }
+  .nav:not(.is-scrolled) .nav-links a:hover,
+  .nav:not(.is-scrolled) .nav-cart:hover {
+    color: var(--texto-claro);
+    background: rgba(255,255,255,0.18);
+  }
   @media (min-width: 900px) {
     .nav-links { display: flex; align-items: center; }
   }
@@ -231,6 +257,7 @@
     display: inline-flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; background: none; border: none; cursor: pointer;
     color: var(--texto-principal);
+    transition: color 0.35s ease, text-shadow 0.35s ease;
   }
   @media (min-width: 900px) {
     .nav-toggle { display: none; }
@@ -865,7 +892,7 @@
 
 <nav class="nav" id="nav">
   <div class="container nav-inner">
-    <a href="#hero" class="nav-logo">Carlos Rocha<br><span style="font-size:0.6em; letter-spacing:0.15em; text-transform:uppercase; color:var(--texto-suave);">Todo para Fiesta</span></a>
+    <a href="#hero" class="nav-logo">Carlos Rocha<br><span class="nav-logo-sub">Todo para Fiesta</span></a>
     <ul class="nav-links">
       <li><a href="#catalogo">Catálogo</a></li>
       <li><a href="#sobre">Sobre nosotros</a></li>
@@ -1138,11 +1165,13 @@
   document.getElementById('year').textContent = new Date().getFullYear();
   document.body.classList.remove('no-js');
 
-  // Nav: fondo al hacer scroll
+  // Nav: transparente sobre el hero, toma su fondo sólido al pasar ~80px de scroll
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('is-scrolled', window.scrollY > 10);
-  }, { passive: true });
+  function updateNavScrolled() {
+    nav.classList.toggle('is-scrolled', window.scrollY > 80);
+  }
+  updateNavScrolled();
+  window.addEventListener('scroll', updateNavScrolled, { passive: true });
 
   // Nav móvil
   const navToggle = document.getElementById('navToggle');
