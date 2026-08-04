@@ -334,7 +334,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.6rem;
-      margin-top: 0.5rem;
+      margin-top: 1.5rem;
     }
     #hero .hero-bar-item { text-align: left; }
   }
@@ -443,6 +443,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    align-items: start;
   }
   @media (min-width: 640px) {
     .catalog-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
@@ -556,6 +557,21 @@
     font-weight: 600;
     color: var(--texto-principal);
     overflow-wrap: break-word;
+    cursor: pointer;
+    line-height: 1.25;
+    min-height: 2.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  /* Al tocar/hacer clic en el nombre (delegado en JS), se quita el recorte de
+     2 líneas para leerlo completo; un segundo toque lo vuelve a recortar. La
+     tarjeta que se expande puede crecer; las demás de la fila no se ven afectadas. */
+  .product-info h3.is-expanded {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    min-height: 0;
   }
   .product-price {
     font-family: var(--font-display);
@@ -579,14 +595,6 @@
      "c/u" en gris junto al precio, subtotal en azul para distinguirlo del
      precio unitario en teal, y controles/botón más compactos. */
   @media (max-width: 639px) {
-    .product-info h3 {
-      line-height: 1.25;
-      min-height: 2.5rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
     .product-price-unit { color: var(--texto-suave); font-weight: 500; font-size: 0.78rem; }
     .product-subtotal strong { color: var(--azul); }
     .qty-btn { width: 30px; height: 30px; font-size: 1rem; }
@@ -902,7 +910,7 @@
       <a href="#catalogo" class="btn btn-secondary">Ver catálogo</a>
     </div>
     <div class="hero-bar">
-      <div class="hero-bar-item"><strong>4 estados +</strong>y envíos a todo México</div>
+      <div class="hero-bar-item"><strong>4 estados +</strong>Envíos a todo México</div>
       <div class="hero-bar-item"><strong>Mayoreo</strong>Mejores precios</div>
       <div class="hero-bar-item"><strong>Variedad</strong>Todo para fiesta</div>
     </div>
@@ -1850,6 +1858,16 @@
     lightboxClose.addEventListener('click', closeLightbox);
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeLightbox();
+    });
+  }
+
+  // Nombre del producto: tocar/hacer clic en el texto lo expande completo (quita el
+  // recorte de 2 líneas); tocarlo de nuevo lo vuelve a recortar. Es un listener aparte
+  // del de la foto (arriba), así que no interfiere con el zoom del lightbox.
+  if (catalogGrid) {
+    catalogGrid.addEventListener('click', (e) => {
+      const nameEl = e.target.closest('.product-info h3');
+      if (nameEl) nameEl.classList.toggle('is-expanded');
     });
   }
 
