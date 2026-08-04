@@ -499,6 +499,25 @@
     cursor: pointer;
   }
   .lightbox-close:hover { background: var(--dorado); color: var(--texto-principal); border-color: var(--dorado); }
+  .lightbox-reset {
+    position: absolute;
+    top: 70px;
+    right: 16px;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.12);
+    color: var(--texto-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .lightbox-reset svg { width: 20px; height: 20px; }
+  .lightbox-reset:hover { background: var(--dorado); color: var(--texto-principal); border-color: var(--dorado); }
+  .lightbox-reset[hidden] { display: none; }
   .product-info {
     padding: 1rem;
     display: flex;
@@ -988,6 +1007,13 @@
 <!-- Lightbox para ver fotos del catálogo en grande -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Cerrar imagen">&times;</button>
+  <button class="lightbox-reset" id="lightboxReset" type="button" aria-label="Regresar la foto a tamaño normal" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="7"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      <line x1="8" y1="11" x2="14" y2="11"/>
+    </svg>
+  </button>
   <img id="lightboxImg" src="" alt="">
 </div>
 
@@ -1631,6 +1657,7 @@
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxReset = document.getElementById('lightboxReset');
 
   // Zoom del lightbox (Panzoom por CDN). Si el CDN no cargó, "Panzoom" queda undefined
   // y el lightbox sigue abriendo la imagen normal, sin zoom, sin romperse.
@@ -1641,7 +1668,19 @@
       lightboxPanzoom.destroy();
       lightboxPanzoom = null;
     }
+    if (lightboxReset) lightboxReset.hidden = true;
   }
+  // Límite de arrastre: no dejar que la imagen se mueva más allá de sus propios bordes.
+  // No usamos la opción "contain" de Panzoom porque la foto vive centrada con márgenes
+  // oscuros (no del tamaño de su contenedor), y esa opción fuerza que la imagen cubra o
+  // quepa en el contenedor completo — rompe el doble clic y la rueda.
+  // Tampoco corregimos "reactivamente" después de cada evento: durante un arrastre rápido,
+  // Panzoom sigue calculando el siguiente movimiento desde su propio punto de referencia
+  // interno, no desde nuestra corrección, así que la pisa en el siguiente tick. En vez de
+  // eso usamos "setTransform", el hook de Panzoom para interceptar y limitar el valor ANTES
+  // de aplicarlo. A escala S, el máximo desplazamiento en cada eje es la mitad de lo que la
+  // imagen creció (ancho/alto originales × (S-1) / 2). A escala 1 el máximo es 0, así que
+  // esto también recentra automáticamente al volver a tamaño normal.
   function setupLightboxZoom() {
     teardownLightboxZoom();
     if (typeof Panzoom === 'undefined') return;
@@ -1649,7 +1688,18 @@
       minScale: 1,
       maxScale: 4,
       panOnlyWhenZoomed: true,
+      setTransform: (elem, { x, y, scale }) => {
+        const maxX = Math.max(0, (elem.offsetWidth * (scale - 1)) / 2);
+        const maxY = Math.max(0, (elem.offsetHeight * (scale - 1)) / 2);
+        const clampedX = Math.min(maxX, Math.max(-maxX, x));
+        const clampedY = Math.min(maxY, Math.max(-maxY, y));
+        elem.style.transform = 'translate(' + clampedX + 'px, ' + clampedY + 'px) scale(' + scale + ')';
+      },
     });
+  }
+  // Muestra/oculta el botón de reset según si hay zoom activo.
+  function updateLightboxResetVisibility(scale) {
+    if (lightboxReset) lightboxReset.hidden = scale <= 1.01;
   }
   // Rueda del mouse para zoom (solo hace algo si Panzoom sí cargó).
   lightboxImg.addEventListener('wheel', (e) => {
@@ -1664,16 +1714,17 @@
       lightboxPanzoom.zoom(2.5, { animate: true, focal: { x: e.clientX, y: e.clientY } });
     }
   });
-  // Panzoom cambia la escala pero NO recentra el desplazamiento por su cuenta: si arrastras
-  // la imagen y luego alejas el zoom, se queda corrida en vez de centrada. Este evento se
-  // dispara con cualquier cambio de zoom (rueda, doble clic o pellizco); si el resultado ya
-  // es prácticamente sin zoom, forzamos que la posición regrese al centro también.
+  // Botón de reset: visible solo mientras hay zoom activo.
+  if (lightboxReset) {
+    lightboxReset.addEventListener('click', () => {
+      if (lightboxPanzoom) lightboxPanzoom.zoom(1, { animate: true });
+    });
+  }
+  // Actualiza la visibilidad del botón de reset con cada cambio de escala (rueda, doble
+  // clic o pellizco). El límite de arrastre en sí lo maneja "setTransform" en setupLightboxZoom.
   lightboxImg.addEventListener('panzoomzoom', (e) => {
-    if (!lightboxPanzoom) return;
-    const scale = (e.detail && typeof e.detail.scale === 'number') ? e.detail.scale : lightboxPanzoom.getScale();
-    // "force" es necesario: con panOnlyWhenZoomed activo, Panzoom ignora cualquier pan()
-    // (incluido este de recentrado) en cuanto la escala vuelve a 1, a menos que se fuerce.
-    if (scale <= 1.01) lightboxPanzoom.pan(0, 0, { animate: true, force: true });
+    const scale = (e.detail && typeof e.detail.scale === 'number') ? e.detail.scale : (lightboxPanzoom ? lightboxPanzoom.getScale() : 1);
+    updateLightboxResetVisibility(scale);
   });
   // Cada vez que termina de cargar una imagen nueva (o la misma, reabierta), arranca el
   // zoom limpio con las dimensiones correctas de esa foto.
