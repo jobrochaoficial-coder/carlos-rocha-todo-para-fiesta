@@ -217,12 +217,10 @@
   .nav-logo {
     font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
     color: var(--azul); text-decoration: none; letter-spacing: 0.01em;
-    transition: color 0.35s ease, text-shadow 0.35s ease;
   }
   .nav-logo-sub {
     font-size: 0.6em; letter-spacing: 0.15em; text-transform: uppercase;
     color: var(--texto-suave);
-    transition: color 0.35s ease, text-shadow 0.35s ease;
   }
   .nav-links { display: none; gap: 2rem; list-style: none; }
   .nav-links a {
@@ -230,21 +228,6 @@
     transition: color 0.2s ease;
   }
   .nav-links a:hover { color: var(--turquesa); }
-  /* Header flotando sobre el hero (aún sin scroll): texto/íconos en blanco con una
-     sombra sutil para que se lean bien sobre cualquier zona de la foto de fondo. */
-  .nav:not(.is-scrolled) .nav-logo,
-  .nav:not(.is-scrolled) .nav-logo-sub,
-  .nav:not(.is-scrolled) .nav-links a,
-  .nav:not(.is-scrolled) .nav-cart,
-  .nav:not(.is-scrolled) .nav-toggle {
-    color: var(--texto-claro);
-    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
-  }
-  .nav:not(.is-scrolled) .nav-links a:hover,
-  .nav:not(.is-scrolled) .nav-cart:hover {
-    color: var(--texto-claro);
-    background: rgba(255,255,255,0.18);
-  }
   @media (min-width: 900px) {
     .nav-links { display: flex; align-items: center; }
   }
@@ -257,7 +240,6 @@
     display: inline-flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; background: none; border: none; cursor: pointer;
     color: var(--texto-principal);
-    transition: color 0.35s ease, text-shadow 0.35s ease;
   }
   @media (min-width: 900px) {
     .nav-toggle { display: none; }
