@@ -39,6 +39,9 @@
     --magenta: #E91E63;
     --coral: #FF6B4A;
     --dorado: #D4AF37;
+    --subcat-activa-bg: #FAEEDA;
+    --subcat-activa-borde: #BA7517;
+    --subcat-activa-texto: #854F0B;
 
     /* Texto */
     --texto-principal: #2A2A2E;
@@ -428,7 +431,12 @@
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   }
   .catalog-subtab:hover { border-color: var(--turquesa); color: var(--texto-principal); }
-  .catalog-subtab.is-active { background: rgba(13,165,160,0.12); border-color: var(--turquesa); color: var(--turquesa-oscuro); }
+  .catalog-subtab.is-active {
+    background: var(--subcat-activa-bg);
+    border: 1.5px solid var(--subcat-activa-borde);
+    color: var(--subcat-activa-texto);
+    font-weight: 600;
+  }
 
   /* Catálogo: grid y tarjetas de producto */
   .catalog-grid {
@@ -465,7 +473,7 @@
     padding: 0.75rem;
   }
   @media (max-width: 639px) {
-    .product-img-wrap { padding: 0.3rem; }
+    .product-img-wrap { aspect-ratio: 1 / 1.12; padding: 0.1rem; }
   }
   .product-img-wrap img {
     width: 100%; height: 100%; object-fit: contain; display: block;
@@ -894,7 +902,7 @@
       <a href="#catalogo" class="btn btn-secondary">Ver catálogo</a>
     </div>
     <div class="hero-bar">
-      <div class="hero-bar-item"><strong>4 estados</strong>Cobertura</div>
+      <div class="hero-bar-item"><strong>4 estados +</strong>y envíos a todo México</div>
       <div class="hero-bar-item"><strong>Mayoreo</strong>Mejores precios</div>
       <div class="hero-bar-item"><strong>Variedad</strong>Todo para fiesta</div>
     </div>
