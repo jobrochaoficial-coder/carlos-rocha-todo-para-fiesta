@@ -147,6 +147,7 @@
     align-items: flex-start;
     gap: 0.75rem;
     min-height: 120px;
+    min-width: 0;
   }
   .contact-label {
     font-size: 0.85rem;
@@ -161,7 +162,9 @@
     font-weight: 600;
     color: var(--texto-principal);
     text-decoration: none;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    min-width: 0;
   }
   .contact-link:hover { color: var(--turquesa); }
 
@@ -647,6 +650,7 @@
     color: rgba(255,255,255,0.75);
     font-size: 0.9rem;
   }
+  footer p { overflow-wrap: break-word; }
   footer .footer-logo {
     font-family: var(--font-display); font-weight: 600; color: var(--dorado); font-size: 1.2rem; margin-bottom: 0.75rem;
   }

@@ -87,6 +87,7 @@
   .btn-primary:hover { background: var(--turquesa-oscuro); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(13,165,160,0.35); }
   .btn-block { width: 100%; font-size: 0.95rem; padding: 0.7rem 1rem; }
   .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-arrow { display: inline-flex; align-items: center; line-height: 1; }
 
   /* Encabezado de página (igual que privacidad.html) */
   .legal-hero { padding: 7.5rem 0 2rem; }
@@ -274,7 +275,7 @@
 <nav class="nav">
   <div class="container nav-inner">
     <a href="index.html" class="nav-logo">Carlos Rocha<br><span style="font-size:0.6em; letter-spacing:0.15em; text-transform:uppercase; color:var(--texto-suave);">Todo para Fiesta</span></a>
-    <a href="index.html" class="btn btn-outline">← Volver al inicio</a>
+    <a href="index.html" class="btn btn-outline"><span class="btn-arrow" aria-hidden="true">←</span> Volver al inicio</a>
   </div>
 </nav>
 
