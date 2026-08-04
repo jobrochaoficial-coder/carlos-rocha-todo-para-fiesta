@@ -1674,26 +1674,39 @@
   // No usamos la opción "contain" de Panzoom porque la foto vive centrada con márgenes
   // oscuros (no del tamaño de su contenedor), y esa opción fuerza que la imagen cubra o
   // quepa en el contenedor completo — rompe el doble clic y la rueda.
-  // Tampoco corregimos "reactivamente" después de cada evento: durante un arrastre rápido,
-  // Panzoom sigue calculando el siguiente movimiento desde su propio punto de referencia
-  // interno, no desde nuestra corrección, así que la pisa en el siguiente tick. En vez de
-  // eso usamos "setTransform", el hook de Panzoom para interceptar y limitar el valor ANTES
-  // de aplicarlo. A escala S, el máximo desplazamiento en cada eje es la mitad de lo que la
-  // imagen creció (ancho/alto originales × (S-1) / 2). A escala 1 el máximo es 0, así que
-  // esto también recentra automáticamente al volver a tamaño normal.
+  // Usamos "setTransform" (el hook de Panzoom para interceptar y limitar el valor ANTES de
+  // aplicarlo) para que la imagen se vea siempre topada. Panzoom guarda x/y en unidades
+  // "sin escalar" (las multiplica por scale al armar el transform final: "scale(...)
+  // translate(...)"), así que el máximo también se calcula en esas unidades — dividido entre
+  // scale. A escala 1 el máximo es 0, así que esto también recentra automáticamente al volver
+  // a tamaño normal.
+  let lightboxBaseWidth = 0;
+  let lightboxBaseHeight = 0;
+  function clampLightboxLocal(x, y, scale) {
+    if (!(scale > 0)) return { x: 0, y: 0 };
+    const maxX = Math.max(0, (lightboxBaseWidth * (scale - 1)) / (2 * scale));
+    const maxY = Math.max(0, (lightboxBaseHeight * (scale - 1)) / (2 * scale));
+    return {
+      x: Math.min(maxX, Math.max(-maxX, x)),
+      y: Math.min(maxY, Math.max(-maxY, y)),
+    };
+  }
   function setupLightboxZoom() {
     teardownLightboxZoom();
     if (typeof Panzoom === 'undefined') return;
+    // El tamaño base se mide UNA sola vez por foto (no en cada frame de arrastre: leer
+    // offsetWidth/offsetHeight fuerza un recálculo de layout del navegador cada vez, y
+    // hacerlo en cada pixel de un gesto de arrastre lo vuelve pesado/entrecortado en
+    // celulares de gama media). setTransform solo hace aritmética con este valor ya medido.
+    lightboxBaseWidth = lightboxImg.offsetWidth;
+    lightboxBaseHeight = lightboxImg.offsetHeight;
     lightboxPanzoom = Panzoom(lightboxImg, {
       minScale: 1,
       maxScale: 4,
       panOnlyWhenZoomed: true,
       setTransform: (elem, { x, y, scale }) => {
-        const maxX = Math.max(0, (elem.offsetWidth * (scale - 1)) / 2);
-        const maxY = Math.max(0, (elem.offsetHeight * (scale - 1)) / 2);
-        const clampedX = Math.min(maxX, Math.max(-maxX, x));
-        const clampedY = Math.min(maxY, Math.max(-maxY, y));
-        elem.style.transform = 'translate(' + clampedX + 'px, ' + clampedY + 'px) scale(' + scale + ')';
+        const c = clampLightboxLocal(x, y, scale);
+        elem.style.transform = 'scale(' + scale + ') translate(' + c.x + 'px, ' + c.y + 'px)';
       },
     });
   }
@@ -1733,6 +1746,22 @@
   // transición deja el arrastre pegado al dedo sin afectar el suavizado del reset.
   lightboxImg.addEventListener('panzoomstart', () => {
     lightboxImg.style.transition = 'none';
+  });
+  // "setTransform" ya limita lo que se VE en cada arrastre, pero Panzoom sigue guardando
+  // internamente la posición real del dedo/mouse sin tope (getPan() lo confirma). Si el
+  // usuario arrastra mucho más allá del límite, ese excedente queda "guardado" y hace falta
+  // arrastrar de regreso esa misma cantidad antes de que la imagen se vuelva a mover — una
+  // "zona muerta". Este listener resincroniza el estado interno al valor ya topado en cada
+  // pixel de arrastre, para que siempre responda de inmediato al regresar.
+  lightboxImg.addEventListener('panzoompan', (e) => {
+    if (!lightboxPanzoom) return;
+    const scale = (e.detail && typeof e.detail.scale === 'number') ? e.detail.scale : lightboxPanzoom.getScale();
+    const rawX = e.detail && typeof e.detail.x === 'number' ? e.detail.x : 0;
+    const rawY = e.detail && typeof e.detail.y === 'number' ? e.detail.y : 0;
+    const c = clampLightboxLocal(rawX, rawY, scale);
+    if (Math.abs(c.x - rawX) > 0.01 || Math.abs(c.y - rawY) > 0.01) {
+      lightboxPanzoom.pan(c.x, c.y, { animate: false, force: true });
+    }
   });
   // Cada vez que termina de cargar una imagen nueva (o la misma, reabierta), arranca el
   // zoom limpio con las dimensiones correctas de esa foto.
