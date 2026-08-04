@@ -151,6 +151,15 @@
     display: flex; align-items: center; justify-content: center;
   }
   .order-item-remove:hover { background: rgba(255,107,74,0.12); }
+  /* Móvil: la miniatura + los controles de cantidad/eliminar ya suman más ancho del que
+     cabe junto al nombre en pantallas angostas, y eso fuerza al texto a partirse letra
+     por letra (min-width:0 + overflow-wrap:break-word con casi cero espacio). Se resuelve
+     bajando los controles a su propio renglón completo, dejando el nombre y el subtotal
+     con espacio real en la fila de arriba junto a la foto. */
+  @media (max-width: 480px) {
+    .order-item { flex-wrap: wrap; row-gap: 0.6rem; }
+    .order-item-controls { flex: 1 1 100%; justify-content: flex-end; }
+  }
 
   .qty-btn {
     flex: 0 0 auto; width: 34px; height: 34px; border-radius: 8px;
