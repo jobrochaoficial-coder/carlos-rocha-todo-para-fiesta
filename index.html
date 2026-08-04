@@ -1664,6 +1664,17 @@
       lightboxPanzoom.zoom(2.5, { animate: true, focal: { x: e.clientX, y: e.clientY } });
     }
   });
+  // Panzoom cambia la escala pero NO recentra el desplazamiento por su cuenta: si arrastras
+  // la imagen y luego alejas el zoom, se queda corrida en vez de centrada. Este evento se
+  // dispara con cualquier cambio de zoom (rueda, doble clic o pellizco); si el resultado ya
+  // es prácticamente sin zoom, forzamos que la posición regrese al centro también.
+  lightboxImg.addEventListener('panzoomzoom', (e) => {
+    if (!lightboxPanzoom) return;
+    const scale = (e.detail && typeof e.detail.scale === 'number') ? e.detail.scale : lightboxPanzoom.getScale();
+    // "force" es necesario: con panOnlyWhenZoomed activo, Panzoom ignora cualquier pan()
+    // (incluido este de recentrado) en cuanto la escala vuelve a 1, a menos que se fuerce.
+    if (scale <= 1.01) lightboxPanzoom.pan(0, 0, { animate: true, force: true });
+  });
   // Cada vez que termina de cargar una imagen nueva (o la misma, reabierta), arranca el
   // zoom limpio con las dimensiones correctas de esa foto.
   lightboxImg.addEventListener('load', setupLightboxZoom);
