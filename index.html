@@ -436,7 +436,7 @@
      sigue centrado con su padding original de siempre. */
   @media (min-width: 900px) {
     #hero .hero-content {
-      max-width: 920px;
+      max-width: 1200px;
       margin-left: 0;
       margin-right: auto;
       padding-left: clamp(56px, 7vw, 120px);
@@ -445,18 +445,38 @@
     /* Título protagonista: el tope (8rem) ya se alcanza desde ~1830px de ancho,
        así que en la pantalla de referencia (1920×1080) se ve al tamaño máximo,
        no a medio camino. "Carlos Rocha" cabe en una línea sin desbordarse
-       (probado en 1920×1080 y en anchos menores). */
+       (probado en 1920×1080 y en anchos menores). Tamaño de letra sin cambios
+       en este ajuste, solo se le dio más ancho al contenedor. */
     #hero h1 { font-size: clamp(3.5rem, 7vw, 8rem); margin-bottom: 1.75rem; }
     #hero h1 .hero-h1-sub { font-size: clamp(1.3rem, 2.1vw, 2.1rem); }
-    #hero .hero-sub { margin-bottom: 2.75rem; }
+    /* Párrafo con más ancho antes de cortar línea (antes 560px). */
+    #hero .hero-sub { margin-bottom: 2.75rem; max-width: 640px; }
     #hero .hero-actions { margin-bottom: 3.25rem; }
-    /* Los 3 bloques de datos se reparten a lo largo de todo el ancho del
-       bloque (920px) en vez de quedar apretados a la izquierda; la línea
-       divisoria de arriba ya se extiende sola porque sigue el ancho del
-       contenedor, que ahora es más ancho. */
-    #hero .hero-bar { padding-top: 2.25rem; gap: 3rem; justify-content: space-between; }
+    /* Composición intencional: arriba (título/párrafo/botones) se queda angosto
+       y a la izquierda; la franja de los 3 datos de abajo se "escapa" del ancho
+       del bloque de contenido y se extiende de lado a lado del hero (casi todo
+       el ancho de la pantalla), con el mismo margen que el título a la
+       izquierda y un margen simétrico a la derecha. Los 3 items se reparten
+       con space-between: "4 estados+" queda a la izquierda, "Mayoreo" al
+       centro, "Variedad" a la derecha. La línea divisoria (border-top) se
+       extiende con la franja porque sigue su ancho. */
+    #hero .hero-bar {
+      box-sizing: border-box;
+      width: 100vw;
+      margin-left: calc(-1 * clamp(56px, 7vw, 120px));
+      padding-top: 2.25rem;
+      padding-left: clamp(56px, 7vw, 120px);
+      padding-right: clamp(56px, 7vw, 120px);
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    /* El overlay ya oscurecía arriba (header) y a la izquierda (título); se
+       agrega una franja extra abajo, a todo lo ancho, para que "Variedad" (que
+       ahora cae más a la derecha, sobre una zona más clara de la foto) se siga
+       leyendo bien igual que el resto de la franja de datos. */
     #hero .hero-overlay {
       background:
+        linear-gradient(to top, rgba(15, 15, 18, 0.32) 0px, rgba(15, 15, 18, 0) 260px),
         linear-gradient(to right, rgba(15, 15, 18, 0.28) 0px, rgba(15, 15, 18, 0) 780px),
         linear-gradient(to bottom, rgba(15, 15, 18, var(--hero-overlay-top-opacity)) 0px, rgba(15, 15, 18, 0) var(--hero-overlay-top-fade)),
         rgba(15, 15, 18, var(--hero-overlay-opacity));
