@@ -466,21 +466,25 @@
     /* Composición intencional: arriba (título/párrafo/botones) se queda angosto
        y a la izquierda, en su lugar de siempre. La franja de los 3 datos de
        abajo se "escapa" del ancho del bloque de contenido (se extiende de
-       lado a lado del hero, con margen cómodo de las orillas) Y además
-       "margin-top: auto" la empuja hasta el fondo del hero-content (que ahora
-       ocupa todo el alto disponible), asentándola cerca del borde inferior de
-       la foto en vez de quedar flotando a media altura. Los 3 items se
-       reparten con space-between: "4 estados+" izquierda, "Mayoreo" centro,
-       "Variedad" derecha. La línea divisoria (border-top) se extiende con la
-       franja porque sigue su ancho. */
+       lado a lado del hero) Y además "margin-top: auto" la empuja hasta el
+       fondo del hero-content (que ahora ocupa todo el alto disponible),
+       asentándola cerca del borde inferior de la foto en vez de quedar
+       flotando a media altura. El padding-left es EL MISMO clamp que usa
+       hero-content, así "4 estados+" queda exactamente alineado con el borde
+       izquierdo del título/párrafo de arriba. padding-top se redujo para que
+       el texto quede pegado justo debajo de su línea divisoria (antes había
+       un hueco de 2.25rem, ahora 0.75rem). Los 3 items se reparten con
+       space-between: "4 estados+" izquierda, "Mayoreo" centro, "Variedad"
+       derecha. La línea divisoria (border-top) se extiende con la franja
+       porque sigue su ancho. */
     #hero .hero-bar {
       box-sizing: border-box;
       width: 100vw;
       margin-left: calc(-1 * clamp(56px, 7vw, 120px));
       margin-top: auto;
-      padding-top: 2.25rem;
-      padding-left: clamp(90px, 9vw, 170px);
-      padding-right: clamp(90px, 9vw, 170px);
+      padding-top: 0.75rem;
+      padding-left: clamp(56px, 7vw, 120px);
+      padding-right: clamp(56px, 7vw, 120px);
       gap: 2rem;
       justify-content: space-between;
     }
