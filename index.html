@@ -178,7 +178,12 @@
       gap: 0.5rem;
       min-height: 0;
     }
-    .contact-link { font-size: 0.9rem; }
+    .contact-link-phone { font-size: 1.3rem; }
+    /* 15px es el máximo que probé (con margen) que sigue cabiendo completo en
+       una sola línea en la tarjeta a 320px de ancho (la pantalla más angosta) —
+       si se agranda más, empieza a salirse. white-space:nowrap fuerza que nunca
+       se parta en dos renglones. */
+    .contact-link-email { font-size: 15px; white-space: nowrap; }
   }
 
   .placeholder-box {
@@ -1114,12 +1119,12 @@
     <div class="grid-placeholder cols-2">
       <div class="contact-card reveal">
         <span class="contact-label">WhatsApp</span>
-        <a class="contact-link" href="https://wa.me/523317974096" target="_blank" rel="noopener">33 1797 4096</a>
+        <a class="contact-link contact-link-phone" href="https://wa.me/523317974096" target="_blank" rel="noopener">33 1797 4096</a>
         <a class="btn btn-primary" href="https://wa.me/523317974096" target="_blank" rel="noopener">Pedir por WhatsApp</a>
       </div>
       <div class="contact-card reveal">
         <span class="contact-label">Correo</span>
-        <a class="contact-link" href="mailto:carlosrocha.mayoreo@gmail.com">carlosrocha.mayoreo@gmail.com</a>
+        <a class="contact-link contact-link-email" href="mailto:carlosrocha.mayoreo@gmail.com">carlosrocha.mayoreo@gmail.com</a>
         <button type="button" class="btn btn-primary" id="emailToggle" aria-expanded="false" aria-controls="emailAccordion">Escribir por correo</button>
         <div class="accordion" id="emailAccordion">
           <div class="accordion-inner">
