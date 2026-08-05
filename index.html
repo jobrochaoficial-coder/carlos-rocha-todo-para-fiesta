@@ -179,11 +179,13 @@
       min-height: 0;
     }
     .contact-link-phone { font-size: 1.3rem; }
-    /* Escala con el ancho de pantalla: 15px es el piso seguro probado para la
-       pantalla más angosta (320px), y crece hasta 18px en los celulares más
-       comunes (400px+). Verificado que en ningún ancho intermedio se sale de
-       la tarjeta. white-space:nowrap fuerza que nunca se parta en dos renglones. */
-    .contact-link-email { font-size: clamp(15px, 4.5vw, 18px); white-space: nowrap; }
+    /* Escala con el ancho de pantalla, midiendo cuánto espacio real sobra en la
+       tarjeta en cada tamaño (no solo el peor caso): 15px en 320px (piso
+       seguro), ~17.5px en 360px (Android típico, ej. OPPO A57), ~18.5px en
+       375px, tope de 20px desde ~410px. Verificado con margen en cada ancho
+       intermedio que nunca se sale de la tarjeta. white-space:nowrap fuerza
+       que nunca se parta en dos renglones. */
+    .contact-link-email { font-size: clamp(15px, 6.4vw - 5.5px, 20px); white-space: nowrap; }
   }
 
   .placeholder-box {
