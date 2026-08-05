@@ -316,11 +316,16 @@
     object-position: 50% 72%;
     z-index: 0;
   }
+  #hero {
+    /* Oscuridad del overlay sobre la foto del hero: 0 = sin oscurecer, 1 = negro total.
+       Súbelo o bájalo aquí para ajustar el contraste del texto. */
+    --hero-overlay-opacity: 0.5;
+  }
   #hero .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(to top, rgba(15,15,18,0.7), rgba(15,15,18,0.35));
+    background: rgba(15, 15, 18, var(--hero-overlay-opacity));
   }
   #hero .hero-content {
     max-width: 760px;
@@ -384,6 +389,15 @@
       margin-top: 1.5rem;
     }
     #hero .hero-bar-item { text-align: center; }
+  }
+  /* Escritorio: el bloque completo del hero (título, subtítulo, párrafo, botones y
+     los 3 datos de abajo) se compacta un poco para que quepa entero dentro de la
+     foto en ventanas de escritorio más bajas, sin que nada quede fuera de ella. */
+  @media (min-width: 900px) {
+    #hero h1 { margin-bottom: 0.85rem; }
+    #hero .hero-sub { margin-bottom: 1.25rem; }
+    #hero .hero-actions { margin-bottom: 1.5rem; }
+    #hero .hero-bar { padding-top: 1.25rem; }
   }
 
   /* Generic section placeholders reused across sections */
