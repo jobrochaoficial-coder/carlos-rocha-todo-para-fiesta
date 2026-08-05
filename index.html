@@ -230,6 +230,7 @@
   .nav-logo-sub {
     font-size: 0.6em; letter-spacing: 0.15em; text-transform: uppercase;
     color: var(--texto-suave);
+    transition: color 0.2s ease;
   }
   .nav-links { display: none; gap: 2rem; list-style: none; }
   .nav-links a {
@@ -237,6 +238,17 @@
     transition: color 0.2s ease;
   }
   .nav-links a:hover { color: var(--turquesa); }
+  /* Header flotando sobre el hero (sin scroll aún): "TODO PARA FIESTA" y los
+     enlaces del menú en teal para que resalten sobre la foto. El logo "Carlos
+     Rocha" NO se toca, sigue azul. En cuanto el header toma su fondo crema
+     (.is-scrolled, misma lógica de siempre) vuelven a su color normal. */
+  .nav:not(.is-scrolled) .nav-logo-sub,
+  .nav:not(.is-scrolled) .nav-links a {
+    color: var(--turquesa);
+  }
+  .nav:not(.is-scrolled) .nav-links a:hover {
+    color: var(--turquesa-oscuro);
+  }
   @media (min-width: 900px) {
     .nav-links { display: flex; align-items: center; }
   }
@@ -319,12 +331,12 @@
   #hero {
     /* Oscuridad del overlay sobre la foto del hero: 0 = sin oscurecer, 1 = negro total.
        Súbelo o bájalo aquí para ajustar el contraste del texto general. */
-    --hero-overlay-opacity: 0.5;
+    --hero-overlay-opacity: 0.38;
     /* Oscurecido EXTRA solo en la franja de arriba (zona del header), que es la
        parte más clara de la foto. Se suma al overlay de arriba y se desvanece
        hacia el centro en --hero-overlay-top-fade px. Ajusta estos dos si el
        logo/menú siguen sin leerse bien, o si se ve demasiado oscuro arriba. */
-    --hero-overlay-top-opacity: 0.45;
+    --hero-overlay-top-opacity: 0.3;
     --hero-overlay-top-fade: 220px;
   }
   #hero .hero-overlay {
