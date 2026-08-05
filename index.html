@@ -436,18 +436,27 @@
      sigue centrado con su padding original de siempre. */
   @media (min-width: 900px) {
     #hero .hero-content {
+      max-width: 920px;
       margin-left: 0;
       margin-right: auto;
       padding-left: clamp(56px, 7vw, 120px);
       padding-right: 24px;
     }
-    #hero h1 { margin-bottom: 1.75rem; }
+    /* Título protagonista: crece bastante más que el clamp base (que se topaba
+       en 4.2rem), sin desbordar — "Carlos Rocha" cabe en una línea dentro de
+       los 920px del bloque incluso en su tamaño máximo (probado). */
+    #hero h1 { font-size: clamp(3.5rem, 6vw, 6.5rem); margin-bottom: 1.75rem; }
+    #hero h1 .hero-h1-sub { font-size: clamp(1.3rem, 2vw, 1.9rem); }
     #hero .hero-sub { margin-bottom: 2.75rem; }
     #hero .hero-actions { margin-bottom: 3.25rem; }
-    #hero .hero-bar { padding-top: 2.25rem; gap: 3rem; }
+    /* Los 3 bloques de datos se reparten a lo largo de todo el ancho del
+       bloque (920px) en vez de quedar apretados a la izquierda; la línea
+       divisoria de arriba ya se extiende sola porque sigue el ancho del
+       contenedor, que ahora es más ancho. */
+    #hero .hero-bar { padding-top: 2.25rem; gap: 3rem; justify-content: space-between; }
     #hero .hero-overlay {
       background:
-        linear-gradient(to right, rgba(15, 15, 18, 0.28) 0px, rgba(15, 15, 18, 0) 620px),
+        linear-gradient(to right, rgba(15, 15, 18, 0.28) 0px, rgba(15, 15, 18, 0) 780px),
         linear-gradient(to bottom, rgba(15, 15, 18, var(--hero-overlay-top-opacity)) 0px, rgba(15, 15, 18, 0) var(--hero-overlay-top-fade)),
         rgba(15, 15, 18, var(--hero-overlay-opacity));
     }
