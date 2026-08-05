@@ -425,14 +425,32 @@
     }
     #hero .hero-bar-item { text-align: center; }
   }
-  /* Escritorio: más aire entre título/párrafo/botones/franja de datos, para que el
-     bloque del hero se vea holgado (no apretado). Se probó que sigue cabiendo
-     completo dentro de la foto incluso en ventanas bajas (~650px de alto). */
+  /* Escritorio: el bloque de texto se alinea a la izquierda (en vez de quedar
+     centrado dentro del hero) con un margen cómodo desde el borde, dejando la
+     parte derecha de la foto respirando sin texto encima. También más aire
+     vertical entre título/párrafo/botones/franja de datos. Se probó que sigue
+     cabiendo completo dentro de la foto incluso en ventanas bajas (~650px de
+     alto). Un degradado extra oscurece un poco la franja izquierda (donde cae
+     el texto ahora) para mantener buen contraste, igual que el que ya existe
+     arriba para el header. SOLO aplica en escritorio: en móvil el hero-content
+     sigue centrado con su padding original de siempre. */
   @media (min-width: 900px) {
-    #hero h1 { margin-bottom: 1.5rem; }
-    #hero .hero-sub { margin-bottom: 2.25rem; }
-    #hero .hero-actions { margin-bottom: 2.75rem; }
-    #hero .hero-bar { padding-top: 2rem; gap: 2.5rem; }
+    #hero .hero-content {
+      margin-left: 0;
+      margin-right: auto;
+      padding-left: clamp(56px, 7vw, 120px);
+      padding-right: 24px;
+    }
+    #hero h1 { margin-bottom: 1.75rem; }
+    #hero .hero-sub { margin-bottom: 2.75rem; }
+    #hero .hero-actions { margin-bottom: 3.25rem; }
+    #hero .hero-bar { padding-top: 2.25rem; gap: 3rem; }
+    #hero .hero-overlay {
+      background:
+        linear-gradient(to right, rgba(15, 15, 18, 0.28) 0px, rgba(15, 15, 18, 0) 620px),
+        linear-gradient(to bottom, rgba(15, 15, 18, var(--hero-overlay-top-opacity)) 0px, rgba(15, 15, 18, 0) var(--hero-overlay-top-fade)),
+        rgba(15, 15, 18, var(--hero-overlay-opacity));
+    }
   }
 
   /* Generic section placeholders reused across sections */
