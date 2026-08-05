@@ -441,6 +441,17 @@
       margin-right: auto;
       padding-left: clamp(56px, 7vw, 120px);
       padding-right: 24px;
+      /* Se estira para ocupar todo el alto del hero (en vez de quedar centrada
+         como un bloque compacto), así hay espacio de sobra abajo para anclar
+         ahí la franja de datos sin mover el título/párrafo/botones de su
+         lugar de siempre. */
+      display: flex;
+      flex-direction: column;
+      align-self: stretch;
+      /* 110px deja un margen cómodo del borde inferior Y espacio libre real
+         sobre el botón flotante de WhatsApp (que ocupa los últimos 80px desde
+         abajo), para que nunca se toquen. */
+      padding-bottom: 110px;
     }
     /* Título protagonista: el tope (8rem) ya se alcanza desde ~1830px de ancho,
        así que en la pantalla de referencia (1920×1080) se ve al tamaño máximo,
@@ -453,20 +464,23 @@
     #hero .hero-sub { margin-bottom: 2.75rem; max-width: 640px; }
     #hero .hero-actions { margin-bottom: 3.25rem; }
     /* Composición intencional: arriba (título/párrafo/botones) se queda angosto
-       y a la izquierda; la franja de los 3 datos de abajo se "escapa" del ancho
-       del bloque de contenido y se extiende de lado a lado del hero (casi todo
-       el ancho de la pantalla), con el mismo margen que el título a la
-       izquierda y un margen simétrico a la derecha. Los 3 items se reparten
-       con space-between: "4 estados+" queda a la izquierda, "Mayoreo" al
-       centro, "Variedad" a la derecha. La línea divisoria (border-top) se
-       extiende con la franja porque sigue su ancho. */
+       y a la izquierda, en su lugar de siempre. La franja de los 3 datos de
+       abajo se "escapa" del ancho del bloque de contenido (se extiende de
+       lado a lado del hero, con margen cómodo de las orillas) Y además
+       "margin-top: auto" la empuja hasta el fondo del hero-content (que ahora
+       ocupa todo el alto disponible), asentándola cerca del borde inferior de
+       la foto en vez de quedar flotando a media altura. Los 3 items se
+       reparten con space-between: "4 estados+" izquierda, "Mayoreo" centro,
+       "Variedad" derecha. La línea divisoria (border-top) se extiende con la
+       franja porque sigue su ancho. */
     #hero .hero-bar {
       box-sizing: border-box;
       width: 100vw;
       margin-left: calc(-1 * clamp(56px, 7vw, 120px));
+      margin-top: auto;
       padding-top: 2.25rem;
-      padding-left: clamp(56px, 7vw, 120px);
-      padding-right: clamp(56px, 7vw, 120px);
+      padding-left: clamp(90px, 9vw, 170px);
+      padding-right: clamp(90px, 9vw, 170px);
       gap: 2rem;
       justify-content: space-between;
     }
