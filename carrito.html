@@ -55,6 +55,10 @@
     color: var(--texto-principal);
     line-height: 1.6;
     font-size: 16px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
   }
   img { max-width: 100%; display: block; }
   a { color: inherit; }
@@ -102,7 +106,9 @@
   .legal-hero p { color: var(--texto-suave); font-size: 1.05rem; max-width: 640px; }
 
   /* Contenido (igual que privacidad.html) */
-  .legal-content { padding: 1rem 0 4rem; }
+  /* flex:1 empuja el footer hasta abajo cuando hay poco contenido (ej. pedido
+     vacío), evitando la franja blanca debajo del footer en pantallas altas. */
+  .legal-content { padding: 1rem 0 4rem; flex: 1 0 auto; }
   .legal-content .card {
     background: var(--bg-claro); border: 1px solid var(--border);
     border-radius: 16px; padding: 2rem;
