@@ -238,16 +238,24 @@
     transition: color 0.2s ease;
   }
   .nav-links a:hover { color: var(--turquesa); }
-  /* Header flotando sobre el hero (sin scroll aún): "TODO PARA FIESTA" y los
-     enlaces del menú en teal para que resalten sobre la foto. El logo "Carlos
-     Rocha" NO se toca, sigue azul. En cuanto el header toma su fondo crema
-     (.is-scrolled, misma lógica de siempre) vuelven a su color normal. */
+  /* Header flotando sobre el hero (sin scroll aún): "TODO PARA FIESTA", los
+     enlaces del menú, el ícono del carrito y el de hamburguesa en dorado para
+     que resalten sobre la foto. El logo "Carlos Rocha" (azul) y el botón
+     "Solicita tu cotización" (teal) NO se tocan. En cuanto el header toma su
+     fondo crema (.is-scrolled, misma lógica de siempre) todo vuelve a su color
+     normal, definido en las reglas base de arriba. */
   .nav:not(.is-scrolled) .nav-logo-sub,
-  .nav:not(.is-scrolled) .nav-links a {
-    color: var(--turquesa);
+  .nav:not(.is-scrolled) .nav-links a,
+  .nav:not(.is-scrolled) .nav-cart,
+  .nav:not(.is-scrolled) .nav-toggle {
+    color: var(--subcat-activa-borde);
   }
   .nav:not(.is-scrolled) .nav-links a:hover {
-    color: var(--turquesa-oscuro);
+    color: var(--dorado);
+  }
+  .nav:not(.is-scrolled) .nav-cart:hover {
+    color: var(--dorado);
+    background: rgba(186, 117, 23, 0.15);
   }
   @media (min-width: 900px) {
     .nav-links { display: flex; align-items: center; }
