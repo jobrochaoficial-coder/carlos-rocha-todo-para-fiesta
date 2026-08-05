@@ -450,10 +450,9 @@
       align-self: stretch;
       justify-content: space-between;
       gap: 1.5rem;
-      /* 110px deja un margen cómodo del borde inferior Y espacio libre real
-         sobre el botón flotante de WhatsApp (que ocupa los últimos 80px desde
-         abajo), para que nunca se toquen. */
-      padding-bottom: 110px;
+      /* Margen chico del borde inferior nada más (ya no se reserva espacio
+         extra para el botón de WhatsApp; puede quedar cerca/detrás de él). */
+      padding-bottom: 48px;
     }
     /* Título protagonista: el tope (8rem) ya se alcanza desde ~1830px de ancho,
        así que en la pantalla de referencia (1920×1080) se ve al tamaño máximo,
