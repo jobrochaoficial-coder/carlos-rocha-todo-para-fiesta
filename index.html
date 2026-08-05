@@ -676,16 +676,14 @@
     margin-top: -0.4rem;
   }
   .product-subtotal strong {
-    color: var(--turquesa-oscuro);
+    color: var(--azul);
     font-weight: 700;
   }
   .btn-block { width: 100%; font-size: 0.95rem; padding: 0.7rem 1rem; }
   /* Móvil: nombre a 2 líneas fijas (todas las tarjetas parejas en altura),
-     "c/u" en gris junto al precio, subtotal en azul para distinguirlo del
-     precio unitario en teal, y controles/botón más compactos. */
+     "c/u" en gris junto al precio, y controles/botón más compactos. */
   @media (max-width: 639px) {
     .product-price-unit { color: var(--texto-suave); font-weight: 500; font-size: 0.78rem; }
-    .product-subtotal strong { color: var(--azul); }
     .qty-btn { width: 30px; height: 30px; font-size: 1rem; }
     .qty-input { height: 30px; font-size: 0.9rem; }
     .btn-add-order { min-height: 34px; padding: 0.5rem 0.7rem; font-size: 0.8rem; line-height: 1.15; }
@@ -1306,11 +1304,11 @@
       { file: 'vela-de-cera-de-numero-dorada', title: 'Vela Cúbica de Número Dorada', ref: '', precio: 12 },
     ] },
     { slug: 'vela-pirotecnia', group: 'velas', subcat: 'vela-pirotecnia', subcatLabel: 'Pirotécnica', products: [
-      { file: 'vela-pirotecnia-rosa', title: 'Velas Pirotecnia Número 5 (Mini) Paquete', ref: '', precio: 5 },
-      { file: 'velas-pirotecnia-colores', title: 'Velas Pirotecnia Número 10 Paquete', ref: '', precio: 6 },
-      { file: 'velas-pirotecnia-paquete', title: 'Velas Pirotecnia Número 12 Paquete', ref: '', precio: 7 },
-      { file: 'proximamente', title: 'Velas Pirotecnia Número 14 Paquete', ref: '', precio: 8.5 },
-      { file: 'proximamente', title: 'Velas Pirotecnia Número 14 PLUS Paquete', ref: '', precio: 10 },
+      { file: 'vela-pirotecnia-rosa', title: 'Velas Pirotecnia Número 5 (Mini) Paquete', ref: '', precio: 250, unidad: 'paquete (50 pz)' },
+      { file: 'velas-pirotecnia-colores', title: 'Velas Pirotecnia Número 10 Paquete', ref: '', precio: 300, unidad: 'paquete (50 pz)' },
+      { file: 'velas-pirotecnia-paquete', title: 'Velas Pirotecnia Número 12 Paquete', ref: '', precio: 350, unidad: 'paquete (50 pz)' },
+      { file: 'proximamente', title: 'Velas Pirotecnia Número 14 Paquete', ref: '', precio: 425, unidad: 'paquete (50 pz)' },
+      { file: 'proximamente', title: 'Velas Pirotecnia Número 14 PLUS Paquete', ref: '', precio: 500, unidad: 'paquete (50 pz)' },
     ] },
     { slug: 'velas-de-cera-espiral', group: 'velas', subcat: 'velas-de-cera-espiral', subcatLabel: 'Torcida', products: [
       { file: 'vela-espiral-rosa-gold', title: 'Rosa Gold', ref: '', precio: 15 },
