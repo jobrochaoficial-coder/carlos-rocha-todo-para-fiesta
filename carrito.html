@@ -216,15 +216,22 @@
   .order-clear:hover { color: var(--coral); }
   .order-clear:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* Footer (igual que privacidad.html) */
+  /* Footer (igual que index.html) */
   footer {
-    background: var(--texto-principal); border-top: 1px solid rgba(255,255,255,0.12);
-    padding: 3rem 0 2rem; text-align: center; color: rgba(255,255,255,0.75); font-size: 0.9rem;
+    background: var(--texto-principal);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding: 1.25rem 0 1rem;
+    text-align: center;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.8rem;
+    line-height: 1.35;
   }
-  footer .footer-logo { font-family: var(--font-display); font-weight: 600; color: var(--dorado); font-size: 1.2rem; margin-bottom: 0.75rem; }
-  footer p { margin-bottom: 0.4rem; }
-  footer a:hover { color: var(--dorado); }
-  .footer-legal { font-size: 0.85rem; }
+  footer p { overflow-wrap: break-word; margin-bottom: 0.25rem; }
+  footer p:last-child { margin-bottom: 0; }
+  footer .footer-logo {
+    font-family: var(--font-display); font-weight: 600; color: var(--dorado); font-size: 1rem; margin-bottom: 0.35rem;
+  }
+  .footer-legal { font-size: 0.75rem; margin-bottom: 0.25rem; }
   .footer-legal a { text-decoration: none; }
   .footer-legal a:hover { text-decoration: underline; }
 
