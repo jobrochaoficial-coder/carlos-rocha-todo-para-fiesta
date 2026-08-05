@@ -360,7 +360,7 @@
     margin-bottom: 1.25rem;
     overflow-wrap: break-word;
     color: var(--texto-claro);
-    text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   }
   #hero h1 .hero-h1-sub {
     display: block;
@@ -373,7 +373,7 @@
     color: var(--texto-claro);
     margin-bottom: 2rem;
     max-width: 560px;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   }
   #hero .hero-actions {
     display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem;
@@ -386,7 +386,7 @@
   #hero .hero-bar-item {
     font-size: 0.85rem;
     color: var(--texto-claro);
-    text-shadow: 0 1px 8px rgba(0,0,0,0.45);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   }
   #hero .hero-bar-item strong {
     display: block;
@@ -394,7 +394,7 @@
     font-size: 1.1rem;
     color: var(--dorado);
     font-weight: 600;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.45);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   }
   /* Móvil: más aire entre título/subtítulo y la franja de datos en 3 columnas
      iguales (antes envolvía en 2+1, quedando desalineada). Fondo y overlay del
@@ -410,14 +410,14 @@
     }
     #hero .hero-bar-item { text-align: center; }
   }
-  /* Escritorio: el bloque completo del hero (título, subtítulo, párrafo, botones y
-     los 3 datos de abajo) se compacta un poco para que quepa entero dentro de la
-     foto en ventanas de escritorio más bajas, sin que nada quede fuera de ella. */
+  /* Escritorio: más aire entre título/párrafo/botones/franja de datos, para que el
+     bloque del hero se vea holgado (no apretado). Se probó que sigue cabiendo
+     completo dentro de la foto incluso en ventanas bajas (~650px de alto). */
   @media (min-width: 900px) {
-    #hero h1 { margin-bottom: 0.85rem; }
-    #hero .hero-sub { margin-bottom: 1.25rem; }
-    #hero .hero-actions { margin-bottom: 1.5rem; }
-    #hero .hero-bar { padding-top: 1.25rem; }
+    #hero h1 { margin-bottom: 1.5rem; }
+    #hero .hero-sub { margin-bottom: 2.25rem; }
+    #hero .hero-actions { margin-bottom: 2.75rem; }
+    #hero .hero-bar { padding-top: 2rem; gap: 2.5rem; }
   }
 
   /* Generic section placeholders reused across sections */
