@@ -442,11 +442,12 @@
       padding-left: clamp(56px, 7vw, 120px);
       padding-right: 24px;
     }
-    /* Título protagonista: crece bastante más que el clamp base (que se topaba
-       en 4.2rem), sin desbordar — "Carlos Rocha" cabe en una línea dentro de
-       los 920px del bloque incluso en su tamaño máximo (probado). */
-    #hero h1 { font-size: clamp(3.5rem, 6vw, 6.5rem); margin-bottom: 1.75rem; }
-    #hero h1 .hero-h1-sub { font-size: clamp(1.3rem, 2vw, 1.9rem); }
+    /* Título protagonista: el tope (8rem) ya se alcanza desde ~1830px de ancho,
+       así que en la pantalla de referencia (1920×1080) se ve al tamaño máximo,
+       no a medio camino. "Carlos Rocha" cabe en una línea sin desbordarse
+       (probado en 1920×1080 y en anchos menores). */
+    #hero h1 { font-size: clamp(3.5rem, 7vw, 8rem); margin-bottom: 1.75rem; }
+    #hero h1 .hero-h1-sub { font-size: clamp(1.3rem, 2.1vw, 2.1rem); }
     #hero .hero-sub { margin-bottom: 2.75rem; }
     #hero .hero-actions { margin-bottom: 3.25rem; }
     /* Los 3 bloques de datos se reparten a lo largo de todo el ancho del
