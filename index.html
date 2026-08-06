@@ -441,47 +441,43 @@
       margin-right: auto;
       padding-left: clamp(56px, 7vw, 120px);
       padding-right: 24px;
-      /* Se estira para ocupar todo el alto del hero y reparte el espacio
-         sobrante EN PARTES IGUALES entre título, párrafo, botones y la franja
-         de abajo (en vez de juntar todo el aire en un solo hueco antes de la
-         franja). "gap" es un mínimo de respiro por si el hero queda bajo. */
+      /* Se estira para ocupar todo el alto del hero. Título/subtítulo/párrafo/
+         botones quedan juntos con poco espacio entre ellos (sus propios
+         margin-bottom, chicos); la franja de abajo usa margin-top:auto para
+         quedarse pegada casi al borde inferior. */
       display: flex;
       flex-direction: column;
       align-self: stretch;
-      justify-content: space-between;
-      gap: 1.5rem;
-      /* Margen chico del borde inferior nada más (ya no se reserva espacio
-         extra para el botón de WhatsApp; puede quedar cerca/detrás de él). */
-      padding-bottom: 48px;
+      /* Margen mínimo del borde inferior: la franja queda casi al ras. */
+      padding-bottom: 24px;
     }
     /* Título protagonista: el tope (8rem) ya se alcanza desde ~1830px de ancho,
        así que en la pantalla de referencia (1920×1080) se ve al tamaño máximo,
        no a medio camino. "Carlos Rocha" cabe en una línea sin desbordarse
-       (probado en 1920×1080 y en anchos menores). Los margin-bottom de aquí
-       para abajo se quitan porque ahora el espaciado lo da justify-content:
-       space-between del contenedor, repartido parejo. */
-    #hero h1 { font-size: clamp(3.5rem, 7vw, 8rem); margin-bottom: 0; }
+       (probado en 1920×1080 y en anchos menores). */
+    #hero h1 { font-size: clamp(3.5rem, 7vw, 8rem); margin-bottom: 1rem; }
     #hero h1 .hero-h1-sub { font-size: clamp(1.3rem, 2.1vw, 2.1rem); }
     /* Párrafo con más ancho antes de cortar línea (antes 560px). */
-    #hero .hero-sub { margin-bottom: 0; max-width: 640px; }
-    #hero .hero-actions { margin-bottom: 0; }
-    /* Composición intencional: arriba (título/párrafo/botones) se queda angosto
-       y a la izquierda. La franja de los 3 datos de abajo se "escapa" del
-       ancho del bloque de contenido (se extiende de lado a lado del hero) Y
-       queda al final del reparto de justify-content: space-between de arriba,
-       asentándola cerca del borde inferior de la foto. El padding-left es EL
-       MISMO clamp que usa hero-content, así "4 estados+" queda exactamente
-       alineado con el borde izquierdo del título/párrafo de arriba. Letra un
-       poco más grande que antes (0.85rem→1rem / 1.1rem→1.3rem). Los 3 items
-       se reparten con space-between: "4 estados+" izquierda, "Mayoreo"
-       centro, "Variedad" derecha. La línea divisoria (border-top) se extiende
-       con la franja porque sigue su ancho. */
+    #hero .hero-sub { margin-bottom: 1.25rem; max-width: 640px; }
+    #hero .hero-actions { margin-bottom: 1.5rem; }
+    /* Composición intencional: arriba (título/párrafo/botones) se queda
+       angosto, a la izquierda, y bien junto (poco espacio entre cada línea).
+       La franja de los 3 datos de abajo se "escapa" del ancho del bloque de
+       contenido (se extiende de lado a lado del hero) Y "margin-top: auto" la
+       empuja hasta el fondo del hero-content, quedando casi al ras del borde
+       inferior de la foto. El padding-left es EL MISMO clamp que usa
+       hero-content, así "4 estados+" queda exactamente alineado con el borde
+       izquierdo del título/párrafo de arriba. Los 3 items se reparten con
+       space-between: "4 estados+" izquierda, "Mayoreo" centro, "Variedad"
+       derecha. La línea divisoria (border-top) se extiende con la franja
+       porque sigue su ancho. */
     #hero .hero-bar-item { font-size: 1rem; }
     #hero .hero-bar-item strong { font-size: 1.3rem; }
     #hero .hero-bar {
       box-sizing: border-box;
       width: 100vw;
       margin-left: calc(-1 * clamp(56px, 7vw, 120px));
+      margin-top: auto;
       padding-top: 0.75rem;
       padding-left: clamp(56px, 7vw, 120px);
       padding-right: clamp(56px, 7vw, 120px);
