@@ -454,11 +454,17 @@
     /* Título protagonista: el tope (8rem) ya se alcanza desde ~1830px de ancho,
        así que en la pantalla de referencia (1920×1080) se ve al tamaño máximo,
        no a medio camino. "Carlos Rocha" cabe en una línea sin desbordarse
-       (probado en 1920×1080 y en anchos menores). */
-    #hero h1 { font-size: clamp(3.5rem, 7vw, 8rem); margin-bottom: 1rem; }
-    #hero h1 .hero-h1-sub { font-size: clamp(1.3rem, 2.1vw, 2.1rem); }
-    /* Párrafo con más ancho antes de cortar línea (antes 560px). */
-    #hero .hero-sub { margin-bottom: 1.25rem; max-width: 640px; }
+       (probado en 1920×1080 y en anchos menores). margin-top: auto en el h1
+       (junto con el margin-top: auto que ya tiene la franja de abajo) hace que
+       el navegador reparta el espacio libre en DOS partes iguales: una arriba
+       del título y otra entre los botones y la línea divisoria — así el
+       bloque superior completo queda centrado/equilibrado en la zona entre el
+       header y la línea, en vez de pegado arriba. */
+    #hero h1 { font-size: clamp(3.5rem, 7vw, 8rem); margin-top: auto; margin-bottom: 2rem; }
+    #hero h1 .hero-h1-sub { font-size: clamp(1.3rem, 2.1vw, 2.1rem); margin-top: 1rem; }
+    /* Párrafo con más ancho antes de cortar línea (antes 560px); más aire
+       arriba (hacia el subtítulo) y abajo (hacia los botones). */
+    #hero .hero-sub { margin-bottom: 2rem; max-width: 640px; }
     #hero .hero-actions { margin-bottom: 1.5rem; }
     /* Composición intencional: arriba (título/párrafo/botones) se queda
        angosto, a la izquierda, y bien junto (poco espacio entre cada línea).
