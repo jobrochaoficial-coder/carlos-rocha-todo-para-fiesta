@@ -764,6 +764,52 @@
     .btn-add-order { min-height: 34px; padding: 0.5rem 0.7rem; font-size: 0.8rem; line-height: 1.15; }
   }
 
+  /* Barra fija de progreso del pedido mínimo: vive dentro de #catalogo, así que
+     con position:sticky se queda visible mientras se hace scroll por el
+     catálogo y se va sola al pasar a la siguiente sección. Oculta con [hidden]
+     cuando el pedido está vacío. */
+  .order-progress-bar {
+    position: sticky;
+    top: 76px;
+    z-index: 500;
+    background: var(--dorado);
+    color: var(--texto-principal);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  }
+  .order-progress-bar.is-complete { background: var(--turquesa); color: var(--texto-claro); }
+  .order-progress-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.9rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    text-align: center;
+  }
+  .order-progress-text { font-size: 0.9rem; font-weight: 600; }
+  .order-progress-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    background: var(--texto-claro);
+    color: var(--turquesa-oscuro);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+  .order-progress-cta:hover { background: rgba(255,255,255,0.85); }
+  @media (max-width: 480px) {
+    .order-progress-text { font-size: 0.8rem; }
+    .order-progress-inner { padding-top: 0.6rem; padding-bottom: 0.6rem; gap: 0.5rem; }
+    .order-progress-cta { font-size: 0.8rem; padding: 0.4rem 0.9rem; }
+  }
+
   /* Catálogo: paginación */
   .catalog-pagination {
     display: flex;
@@ -1085,6 +1131,11 @@
 
 <!-- 2. CATÁLOGO -->
 <section id="catalogo" class="section bg-soft">
+  <div class="order-progress-bar" id="orderProgressBar" hidden>
+    <div class="container order-progress-inner">
+      <span class="order-progress-text" id="orderProgressText"></span>
+    </div>
+  </div>
   <div class="container">
     <div class="section-head reveal">
       <span class="section-eyebrow">Catálogo</span>
@@ -1149,10 +1200,6 @@
       <details class="faq-item reveal">
         <summary>¿Cuál es el pedido mínimo?</summary>
         <p>El pedido mínimo es de $2,500 MXN para envíos por paquetería (el envío se cobra aparte según la zona). Si estás en Jalisco, Colima, Nayarit o Zacatecas y te queda cerca para entrega directa, el mínimo es de $5,000 MXN. La entrega directa depende de la localidad, así que confírmanos tu zona por WhatsApp y te decimos cómo te llega.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary>¿El precio baja si compro más?</summary>
-        <p>Sí, entre más piezas compres, mejor es el precio.</p>
       </details>
       <details class="faq-item reveal">
         <summary>¿Cómo hago un pedido?</summary>
@@ -2079,6 +2126,41 @@
     }
   }
 
+  // Suma precio × cantidad de todo el pedido. MISMA fórmula que calcOrderTotal()
+  // en carrito.html (misma llave 'crf_pedido'), para que el total mostrado aquí
+  // nunca se desfase del que se ve y se envía desde el carrito.
+  const ORDER_MINIMUM = 2500;
+  function calcOrderTotal() {
+    let total = 0;
+    Object.keys(orderState).forEach(id => {
+      const item = orderState[id];
+      total += (Number(item.precio) || 0) * item.qty;
+    });
+    return total;
+  }
+
+  // Barra fija del catálogo: se oculta con el pedido vacío, muestra cuánto falta
+  // para el mínimo, y cambia a mensaje de logro (con enlace al carrito) al alcanzarlo.
+  const orderProgressBar = document.getElementById('orderProgressBar');
+  const orderProgressText = document.getElementById('orderProgressText');
+  function updateOrderProgressBar() {
+    if (!orderProgressBar || !orderProgressText) return;
+    const total = calcOrderTotal();
+    if (total <= 0) {
+      orderProgressBar.hidden = true;
+      return;
+    }
+    orderProgressBar.hidden = false;
+    if (total >= ORDER_MINIMUM) {
+      orderProgressBar.classList.add('is-complete');
+      orderProgressText.innerHTML = '¡Llevas $' + formatPrecio(total) + ' MXN! Ya alcanzaste el pedido mínimo. <a class="order-progress-cta" href="carrito.html">Envíanos tu pedido por WhatsApp</a>';
+    } else {
+      orderProgressBar.classList.remove('is-complete');
+      const faltante = ORDER_MINIMUM - total;
+      orderProgressText.innerHTML = 'Llevas $' + formatPrecio(total) + ' MXN · Te faltan $' + formatPrecio(faltante) + ' MXN para el pedido mínimo de $2,500 MXN';
+    }
+  }
+
   function addToOrder(id, title, qty, src, subcat, ref, precio, unidad) {
     const n = Math.max(1, parseInt(qty, 10) || 1);
     if (orderState[id]) {
@@ -2088,6 +2170,7 @@
     }
     saveOrder();
     updateOrderBadge();
+    updateOrderProgressBar();
   }
 
   // Subtotal de la tarjeta (cantidad × precio unitario, misma cuenta que usa el carrito):
@@ -2192,6 +2275,7 @@
 
   loadOrder();
   updateOrderBadge();
+  updateOrderProgressBar();
 
   // Red de seguridad global: revela todo a los 3s pase lo que pase (incluye lo ya presente al cargar)
   setTimeout(() => {
