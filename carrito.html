@@ -296,7 +296,7 @@
   <div class="container">
     <span class="section-eyebrow">Pedido</span>
     <h1>Tu Pedido</h1>
-    <p>Revisa los productos que agregaste, completa tus datos y envía tu pedido por WhatsApp o correo. Pedido mínimo: $2,500 MXN. El costo de envío depende de tu zona — confírmanos por WhatsApp y te decimos cómo te llega.</p>
+    <p>Revisa los productos que agregaste, completa tus datos y envía tu pedido por WhatsApp o correo. Pedido mínimo: $2,500 MXN. El tipo y costo de entrega dependen de tu zona — hacemos entrega directa en muchos lugares. Confírmanos por WhatsApp y te decimos cómo te llega.</p>
   </div>
 </section>
 
@@ -562,7 +562,7 @@
     const faltante = ORDER_MINIMUM - calcOrderTotal();
     if (faltante <= 0) return '';
     return '<p class="order-minimum-warning">Te faltan $' + formatPrecio(faltante) + ' para el pedido mínimo de $2,500. ' +
-      'El costo de envío depende de tu zona — confírmanos por WhatsApp y te decimos cómo te llega.</p>';
+      'El tipo y costo de entrega dependen de tu zona — hacemos entrega directa en muchos lugares. Confírmanos por WhatsApp y te decimos cómo te llega.</p>';
   }
 
   function renderOrderPanel() {
